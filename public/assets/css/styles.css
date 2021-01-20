@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
+
+body {
+  font-family: "Roboto", sans-serif;
+  background: radial-gradient(ellipse at center, #333333, #000000 75%) no-repeat;
+  color: white;
+  height: 100vh;
+  width: 100vw;
+}
+
+.navbar-custom {
+  background-color: #bb000e;
+  font-size: larger;
+}
+
+.white-text {
+  color: white;
+}
+
+.brand {
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+.container-custom {
+  width: 75%;
+}
+
+.login_form {
+  background-color: #bb000e;
+  width: 45%;
+  margin: auto;
+  border-radius: 20px;
+}
+
+.container .tab-group {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.container .tab-group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.container .tab-group li a {
+  display: block;
+  text-decoration: none;
+  padding: 15px;
+  background: #630a10;
+  color: #fff;
+  font-size: 20px;
+  float: left;
+  width: 50%;
+  text-align: center;
+  border-top: 3px solid transparent;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+.container .tab-group li a:hover {
+  background: #f10717;
+  color: white;
+}
+.container .tab-group .active a {
+  background: #bb000e;
+  color: white;
+  border-top: 3px solid white;
+}
+
+#signup {
+  display: none;
+}
