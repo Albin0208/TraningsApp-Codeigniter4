@@ -2,19 +2,12 @@
 
 body {
   font-family: "Roboto", sans-serif;
-  background: radial-gradient(ellipse at center, #333333, #000000 75%) no-repeat;
-  color: white;
+  background: radial-gradient(ellipse at center, #101d44, #060a14 75%) no-repeat;
+  /* background: radial-gradient(ellipse at center, #333333, #000000 75%) no-repeat; */
+  background-attachment: fixed;
+  /* color: white; */
   height: 100vh;
   width: 100vw;
-}
-
-.navbar-custom {
-  background-color: #bb000e;
-  font-size: larger;
-}
-
-.white-text {
-  color: white;
 }
 
 .brand {
@@ -27,48 +20,108 @@ body {
 }
 
 .login_form {
-  background-color: #bb000e;
-  width: 45%;
-  margin: auto;
+  border: 1px solid white;
   border-radius: 20px;
+  color: white;
 }
 
-.container .tab-group {
-  list-style: none;
+.login_form > form {
+  color: black;
+}
+
+.active {
+  background-color: #720c13;
+  box-shadow: 0px 0px 0px 2px white inset;
+  border-radius: 10px;
+}
+
+.bg-red {
+  background-color: #92140c;
+  /* background-color: #3f7cac; */
+  /* background-color: #011640; */
+  /* background-color: #ba0600; */
+  /* background-color: #bb000e; */
+}
+
+.account-page {
+  border-radius: 10px;
+}
+
+.account-nav,
+.account-nav > ul {
+  border-radius: 10px 0 0 10px;
+  list-style-type: none;
   padding: 0;
-  margin: 0;
-}
-.container .tab-group:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-.container .tab-group li a {
-  display: block;
-  text-decoration: none;
-  padding: 15px;
-  background: #630a10;
-  color: #fff;
-  font-size: 20px;
-  float: left;
-  width: 50%;
-  text-align: center;
-  border-top: 3px solid transparent;
-  -moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
-}
-.container .tab-group li a:hover {
-  background: #f10717;
-  color: white;
-}
-.container .tab-group .active a {
-  background: #bb000e;
-  color: white;
-  border-top: 3px solid white;
 }
 
-#signup {
-  display: none;
+.account-nav > ul > li:first-child {
+  border-top-left-radius: 10px;
+}
+
+.account-nav > ul > li:last-child {
+  border-bottom-left-radius: 10px;
+}
+
+.account-nav > ul > li > a {
+  text-decoration: none;
+  color: white;
+}
+
+.account-nav > ul > li:hover {
+  border-radius: 0;
+  cursor: pointer;
+  background-color: #720c13;
+}
+
+.account-nav > ul > li.active {
+  border-radius: 0;
+  box-shadow: none;
+  background-color: #720c13;
+}
+
+.account-nav > ul > li:first-child:hover,
+.account-nav > ul > li:first-child.active {
+  border-top-left-radius: 10px;
+}
+
+.account-nav > ul > li:last-of-type:hover,
+.account-nav > ul > li:last-of-type.active {
+  border-bottom-left-radius: 10px;
+}
+
+.account-nav > ul > hr {
+  width: 90%;
+}
+
+.account-page-content {
+  /* background-color: rgba(187, 0, 14, 0.3); */
+  border: 1px solid #92140c;
+  /* background-color: rgba(0, 0, 0, 0.4); */
+  /* background-color: rgba(255, 255, 255, 0.5); */
+  /* background-color: #24373c; */
+  background-color: #143760;
+}
+
+.btn-primary-custom {
+  background-color: #fc791e;
+  color: white;
+}
+
+.btn-primary-custom:hover {
+  background-color: #c46019;
+  color: white;
+}
+
+.btn-secondary-custom {
+  background-color: #0303e0;
+  color: white;
+}
+
+.btn-secondary-custom:hover {
+  background-color: #0101b3;
+  color: white;
+}
+
+.edit-profile {
+  color: white;
 }
