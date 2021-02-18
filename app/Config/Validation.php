@@ -58,7 +58,7 @@ class Validation
 
 	public $register =   [
 		'email' => [
-			'rules' => 'required|valid_email|is_unique[users.email]',
+			'rules' => 'required|valid_email|is_unique[customers.email]',
 			'label' => 'Email',
 			'errors' => [
 				'required' => '{field} fältet får inte vara tomt',
@@ -126,12 +126,38 @@ class Validation
 			]
 		],
 		'username' => [
-			'rules' => 'required|alpha_numeric|is_unique[users.username]',
+			'rules' => 'required|alpha_numeric|is_unique[users.username,id,{id}]',
 			'label' => 'Användarnamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
 				'alpha_numeric' => '{field}et får bara innehålla bokstäver och siffror',
 				'is_unique' => '{field}et är upptaget'
+			]
+		],
+	];
+
+	public $updateUserPassword = [
+		'current_password' => [
+			'rules' => 'required_with[password]|matchesUser[current_password]',
+			'label' => 'Nuvarande Lösenord',
+			'errors' => [
+				'matchesUser' => 'Fel lösenord',
+				'required_with' => '{field}s fältet måste vara ifyllt',
+			]
+		],
+		'password' => [
+			'rules' => 'required|min_length[8]',
+			'label' => 'Lösenord',
+			'errors' => [
+				'required' => '{field}s fältet får inte vara tomt',
+				'min_length' => '{field} fältet måste vara minst 8 tecken',
+			]
+		],
+		'confirm_password' => [
+			'rules' => 'matches[password]',
+			'label' => 'Bekräfta lösenord',
+			'errors' => [
+				'matches' => '{field} matchar inte lösenordet',
 			]
 		],
 	];

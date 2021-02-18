@@ -38,6 +38,7 @@ class Auth extends Controller
           'password' => $this->request->getPost('password'),
           'confirm_password' => $this->request->getPost('confirm_password'),
         ];
+        $model->setValidationRules($validation->getRuleGroup('register'));
         if ($model->save($newData) == false)
           return view('errors/errors', ['errors/errors' => $model->errors(), 'data' => $newData]);
 
@@ -46,6 +47,7 @@ class Auth extends Controller
 
         return redirect()->to("/login");
       } else {
+        $data['apost'] = $_POST;
         $data['validation'] = $validation;
       }
     }
@@ -65,12 +67,11 @@ class Auth extends Controller
 
     if ($this->request->getMethod() == 'post') {
       $validation = \Config\Services::validation();
-
       if ($validation->run($_POST, 'login')) {
         $model = new UserModel();
 
-        $user = $model->where('email', $this->request->getVar('email'))
-          ->first();
+        $user = $model->getUser($this->request->getPost('email'));
+
         $this->setUserSession($user);
         return redirect()->to('/user');
       } else {
@@ -89,7 +90,7 @@ class Auth extends Controller
   private function setUserSession($user)
   {
     $data = [
-      'id' => $user['id'],
+      'id' => $user['customer_id'],
       'firstname' => $user['firstname'],
       'lastname' => $user['lastname'],
       'email' => $user['email'],

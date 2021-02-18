@@ -6,11 +6,10 @@ use CodeIgniter\Model;
 
 class UserModel extends Model
 {
-    protected $table      = 'users';
-    protected $primaryKey = 'id';
-    protected $allowedFields = ['firstname', 'lastname', 'email', 'password', 'username', 'updated_at'];
-    protected $validationRules = 'register';
-    protected $skipValidation = false;
+    protected $table      = 'customers';
+    protected $primaryKey = 'customer_id';
+    protected $allowedFields = ['firstname', 'lastname', 'username', 'password', 'phone', 'email', 'address', 'city', 'zip_code', 'updated_at'];
+    protected $useTimeStaps = true;
 
     protected $beforeInsert = ['beforeInsert'];
     protected $beforeUpdate = ['beforeUpdate'];
@@ -37,5 +36,15 @@ class UserModel extends Model
         $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
 
         return $data;
+    }
+
+    public function getUser($search = null)
+    {
+        if (is_numeric($search))
+            $user = $this->find($search);
+        else
+            $user = $this->where('email', $search)->first();
+
+        return $user;
     }
 }

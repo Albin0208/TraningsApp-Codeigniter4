@@ -20,43 +20,45 @@ class User extends Controller
 
     $model = new UserModel();
 
-    $data['user'] = $model->where('id', session()->get('id'))->first();
-
     if ($this->request->getMethod() == 'post') {
       $validation = \Config\Services::validation();
+      $_POST['id'] = $data['id'] = session()->get('id');
+      $validation->loadRuleGroup('updateUser');
 
-      $validation->setRuleGroup('updateUser');
-      // $validation->setRules([
-      //   'current_password' => [
-      //     'rules' => 'required|matchesUser[current_password]',
-      //     'label' => 'Nuvarande Lösenord',
-      //     'errors' => [
-      //       'required' => '{field}s fältet får inte vara tomt',
-      //     ]
-      //   ],
-      //   'password' => [
-      //     'rules' => 'required_with[current_password]|min_length[8]',
-      //     'label' => 'Lösenord',
-      //     'errors' => [
-      //       'required' => '{field}s fältet får inte vara tomt',
-      //       'min_length' => '{field} fältet måste vara minst 8 tecken',
-      //     ]
-      //   ],
-      //   'confirm_password' => [
-      //     'rules' => 'required_with[password]|matches[password]',
-      //     'label' => 'Bekräfta lösenord',
-      //     'errors' => [
-      //       'matches' => '{field} matchar inte lösenordet',
-      //     ]
-      //   ],
-      // ]);
+      if ($this->request->getPost('password')) {
+        $validation->loadRuleGroup('updateUserPassword');
+      }
 
       if ($validation->run($_POST)) {
+        $newData = [
+          'id' => session()->get('id'),
+          'firstname' => $this->request->getPost('firstname'),
+          'lastname' => $this->request->getPost('lastname'),
+          'username' => $this->request->getPost('username')
+        ];
+        $validationRules = $validation->getRuleGroup('updateUser');
+
+        //Om användaren vill ändra lösenord så ska det valideras
+        if ($this->request->getPost('current_password') && $this->request->getPost('password')) {
+          $newData['password'] = $this->request->getPost('password');
+          //Lägg ihop valideringsreglerna för validering i userModel
+          $validationRules = array_merge($validationRules, $validation->getRuleGroup('updateUserPassword'));
+        }
+
+        $model->setValidationRules($validationRules);
+        if ($model->save($newData) == false)
+          return view('errors/errors', ['errors/errors' => $model->errors(), 'data' => $newData]);
+
+        session()->setFlashData('success', 'Lyckad uppdatering');
+        return redirect()->to(current_url());
       } else {
         $data['validation'] = $validation;
       }
+      unset($data['id']);
     }
 
+    // $data['user'] = $model->where('customer_id', session()->get('id'))->first();
+    $data['user'] = $model->getUser(session()->get('id'));
     return view('userLayouts/userProfile', $data);
   }
 

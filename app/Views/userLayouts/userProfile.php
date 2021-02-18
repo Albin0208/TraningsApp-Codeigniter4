@@ -1,108 +1,125 @@
 <?= $this->extend("userAccount") ?>
 <?= $this->section('userPage') ?>
 
-<form class="edit-profile" method="POST">
-  <div class="row g-2">
-    <div class="mb-3 col-sm h-25">
-      <label for="email">
-        <h4>Email Adress</h4>
-      </label>
-      <span class="input-group col-sm-6">
-        <span class="input-group-text">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
-            <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" />
-          </svg></span>
-        <input type="email" class="form-control" name="email" value="<?= $user['email'] ?>" readonly placeholder="Email">
-      </span>
-    </div>
+<?php if (session()->get('success')) : ?>
+  <div class="alert alert-success" role="alert">
+    <?= session()->get('success') ?>
   </div>
-  <div class="row">
-    <div class="col-sm">
-      <div class="mb-3 col-sm h-25">
-        <label for="firstname">
-          <h4>Förnamn</h4>
-        </label>
-        <span class="input-group col-sm-6">
-          <span class="input-group-text">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 14 14">
-              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-            </svg></span>
-          <input type="text" class="form-control <?= isInvalid('firstname') ?>" name="firstname" value="<?= $user['firstname'] ?>" placeholder="Förnamn">
+<?php endif; ?>
+<script src="assets/js/main.js"></script>
+
+<form method="post" class="text-white text-center" novalidate>
+  <div class="col-md">
+    <div class="row">
+      <div class="mt-3 input-group flex-nowrap input-group-lg">
+        <span class="input-group-text bg-dark border-custom border-end-0">
+          <i class="bi bi-envelope-fill text-white"></i>
+        </span>
+        <div class="form-floating w-100">
+          <input type="email" class="form-control rounded-0 border-custom rounded-end overlay1 border-start-0 <?= isInvalid('email') ?>" name="email" value="<?= $user['email'] ?>" disabled placeholder="Email" required>
+          <label for="email">Email adress</label>
+        </div>
+      </div>
+      <?= displayError('email') ?>
+    </div>
+    <div class="row gx-2">
+      <div class="col-sm">
+        <div class="mt-3 col-sm">
+          <div class=" input-group flex-nowrap input-group-lg">
+            <span class="input-group-text bg-dark border-custom border-end-0">
+              <i class="bi bi-person-fill text-white"></i>
+            </span>
+            <div class="form-floating w-100 me-auto">
+              <input type="text" class="form-control rounded-0 border-custom rounded-end overlay1 border-start-0 <?= isInvalid('firstname') ?>" name="firstname" value="<?= $user['firstname'] ?>" id="firstname" placeholder="Förnamn" required>
+              <label for="firstname">Förnamn</label>
+            </div>
+          </div>
           <?= displayError('firstname') ?>
-        </span>
-      </div>
-      <div class="mb-3 col-sm h-25">
-        <label for="lastname">
-          <h4>Efternamn</h4>
-        </label>
-        <span class="input-group col-sm-6">
-          <span class="input-group-text">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 14 14">
-              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-            </svg></span>
-          <input type="text" class="form-control <?= isInvalid('lastname') ?>" name="lastname" value="<?= $user['lastname'] ?>" placeholder="Efternamn">
+        </div>
+        <div class="mt-3  col-sm">
+          <div class="input-group flex-nowrap input-group-lg">
+            <span class="input-group-text bg-dark border-custom border-end-0">
+              <i class="bi bi-person-fill text-white"></i>
+            </span>
+            <div class="form-floating w-100">
+              <input type="text" class="form-control rounded-0 border-custom rounded-end overlay1 border-start-0 <?= isInvalid('lastname') ?>" name="lastname" value="<?= $user['lastname'] ?>" placeholder="Efternamn" required>
+              <label for="lastname">Efternamn</label>
+            </div>
+          </div>
           <?= displayError('lastname') ?>
-        </span>
-      </div>
-      <div class="mb-3 col-sm h-25">
-        <label for="username">
-          <h4>Användarnamn</h4>
-        </label>
-        <span class="input-group col-sm-6">
-          <span class="input-group-text">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 14 14">
-              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-            </svg></span>
-          <input type="text" class="form-control <?= isInvalid('username') ?>" name="username" value="<?= $user['username'] ?>" placeholder="Användarnamn">
+        </div>
+        <div class="mt-3 col-sm">
+          <div class="input-group flex-nowrap input-group-lg">
+            <span class="input-group-text bg-dark border-custom border-end-0">
+              <i class="bi bi-person-fill text-white"></i>
+            </span>
+            <div class="form-floating w-100">
+              <input type="text" class="form-control rounded-0 border-custom rounded-end overlay1 border-start-0 <?= isInvalid('username') ?>" name="username" value="<?= $user['username'] ?>" placeholder="Användarnamn" required>
+              <label for="username">Användarnamn</label>
+            </div>
+          </div>
           <?= displayError('username') ?>
-        </span>
+        </div>
       </div>
-    </div>
-    <div class="col-sm">
-      <div class="mb-3 col-sm h-25">
-        <label for="current_password">
-          <h4>Nuvarande Lösenord</h4>
-        </label>
-        <span class="input-group col-sm-6">
-          <span class="input-group-text">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
-              <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
-            </svg></span>
-          <input type="password" class="form-control <?= isInvalidLogin('current_password') ? 'is-invalid' : null  ?>" name="current_password" placeholder="Nuvarande Lösenord">
+      <div class="col-sm">
+        <div class="mt-3 col-sm">
+          <div class=" input-group flex-nowrap input-group-lg">
+            <span class="input-group-text bg-dark border-custom border-end-0">
+              <i class="bi bi-lock-fill text-white"></i>
+            </span>
+            <div class="form-floating w-100 me-auto">
+              <input type="password" class="form-control rounded-0 border-custom rounded-end overlay1 border-start-0 <?= isInvalidLogin('current_password') ? 'is-invalid' : null ?>" name="current_password" placeholder="Lösenord" required>
+              <label for="current_password">Nuvarande Lösenord</label>
+            </div>
+          </div>
+          <?= displayError('current_password') ?>
+        </div>
+        <div class="mt-3 col-sm">
+          <div class=" input-group flex-nowrap input-group-lg">
+            <span class="input-group-text bg-dark border-custom border-end-0">
+              <i class="bi bi-lock-fill text-white"></i>
+            </span>
+            <div class="form-floating w-100 me-auto">
+              <input type="password" class="form-control rounded-0 border-custom rounded-end overlay1 border-start-0 <?= isInvalidLogin('password') ? 'is-invalid' : null ?>" name="password" placeholder="Lösenord" required>
+              <label for="password">Lösenord</label>
+            </div>
+          </div>
           <?= displayError('password') ?>
-        </span>
-      </div>
-      <div class="mb-3 col-sm h-25">
-        <label for="password">
-          <h4>Nytt Lösenord</h4>
-        </label>
-        <span class="input-group col-sm-6">
-          <span class="input-group-text">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
-              <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
-            </svg></span>
-          <input type="password" class="form-control <?= isInvalidLogin('password') ? 'is-invalid' : null  ?>" name="password" placeholder="Nytt Lösenord">
-          <?= displayError('password') ?>
-        </span>
-      </div>
-      <div class="mb-3 col-sm h-25">
-        <label for="confirm_password">
-          <h4>Bekräfta Lösenord</h4>
-        </label>
-        <span class="input-group col-sm-6">
-          <span class="input-group-text">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
-              <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
-            </svg></span>
-          <input type="passowrd" class="form-control <?= isInvalidLogin('password') ? 'is-invalid' : null  ?>" name="confirm_password" placeholder="Bekräfta Lösenord">
+        </div>
+        <div class="mt-3 col-sm">
+          <div class=" input-group flex-nowrap input-group-lg">
+            <span class="input-group-text bg-dark border-custom border-end-0">
+              <i class="bi bi-lock-fill text-white"></i>
+            </span>
+            <div class="form-floating w-100 me-auto">
+              <input type="password" class="form-control rounded-0 border-custom rounded-end overlay1 border-start-0 <?= isInvalidLogin('confirm_password') ? 'is-invalid' : null ?>" name="confirm_password" placeholder="Lösenord" required>
+              <label for="confirm_password">Bekräfta Lösenord</label>
+            </div>
+          </div>
           <?= displayError('confirm_password') ?>
-        </span>
+        </div>
       </div>
     </div>
   </div>
-  <div class="d-grid gap-2 col-6 mx-auto">
-    <button type="submit" class="btn btn-primary-custom rounded-pill btn-lg mt-3 mb-4">Spara</button>
+  <div class="my-5 ms-auto w-100 d-flex justify-content-around">
+    <button type="submit" class="btn btn-outline-success btn-lg rounded-pill w-25">Spara</button>
+    <button type="reset" class="btn btn-outline-danger rounded-pill w-25">Återställ</button>
   </div>
 </form>
 
+
+<script>
+  var forms = document.querySelectorAll('.needs-validation');
+
+  Array.prototype.slice.call(forms).forEach(function(form) {
+    form.addEventListener('submit', function(event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation();
+      }
+
+      form.classList.add('was-validated');
+    }, false);
+  });
+</script>
 <?= $this->endSection() ?>

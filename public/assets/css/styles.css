@@ -2,12 +2,12 @@
 
 body {
   font-family: "Roboto", sans-serif;
-  background: radial-gradient(ellipse at center, #101d44, #060a14 75%) no-repeat;
-  /* background: radial-gradient(ellipse at center, #333333, #000000 75%) no-repeat; */
+  background-color: #121212;
   background-attachment: fixed;
-  /* color: white; */
+  margin: 0;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
-  width: 100vw;
 }
 
 .brand {
@@ -19,109 +19,200 @@ body {
   width: 75%;
 }
 
-.login_form {
-  border: 1px solid white;
-  border-radius: 20px;
-  color: white;
+.border-custom {
+  border-color: #6c757d;
 }
 
-.login_form > form {
-  color: black;
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: white;
+  box-shadow: 0 0 0px 1000px rgb(26, 26, 26) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.overlay1 {
+  background-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+input {
+  background-color: #212529 !important;
+  color: white !important;
 }
 
 .active {
-  background-color: #720c13;
-  box-shadow: 0px 0px 0px 2px white inset;
+  background-color: #1d1d1d;
+  box-shadow: 0px 0px 0px 2px #0dcaf0 inset;
   border-radius: 10px;
+  margin-left: 0;
+  padding-left: 0;
 }
 
-.bg-red {
-  background-color: #92140c;
-  /* background-color: #3f7cac; */
-  /* background-color: #011640; */
-  /* background-color: #ba0600; */
-  /* background-color: #bb000e; */
+.navbar-custom {
+  box-shadow: 0 4px 15px 5px black;
+  background-color: #292929;
 }
 
-.account-page {
-  border-radius: 10px;
+.menu-bg {
+  background-color: #292929;
 }
+
+/* ==================================== */
+/*          Account Page                */
+/* ==================================== */
 
 .account-nav,
 .account-nav > ul {
-  border-radius: 10px 0 0 10px;
-  list-style-type: none;
+  margin: 0;
   padding: 0;
 }
 
-.account-nav > ul > li:first-child {
-  border-top-left-radius: 10px;
-}
-
-.account-nav > ul > li:last-child {
-  border-bottom-left-radius: 10px;
-}
-
-.account-nav > ul > li > a {
-  text-decoration: none;
+.account-nav > hr {
   color: white;
 }
 
 .account-nav > ul > li:hover {
   border-radius: 0;
   cursor: pointer;
-  background-color: #720c13;
+  background-color: #1d1d1d;
 }
 
 .account-nav > ul > li.active {
   border-radius: 0;
   box-shadow: none;
-  background-color: #720c13;
-}
-
-.account-nav > ul > li:first-child:hover,
-.account-nav > ul > li:first-child.active {
-  border-top-left-radius: 10px;
-}
-
-.account-nav > ul > li:last-of-type:hover,
-.account-nav > ul > li:last-of-type.active {
-  border-bottom-left-radius: 10px;
+  background-color: #1d1d1d;
 }
 
 .account-nav > ul > hr {
   width: 90%;
 }
 
-.account-page-content {
-  /* background-color: rgba(187, 0, 14, 0.3); */
-  border: 1px solid #92140c;
-  /* background-color: rgba(0, 0, 0, 0.4); */
-  /* background-color: rgba(255, 255, 255, 0.5); */
-  /* background-color: #24373c; */
-  background-color: #143760;
+/* ==================================== */
+/*                Footer                */
+/* ==================================== */
+
+footer {
+  background-color: #000000;
+  /* background-color: #20222a; */
+  margin-top: auto;
 }
 
-.btn-primary-custom {
-  background-color: #fc791e;
+.footer-list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+}
+
+.footer-list > li > a {
+  text-decoration: none;
   color: white;
 }
 
-.btn-primary-custom:hover {
-  background-color: #c46019;
-  color: white;
+.footer-list > li > a:hover {
+  color: red;
 }
 
-.btn-secondary-custom {
-  background-color: #0303e0;
-  color: white;
+/* ==================================== */
+/*              Cart Rules              */
+/* ==================================== */
+
+.main_cart {
+  background: #fff;
 }
 
-.btn-secondary-custom:hover {
-  background-color: #0101b3;
-  color: white;
+.card {
+  border: none;
 }
 
-.edit-profile {
+.product_name {
+  color: black;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.card-title p {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.price-money h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.set_quantity {
+  position: relative;
+}
+
+.page-link-custom {
+  line-height: 16px;
+  width: 45px;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background-color: #212529;
+}
+.page-item-custom input {
+  line-height: 22px;
+  padding: 3px;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* ==================================== */
+/*          Custom Pagination           */
+/* ==================================== */
+
+.pagination > li > a {
+  background-color: #292929;
   color: white;
+  border-color: #6c757d;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+  color: white;
+  background-color: #424547;
+  border-color: #b1b3b4 !important;
+}
+
+.pagination > .active > a {
+  color: white;
+  background-color: #111111 !important;
+  border: solid 1px #6c757d !important;
+}
+
+.page-item.disabled > a {
+  background-color: #292929 !important;
+  border-color: #6c757d !important;
+}
+
+/* ==================================== */
+/*             Cart Counter             */
+/* ==================================== */
+
+.cart-wrapper {
+  position: relative;
+  margin-right: 16px;
+}
+.cart-badge {
+  position: absolute;
+  top: -10px;
+  right: -12px;
 }
