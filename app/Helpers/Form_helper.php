@@ -13,12 +13,21 @@ function displayError(string $field)
   if (!empty($_POST)) {
     $validation = \Config\Services::validation();
     if ($validation->hasError($field)) {
-      return '<div class="mt-1 text-danger text-start">' .
+      return '<div class="mt-1 alert alert-danger atext-danger aposition-absolute text-start">' .
         $validation->getError($field) . '</div>';
       // return '<div class="invalid-feedback text-dark bg-danger text-start ps-1">' .
       //   $validation->getError($field) . '</div>';
     }
     return;
+  }
+}
+
+function getError($field)
+{
+  if (!empty($_POST)) {
+    $validation = \Config\Services::validation();
+    if ($validation->hasError($field))
+      return $validation->getError($field);
   }
 }
 

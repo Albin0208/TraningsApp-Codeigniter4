@@ -3,6 +3,8 @@
 namespace App\Validation;
 
 use App\Models\UserModel;
+use CodeIgniter\I18n\Time;
+use DateTime;
 
 class UserRules
 {
@@ -35,12 +37,24 @@ class UserRules
    * @param  Array $data
    * @return Bool Om lösenordet matchar användares lösenord
    */
-  public function matchesUser(string $str, string $fields, array $data)
+  public function matchesUser(string $str, string $fields, array $data):bool
   {
     $model = new UserModel();
 
     $user = $model->where('id', $data['id'])->first();
 
     return password_verify($data['current_password'], $user['password']);
+  }
+
+  public function valid_expiration_date(string $str, string $fields, array $data)
+  {
+    $myTime = Time::today();
+    // $myTime = Time::createFromFormat('m/y', $myTime);
+    $date = Time::createFromFormat('n/y', $str);
+    echo $myTime . ' | '. $date;
+    // $passedTime = $str;
+    // $passedTime = Time::parse($str);
+    // return $date->isAfter($myTime);
+    return $myTime->isBefore($date);
   }
 }

@@ -36,17 +36,13 @@ class User extends Controller
           'lastname' => $this->request->getPost('lastname'),
           'username' => $this->request->getPost('username')
         ];
-        $validationRules = $validation->getRuleGroup('updateUser');
 
-        //Om användaren vill ändra lösenord så ska det valideras
+        //Om användaren vill ändra lösenord
         if ($this->request->getPost('current_password') && $this->request->getPost('password')) {
           $newData['password'] = $this->request->getPost('password');
-          //Lägg ihop valideringsreglerna för validering i userModel
-          $validationRules = array_merge($validationRules, $validation->getRuleGroup('updateUserPassword'));
         }
 
-        $model->setValidationRules($validationRules);
-        if ($model->save($newData) == false)
+        if ($model->update($newData['id'], $newData) == false)
           return view('errors/errors', ['errors/errors' => $model->errors(), 'data' => $newData]);
 
         session()->setFlashData('success', 'Lyckad uppdatering');
@@ -57,7 +53,6 @@ class User extends Controller
       unset($data['id']);
     }
 
-    // $data['user'] = $model->where('customer_id', session()->get('id'))->first();
     $data['user'] = $model->getUser(session()->get('id'));
     return view('userLayouts/userProfile', $data);
   }

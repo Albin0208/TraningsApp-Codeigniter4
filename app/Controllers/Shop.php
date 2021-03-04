@@ -35,6 +35,7 @@ class Shop extends Controller
     $model = new ShopModel();
 
     $data['product'] =  $model->getProduct($slug);
+    $data['title'] =  'Elit-Träning | ' .$data['product']['name'];
 
     return view('shop/single_product', $data);
   }
@@ -48,10 +49,11 @@ class Shop extends Controller
     $model = new ShopModel();
 
     $product = $model->where('product_id', $id)->first();
-    $product['qty'] = $qty;
+    //Om antalet inte finns så ska en vara läggas till
+    $product['qty'] = $qty ?? 1;
 
     $cart->insert($product);
 
-    return redirect()->to(previous_url());
+    return redirect()->back()->with('cartSuccess', 'Varan är tillagd i varukorgen');
   }
 }

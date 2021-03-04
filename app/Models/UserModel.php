@@ -9,7 +9,7 @@ class UserModel extends Model
     protected $table      = 'customers';
     protected $primaryKey = 'customer_id';
     protected $allowedFields = ['firstname', 'lastname', 'username', 'password', 'phone', 'email', 'address', 'city', 'zip_code', 'updated_at'];
-    protected $useTimeStaps = true;
+    protected $useTimestamps = true;
 
     protected $beforeInsert = ['beforeInsert'];
     protected $beforeUpdate = ['beforeUpdate'];
@@ -38,13 +38,11 @@ class UserModel extends Model
         return $data;
     }
 
-    public function getUser($search = null)
+    public function getUser($search)
     {
         if (is_numeric($search))
-            $user = $this->find($search);
-        else
-            $user = $this->where('email', $search)->first();
+            return $this->find($search);
 
-        return $user;
+        return $this->where('email', $search, true)->first();
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\OrderItemModel;
+use App\Models\OrderModel;
 use App\Models\UserModel;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Controller;
@@ -28,6 +30,7 @@ class Cart extends Controller
   public function checkout()
   {
     $cart = \Config\Services::cart();
+    session()->setFlashdata('redirect', 'cart/checkout');
 
     $data = [
       'title' => 'Elit-Träning | Kassa',
@@ -37,9 +40,31 @@ class Cart extends Controller
     if ($this->request->getMethod() == 'post') {
       $validation = \Config\Services::validation();
       if ($validation->run($_POST, 'checkout')) {
-
         //TODO Skapa checkout validation
 
+        // $order = new OrderModel();
+        // $orderItem = new OrderItemModel();
+        // $cart = \Config\Services::cart();
+
+        // //TODO Lägg till faktura info
+        // $orderData = [
+        //   'customer_id' => session()->get('id') ?? null,
+        //   'order_price' => $cart->total()
+        // ];
+
+        // $id = $order->insert($orderData);
+
+        // foreach ($cart->contents() as $item) {
+        //   $orderData = [
+        //     'order_id' => $id,
+        //     'product_id' => $item['product_id'],
+        //     'quantity' => $item['qty']
+        //   ];
+
+        //   $orderItem->insert($orderData);
+        // }
+        // //TODO Skicka orderbekräftelse på mail
+        // $cart->destroy();
         return redirect()->to('/cart/order');
       } else {
         $data['validation'] = $validation;
@@ -62,6 +87,8 @@ class Cart extends Controller
       'title' => 'Elit-Träning | Order',
     ];
 
+    //TODO Visa en orderbekräftelse
+
     return view('orderConfirm', $data);
   }
 
@@ -76,32 +103,19 @@ class Cart extends Controller
         case 'delete':
           $rowid = $this->request->getPost('rowid');
           $cart->remove($rowid);
-          return redirect()->to(previous_url());
+          return redirect()->back();
           break;
 
         case 'increase':
           $rowid = $this->request->getPost('rowid');
           $cart->increase($rowid);
-          return redirect()->to(previous_url());
+          return redirect()->back();
           break;
 
         case 'decrease':
           $rowid = $this->request->getPost('rowid');
           $cart->decrease($rowid);
-          return redirect()->to(previous_url());
-          break;
-
-        case 'discount':
-          $validation = \Config\Services::validation();
-
-          $validation->setRule('discount_code', 'discount', 'validDiscount[discount_code]');
-
-          if ($validation->run($_POST)) {
-            $cart->setDiscountCode($this->request->getPost('discount_code'));
-            return redirect()->to(previous_url());
-          } else {
-            $data['validation'] = $validation;
-          }
+          return redirect()->back();
           break;
       }
     }

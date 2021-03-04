@@ -98,7 +98,7 @@ class Validation
 			]
 		],
 		'username' => [
-			'rules' => 'required|alpha_numeric|is_unique[users.username]',
+			'rules' => 'required|alpha_numeric|is_unique[customers.username]',
 			'label' => 'Användarnamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -126,7 +126,7 @@ class Validation
 			]
 		],
 		'username' => [
-			'rules' => 'required|alpha_numeric|is_unique[users.username,id,{id}]',
+			'rules' => 'required|alpha_numeric|is_unique[customers.username,customer_id,{id}]',
 			'label' => 'Användarnamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -158,6 +158,101 @@ class Validation
 			'label' => 'Bekräfta lösenord',
 			'errors' => [
 				'matches' => '{field} matchar inte lösenordet',
+			]
+		],
+	];
+
+	public $checkout = [
+		'email' => [
+			'rules' => 'required|valid_email',
+			'label' => 'Email',
+			'errors' => [
+				'required' => '{field} fältet får inte vara tomt',
+				'valid_email' => '{field} fältet måste vara en giltig email adress'
+			]
+		],
+		'firstname' => [
+			'rules' => 'required|regex_match[[a-z]|å|ä|ö[A-Z]|Å|Ä|Ö]',
+			'label' => 'Förnamn',
+			'errors' => [
+				'required' => '{field}s fältet får inte vara tomt',
+				'regex_match' => '{field}et får bara innehålla bokstäver',
+			]
+		],
+		'lastname' => [
+			'rules' => 'required|regex_match[[a-z]|å|ä|ö[A-Z]|Å|Ä|Ö]',
+			'label' => 'Efternamn',
+			'errors' => [
+				'required' => '{field}s fältet får inte vara tomt',
+				'regex_match' => '{field}et får bara innehålla bokstäver',
+			]
+		],
+		'zipCode' => [
+			'rules' => 'required|numeric|exact_length[5]',
+			'label' => 'Postnummer',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'numeric' => 'Fältet får bara innehålla siffror',
+				'exact_length' => 'Fältet måste vara 5 siffror långt',
+			]
+		],
+		'socialNumber' => [
+			'rules' => 'required|numeric|exact_length[10]',
+			'label' => 'Personnummer',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'numeric' => 'Fältet får bara innehålla siffror',
+				'exact_length' => 'Fältet måste vara {param} siffror långt',
+			]
+		],
+		'address' => [
+			'rules' => 'required|alpha_numeric_space',
+			'label' => 'Adress',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'alpha_numeric_space' => 'Fältet får innehålla bokstäver, mellanslag och siffror'
+			]
+		],
+		'city' => [
+			'rules' => 'required|alpha_space',
+			'label' => 'Stad',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'alpha_space' => 'Fältet får bara innehålla bokstäver och mellanslag'
+			]
+		],
+		'phone' => [
+			'rules' => 'required|numeric|min_length[7]|max_length[13]',
+			'label' => 'Telefonnummer',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'numeric' => 'Fältet får bara innehålla siffror',
+				'min_length' => 'Fältet måste innehålla minst {param} siffror',
+				'max_length' => 'Fältet får innehålla max {param} siffror'
+			]
+		],
+		'cardNumber' => [
+			'rules' => 'required|valid_cc_number[mastercard]|valid_cc_number[visa]|valid_cc_number[maestro]',
+			'label' => 'Kortnummer',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'valid_cc_number' => 'Ange antingen ett mastercard, visa eller maestro'
+			]
+		],
+		'expiration' => [
+			'rules' => 'required|valid_expiration_date[expiration]',
+			'label' => '',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'valid_expiration_date' => 'Ogiltigt utgångsdatum'
+			]
+		],
+		'cvc' => [
+			'rules' => 'required|numeric|exact_length[3]',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'numeric' => 'Fältet får bara innehålla siffror',
+				'exact_length' => 'Fältet måste vara exakt {param} siffror'
 			]
 		],
 	];
