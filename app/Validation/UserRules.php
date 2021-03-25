@@ -4,7 +4,7 @@ namespace App\Validation;
 
 use App\Models\UserModel;
 use CodeIgniter\I18n\Time;
-use DateTime;
+use CodeIgniter\Validation\CreditCardRules;
 
 class UserRules
 {
@@ -37,7 +37,7 @@ class UserRules
    * @param  Array $data
    * @return Bool Om lösenordet matchar användares lösenord
    */
-  public function matchesUser(string $str, string $fields, array $data):bool
+  public function matchesUser(string $str, string $fields, array $data)
   {
     $model = new UserModel();
 
@@ -48,13 +48,32 @@ class UserRules
 
   public function valid_expiration_date(string $str, string $fields, array $data)
   {
+    $month = substr($str, 0,2);
+    $year = substr($str, 3, 2);
+    
+    if (!checkdate($month, 1, $year))
+    return false;
+    
     $myTime = Time::today();
-    // $myTime = Time::createFromFormat('m/y', $myTime);
-    $date = Time::createFromFormat('n/y', $str);
-    echo $myTime . ' | '. $date;
-    // $passedTime = $str;
-    // $passedTime = Time::parse($str);
-    // return $date->isAfter($myTime);
+    $date = Time::createFromFormat('m/y', $str);
+
     return $myTime->isBefore($date);
+  }
+
+  public function cleanString(string &$str =null, string $fields, array $data)
+  {
+    $str = preg_replace('/[^a-z|å|ä|ö\d]/i', '', $str);
+  }
+
+  public function validateCard(string $str, string $fields, array $data)
+  {
+    $cards = ['mastercard', 'visa', 'maestro'];
+    $cardRules = new CreditCardRules();
+    
+    foreach ($cards as $card) {
+      if ($cardRules->valid_cc_number($str, $card))
+        return true;
+    }
+    return false;
   }
 }

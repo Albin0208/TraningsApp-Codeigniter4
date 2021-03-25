@@ -13,6 +13,7 @@ class Filters extends BaseConfig
 		'toolbar'  => \CodeIgniter\Filters\DebugToolbar::class,
 		'honeypot' => \CodeIgniter\Filters\Honeypot::class,
 		'auth' 		 => \App\Filters\AuthFIlter::class,
+		'order' 		 => \App\Filters\OrderConfirmFilter::class,
 	];
 
 	// Always applied before every request
@@ -36,6 +37,7 @@ class Filters extends BaseConfig
 	// that they should run on, like:
 	//    'isLoggedIn' => ['before' => ['account/*', 'profiles/*']],
 	public $filters = [
-		'auth' => ['before' => ['user/*', 'user']]
+		'auth' => ['before' => ['user/*', 'user']],
+		'order' => ['before' => ['cart/orderConfirm']]
 	];
 }

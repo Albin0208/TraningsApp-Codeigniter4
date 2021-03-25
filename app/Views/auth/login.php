@@ -5,7 +5,7 @@
   <div class="card-body">
     <h1 class="card-title">Logga in</h1>
     <hr>
-    <?php if (session()->get('success')) : ?>
+    <?php if (session()->has('success')) : ?>
     <div class="alert alert-success col-sm-10 ms-auto me-auto">
       <?= session()->get('success') ?>
     </div>

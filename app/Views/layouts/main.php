@@ -79,10 +79,10 @@
               <a href="/terms-and-conditions">Allmänna villkor</a>
             </li>
             <li>
-              <a href="mailto:">Maila oss</a>
+              <a href="mailto:elitTraning@gmail.com" target="_blank">Maila oss</a>
             </li>
             <li>
-              <a href="tel:+">0712 34 56 78</a>
+              <a href="tel:+" target="_blank">0712 34 56 78</a>
             </li>
           </ul>
         </div>

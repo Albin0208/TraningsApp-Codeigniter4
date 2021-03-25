@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Models\OrderItemModel;
 use App\Models\OrderModel;
 use App\Models\UserModel;
-use CodeIgniter\Config\Config;
 use CodeIgniter\Controller;
 
 class Cart extends Controller
@@ -40,32 +39,41 @@ class Cart extends Controller
     if ($this->request->getMethod() == 'post') {
       $validation = \Config\Services::validation();
       if ($validation->run($_POST, 'checkout')) {
-        //TODO Skapa checkout validation
 
-        // $order = new OrderModel();
-        // $orderItem = new OrderItemModel();
-        // $cart = \Config\Services::cart();
+        $order = new OrderModel();
+        $orderItem = new OrderItemModel();
+        $cart = \Config\Services::cart();
 
-        // //TODO Lägg till faktura info
-        // $orderData = [
-        //   'customer_id' => session()->get('id') ?? null,
-        //   'order_price' => $cart->total()
-        // ];
+        $orderData = [
+          'customer_id' => session()->get('id') ?? null,
+          'email' => $this->request->getPost('email'),
+          'firstname' => $this->request->getPost('firstname'),
+          'lastname' => $this->request->getPost('lastname'),
+          'address' => $this->request->getPost('address'),
+          'zip_code' => $this->request->getPost('zipCode'),
+          'city' => $this->request->getPost('city'),
+          'phone' => $this->request->getPost('phone'),
+          'order_price' => $cart->total()
+        ];
 
-        // $id = $order->insert($orderData);
+        $id = $order->insert($orderData);
 
-        // foreach ($cart->contents() as $item) {
-        //   $orderData = [
-        //     'order_id' => $id,
-        //     'product_id' => $item['product_id'],
-        //     'quantity' => $item['qty']
-        //   ];
+        foreach ($cart->contents() as $item) {
+          $orderData = [
+            'order_id' => $id,
+            'product_id' => $item['product_id'],
+            'quantity' => $item['qty'],
+            'item_price' => $item['price']
+          ];
 
-        //   $orderItem->insert($orderData);
+          $orderItem->insert($orderData);
+        }
+        
+        // if ($this->sendMail()) {
+        //   $cart->destroy();
+          session()->setFlashData('orderPlaced', true);
+          return redirect()->to('/cart/orderConfirm')->with('orderId', $id);
         // }
-        // //TODO Skicka orderbekräftelse på mail
-        // $cart->destroy();
-        return redirect()->to('/cart/order');
       } else {
         $data['validation'] = $validation;
       }
@@ -81,13 +89,21 @@ class Cart extends Controller
     return view('checkout', $data);
   }
 
-  public function order()
+  public function orderConfirm()
   {
-    $data = [
-      'title' => 'Elit-Träning | Order',
-    ];
+    $orderModel = new OrderModel();
+    $itemModel = new OrderItemModel();
 
-    //TODO Visa en orderbekräftelse
+    $order = $orderModel->find(session()->get('orderId'));
+    $items = $itemModel->where('order_id', $order['order_id'])->findAll();
+    
+    $data = [
+      'title' => 'Din order är slutförd',
+      'email' => $order['email'],
+      'orderId' => $order['order_id'],
+      'orderPrice' => $order['order_price'],
+      'orderItems' => $items,
+    ];
 
     return view('orderConfirm', $data);
   }
@@ -119,5 +135,27 @@ class Cart extends Controller
           break;
       }
     }
+  }
+
+  private function sendMail()
+  {
+    $data = [
+      'cart' => \Config\Services::cart(),
+      'email' => $this->request->getPost('email'),
+      'firstname' => $this->request->getPost('firstname'),
+      'lastname' => $this->request->getPost('lastname'),
+      'address' => $this->request->getPost('address'),
+      'zipCode' => $this->request->getPost('zipCode'),
+      'city' => $this->request->getPost('city'),
+      'phone' => $this->request->getPost('phone'),
+    ];
+
+    $email = \Config\Services::email();
+    $message = view('emails/orderConfirmEmail', $data);
+    $email->setTo($this->request->getPost('email'));
+    $email->setSubject('Din Elit-Träning order är nu slutförd');
+    $email->setMessage($message);
+
+    return $email->send();
   }
 }

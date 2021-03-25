@@ -62,7 +62,7 @@ class Validation
 			'label' => 'Email',
 			'errors' => [
 				'required' => '{field} fältet får inte vara tomt',
-				'valid_email' => '{field} fältet måste vara en giltig email adress',
+				'valid_email' => '{field} fältet måste vara en giltig emailadress',
 				'is_unique' => '{field} adressen är upptagen'
 			]
 		],
@@ -82,7 +82,7 @@ class Validation
 			]
 		],
 		'firstname' => [
-			'rules' => 'required|regex_match[[a-z]|å|ä|ö[A-Z]|Å|Ä|Ö]',
+			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö]+$/i]',
 			'label' => 'Förnamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -90,7 +90,7 @@ class Validation
 			]
 		],
 		'lastname' => [
-			'rules' => 'required|regex_match[[a-z]|å|ä|ö[A-Z]|Å|Ä|Ö]',
+			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö]+$/i]',
 			'label' => 'Efternamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -98,11 +98,11 @@ class Validation
 			]
 		],
 		'username' => [
-			'rules' => 'required|alpha_numeric|is_unique[customers.username]',
+			'rules' => 'required|regex_match[/^[A-Z0-9åäöÅÄÖ]+$/i]|is_unique[customers.username]',
 			'label' => 'Användarnamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
-				'alpha_numeric' => '{field}et får bara innehålla bokstäver och siffror',
+				'regex_match' => '{field}et får bara innehålla bokstäver och siffror',
 				'is_unique' => '{field}et är upptaget'
 			]
 		],
@@ -110,7 +110,7 @@ class Validation
 
 	public $updateUser =   [
 		'firstname' => [
-			'rules' => 'required|regex_match[[a-z]|å|ä|ö[A-Z]|Å|Ä|Ö]',
+			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö]+$/i]',
 			'label' => 'Förnamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -118,7 +118,7 @@ class Validation
 			]
 		],
 		'lastname' => [
-			'rules' => 'required|regex_match[[a-z]|å|ä|ö[A-Z]|Å|Ä|Ö]',
+			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö]+$/i]',
 			'label' => 'Efternamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -126,11 +126,11 @@ class Validation
 			]
 		],
 		'username' => [
-			'rules' => 'required|alpha_numeric|is_unique[customers.username,customer_id,{id}]',
+			'rules' => 'required|regex_match[/^[A-Z0-9åäöÅÄÖ]+$/i]|is_unique[customers.username,customer_id,{id}]',
 			'label' => 'Användarnamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
-				'alpha_numeric' => '{field}et får bara innehålla bokstäver och siffror',
+				'regex_match' => '{field}et får bara innehålla bokstäver och siffror',
 				'is_unique' => '{field}et är upptaget'
 			]
 		],
@@ -172,7 +172,7 @@ class Validation
 			]
 		],
 		'firstname' => [
-			'rules' => 'required|regex_match[[a-z]|å|ä|ö[A-Z]|Å|Ä|Ö]',
+			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö]+$/i]',
 			'label' => 'Förnamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -180,7 +180,7 @@ class Validation
 			]
 		],
 		'lastname' => [
-			'rules' => 'required|regex_match[[a-z]|å|ä|ö[A-Z]|Å|Ä|Ö]',
+			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö]+$/i]',
 			'label' => 'Efternamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -188,7 +188,7 @@ class Validation
 			]
 		],
 		'zipCode' => [
-			'rules' => 'required|numeric|exact_length[5]',
+			'rules' => 'cleanString[zipCode]|required|numeric|exact_length[5]',
 			'label' => 'Postnummer',
 			'errors' => [
 				'required' => 'Fältet får inte vara tomt',
@@ -197,7 +197,7 @@ class Validation
 			]
 		],
 		'socialNumber' => [
-			'rules' => 'required|numeric|exact_length[10]',
+			'rules' => 'cleanString[socialNumber]|required|numeric|exact_length[10]',
 			'label' => 'Personnummer',
 			'errors' => [
 				'required' => 'Fältet får inte vara tomt',
@@ -206,19 +206,19 @@ class Validation
 			]
 		],
 		'address' => [
-			'rules' => 'required|alpha_numeric_space',
+			'rules' => 'cleanString[address]|required|regex_match[[a-z]|å|ä|ö ]/i',
 			'label' => 'Adress',
 			'errors' => [
 				'required' => 'Fältet får inte vara tomt',
-				'alpha_numeric_space' => 'Fältet får innehålla bokstäver, mellanslag och siffror'
+				'regex_match' => 'Fältet får innehålla bokstäver, mellanslag och siffror'
 			]
 		],
 		'city' => [
-			'rules' => 'required|alpha_space',
+			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö ]+$/i]',
 			'label' => 'Stad',
 			'errors' => [
 				'required' => 'Fältet får inte vara tomt',
-				'alpha_space' => 'Fältet får bara innehålla bokstäver och mellanslag'
+				'regex_match' => 'Fältet får bara innehålla bokstäver och mellanslag'
 			]
 		],
 		'phone' => [
@@ -232,11 +232,11 @@ class Validation
 			]
 		],
 		'cardNumber' => [
-			'rules' => 'required|valid_cc_number[mastercard]|valid_cc_number[visa]|valid_cc_number[maestro]',
+			'rules' => 'required|validateCard[cardNumber]',
 			'label' => 'Kortnummer',
 			'errors' => [
 				'required' => 'Fältet får inte vara tomt',
-				'valid_cc_number' => 'Ange antingen ett mastercard, visa eller maestro'
+				'validateCard' => 'Ange antingen ett mastercard, visa eller maestro'
 			]
 		],
 		'expiration' => [

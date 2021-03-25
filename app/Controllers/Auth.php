@@ -36,16 +36,12 @@ class Auth extends Controller
           'email' => $this->request->getPost('email'),
           'username' => $this->request->getPost('username'),
           'password' => $this->request->getPost('password'),
-          'confirm_password' => $this->request->getPost('confirm_password'),
         ];
-        $model->setValidationRules($validation->getRuleGroup('register'));
+
         if ($model->save($newData) == false)
-          return view('errors/errors', ['errors/errors' => $model->errors(), 'data' => $newData]);
+          return redirect()->back()->with('error', 'Något gick fel vid registreringen, vänligen försök igen');
 
-        $session = session();
-        $session->setFlashdata('success', 'Lyckad registrering');
-
-        return redirect()->to("/login");
+        return redirect()->to("/login")->with('success', 'Lyckad registrering');
       } else {
         $data['validation'] = $validation;
       }

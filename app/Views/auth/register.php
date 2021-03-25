@@ -5,6 +5,11 @@
   <div class="card-body">
     <h1 class="card-title">Bli medlem</h1>
     <hr>
+    <?php if (session()->has('error')) : ?>
+    <div class="alert alert-danger col-sm-10 ms-auto me-auto">
+      <?= session()->get('error') ?>
+    </div>
+    <?php endif; ?>
     <?= form_open(base_url() . '/register', 'data-parsley-validate') ?>
     <div class="col-md">
       <div class="row gx-2 mt-3">
