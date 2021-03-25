@@ -22,7 +22,7 @@ class Shop extends Controller
       'cart' => session()->get('cart_contents')
     ];
 
-    return view('shop/shop', $data);
+    return view('layouts/shop/shop', $data);
   }
 
   public function product($slug = null)
@@ -37,7 +37,7 @@ class Shop extends Controller
     $data['product'] =  $model->getProduct($slug);
     $data['title'] =  'Elit-Träning | ' .$data['product']['name'];
 
-    return view('shop/single_product', $data);
+    return view('layouts/shop/single_product', $data);
   }
 
   public function addToCart()

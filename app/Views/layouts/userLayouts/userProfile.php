@@ -1,4 +1,4 @@
-<?= $this->extend("userAccount") ?>
+<?= $this->extend("layouts/userLayouts/userAccount") ?>
 <?= $this->section('userPage') ?>
 
 <?php if (session()->get('success')) : ?>
@@ -121,19 +121,4 @@
 </div>
 <?= form_close() ?>
 
-
-<script>
-var forms = document.querySelectorAll('.needs-validation');
-
-Array.prototype.slice.call(forms).forEach(function(form) {
-  form.addEventListener('submit', function(event) {
-    if (!form.checkValidity()) {
-      event.preventDefault()
-      event.stopPropagation();
-    }
-
-    form.classList.add('was-validated');
-  }, false);
-});
-</script>
 <?= $this->endSection() ?>

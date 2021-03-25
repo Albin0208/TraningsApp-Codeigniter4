@@ -2,7 +2,7 @@
 <?= $this->section("content") ?>
 <div class="row bg-dark m-0 shadow rounded">
   <div class="col-lg-2 menu-bg p-0 rounded-start">
-    <?= $this->include('./layouts/templates/sortbar') ?>
+    <?= $this->include('./templates/sortbar') ?>
   </div>
   <div class="col-12 col-lg-10">
     <div class="<?= session()->has('cartSuccess') ? 'd-block' : 'd-none' ?> alert alert-success mt-1 text-center">

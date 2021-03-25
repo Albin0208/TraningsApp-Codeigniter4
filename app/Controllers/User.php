@@ -54,7 +54,7 @@ class User extends Controller
     }
 
     $data['user'] = $model->getUser(session()->get('id'));
-    return view('userLayouts/userProfile', $data);
+    return view('layouts/userLayouts/userProfile', $data);
   }
 
   public function orders()
@@ -63,7 +63,7 @@ class User extends Controller
       'title' => 'Elit-Träning | Beställningar'
     ];
 
-    return view('userLayouts/userOrders', $data);
+    return view('layouts/userLayouts/userOrders', $data);
   }
 
   public function programs()
@@ -72,6 +72,6 @@ class User extends Controller
       'title' => 'Elit-Träning | Mina program'
     ];
 
-    return view('userLayouts/userPrograms', $data);
+    return view('layouts/userLayouts/userPrograms', $data);
   }
 }

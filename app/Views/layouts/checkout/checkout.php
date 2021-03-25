@@ -9,7 +9,7 @@
       <!-- Card -->
       <div class="card mb-3 bg-dark text-white">
         <div class="card-body">
-          <?= $this->include('/layouts/templates/checkout/shipping') ?>
+          <?= $this->include('/layouts/checkout/shipping') ?>
         </div>
       </div>
       <!-- Card -->

@@ -23,7 +23,7 @@ class Cart extends Controller
       'cart' => $cart,
     ];
 
-    return view('cart', $data);
+    return view('layouts/checkout/cart', $data);
   }
 
   public function checkout()
@@ -86,7 +86,7 @@ class Cart extends Controller
       }
     }
 
-    return view('checkout', $data);
+    return view('layouts/checkout/checkout', $data);
   }
 
   public function orderConfirm()
@@ -105,7 +105,7 @@ class Cart extends Controller
       'orderItems' => $items,
     ];
 
-    return view('orderConfirm', $data);
+    return view('layouts/checkout/orderConfirm', $data);
   }
 
   public function editCart()

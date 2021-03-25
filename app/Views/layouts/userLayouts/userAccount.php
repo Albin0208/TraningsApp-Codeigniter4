@@ -2,7 +2,7 @@
 <?= $this->section("content") ?>
 <div class="row account-page m-0 bg-dark shadow">
   <div class="col-lg-2 menu-bg p-0">
-    <?= $this->include('./layouts/templates/sidebar') ?>
+    <?= $this->include('./templates/sidebar') ?>
   </div>
   <div class="col-lg-10 col-sm-12 pt-2 account-page">
     <div class="d-flex">
