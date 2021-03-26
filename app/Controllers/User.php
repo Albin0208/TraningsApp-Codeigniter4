@@ -2,8 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Models\OrderModel;
 use App\Models\UserModel;
 use CodeIgniter\Controller;
+use CodeIgniter\I18n\Time;
 
 class User extends Controller
 {
@@ -16,6 +18,7 @@ class User extends Controller
   {
     $data = [
       'title' => 'Elit-Träning | Mitt Konto',
+      'pageTitle' => 'Min Profil'
     ];
 
     $model = new UserModel();
@@ -59,17 +62,29 @@ class User extends Controller
 
   public function orders()
   {
+    $model = new OrderModel();
+
     $data = [
-      'title' => 'Elit-Träning | Beställningar'
+      'title' => 'Elit-Träning | Beställningar',
+      'orders' => $model->where('customer_id', 1)->orderBy('created_at', 'DESC')->paginate(10, 'group'),
+      'pager' => $model->pager,
+      'time' => new Time(),
+      'pageTitle' => 'Mina Beställningar'
     ];
 
     return view('layouts/userLayouts/userOrders', $data);
   }
 
+  public function order(int $orderId)
+  {
+    
+  }
+
   public function programs()
   {
     $data = [
-      'title' => 'Elit-Träning | Mina program'
+      'title' => 'Elit-Träning | Mina program',
+      'pageTitle' => 'Mina Program'
     ];
 
     return view('layouts/userLayouts/userPrograms', $data);

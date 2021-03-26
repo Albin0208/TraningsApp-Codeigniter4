@@ -53,7 +53,8 @@ class Cart extends Controller
           'zip_code' => $this->request->getPost('zipCode'),
           'city' => $this->request->getPost('city'),
           'phone' => $this->request->getPost('phone'),
-          'order_price' => $cart->total()
+          'order_price' => $cart->total(),
+          'quantity' => $cart->totalItems()
         ];
 
         $id = $order->insert($orderData);
