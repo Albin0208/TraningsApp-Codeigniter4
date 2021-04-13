@@ -41,7 +41,7 @@ class UserRules
   {
     $model = new UserModel();
 
-    $user = $model->where('id', $data['id'])->first();
+    $user = $model->where('customer_id', $data['id'])->first();
 
     return password_verify($data['current_password'], $user['password']);
   }
@@ -75,5 +75,10 @@ class UserRules
         return true;
     }
     return false;
+  }
+
+  public function validName(string $str, string $fields, array $data)
+  {
+    return (bool) preg_match('/^(?![×÷])[A-Za-zÀ-ÿ]+$/m', $str);
   }
 }

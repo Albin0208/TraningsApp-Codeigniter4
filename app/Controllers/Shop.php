@@ -11,6 +11,12 @@ class Shop extends Controller
   {
     helper('form');
   }
+    
+  /**
+   * Visa butiken
+   *
+   * @return View Butiksvyn
+   */
   public function index()
   {
     $model = new ShopModel();
@@ -24,11 +30,17 @@ class Shop extends Controller
 
     return view('layouts/shop/shop', $data);
   }
-
+  
+  /**
+   * Visa en produkt
+   *
+   * @param  string slugen för produkten
+   * @return View Produktvyn
+   */
   public function product($slug = null)
   {
     if (!$slug) {
-      //return 404 sida
+      //TODO return 404 sida
       echo '404 Page not found';
     }
 
@@ -39,7 +51,12 @@ class Shop extends Controller
 
     return view('layouts/shop/single_product', $data);
   }
-
+  
+  /**
+   * Lägg till en vara i varukorgen
+   *
+   * @return Redirect Tillbaka till föregående sida
+   */
   public function addToCart()
   {
     $id = $this->request->getPost('product_id');

@@ -14,11 +14,12 @@
     <?php foreach($orders as $order) : ?>
     <tr>
       <th scope="row"><a class="text-decoration-none text-info"
-          href="order/<?= esc($order['order_id']) ?>">#<?= esc($order['order_id']) ?></a></th>
+          href="view-order/<?= esc($order['order_number']) ?>">#<?= esc($order['order_number']) ?></a></th>
       <td><?= esc($time->parse($order['created_at'])->toDateString()) ?></td>
       <td><?= esc($order['order_price']) ?> SEK för <?= esc($order['quantity']) ?>
         <?= $order['quantity'] <= 1 ? 'artikel' : 'artiklar' ?></td>
-      <td class="text-end"><button class="btn btn-outline-info">Visa</button></td>
+      <td class="text-end"><a class="btn btn-outline-info" href="view-order/<?= esc($order['order_number']) ?>">Visa</a>
+      </td>
     </tr>
     <?php endforeach; ?>
   </tbody>

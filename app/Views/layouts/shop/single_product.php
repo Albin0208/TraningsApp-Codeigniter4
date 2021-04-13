@@ -1,11 +1,15 @@
 <?= $this->extend("layouts/main") ?>
 <?= $this->section("content") ?>
 <div class="container w-100 p-4 bg-dark shadow">
-  <div class="<?= session()->has('cartSuccess') ? 'd-block' : 'd-none' ?> alert alert-success mt-1 text-center">
-    <?= session()->get('cartSuccess') ?>
+  <?php if (session()->has('cartSuccess')) : ?>
+  <div class="alert alert-success mt-1 text-centera row">
+    <p class="col m-0"><?= session()->get('cartSuccess') ?></p>
+    <a class="ms-auto col text-end" href="/cart">
+      Till varukorgen
+    </a>
   </div>
-  <a href="/shop" class="btn btn-outline-lighta rounded-circle overlay1a mb-2"><i
-      class="bi bi-arrow-left text-white fs-2"></i></a>
+  <?php endif; ?>
+  <a href="/shop" class="btn mb-2"><i class="bi bi-arrow-left text-white fs-2"></i></a>
   <div class="row row-cols-1 row-cols-xl-2">
     <div class="col text-center">
       <img src="<?= $product['image'] ?>" class="img-fluid">

@@ -16,7 +16,7 @@
         <div class="form-floating col-sm">
           <input type="text" class="form-control border-custom overlay1 <?= isInvalid('firstname') ?>" name="firstname"
             value="<?= set_value('firstname') ?>" id="firstname" placeholder="Förnamn"
-            data-parsley-pattern="[A-z]|Å|Ä|Ö|å|ä|ö" data-parsley-errors-container="#invalidFirstname"
+            data-parsley-pattern="/^[A-Za-zÀ-ÿ]+$/" data-parsley-errors-container="#invalidFirstname"
             data-parsley-trigger="keyup change" required>
           <label for="firstname">Förnamn</label>
           <div class="text-danger text-start" id="invalidFirstname">
@@ -25,7 +25,7 @@
         </div>
         <div class="form-floating col-sm">
           <input type="text" class="form-control border-custom overlay1 <?= isInvalid('lastname') ?>" name="lastname"
-            value="<?= set_value('lastname') ?>" placeholder="Efternamn" data-parsley-pattern="[A-z]|Å|Ä|Ö|å|ä|ö"
+            value="<?= set_value('lastname') ?>" placeholder="Efternamn" data-parsley-pattern="^[A-Za-zÀ-ÿ]+$"
             data-parsley-errors-container="#invalidLastname" data-parsley-trigger="keyup" required>
           <label for="lastname">Efternamn</label>
           <div class="text-danger text-start" id="invalidLastname">
@@ -47,7 +47,7 @@
       <div class="row gx-2 mt-3">
         <div class="form-floating">
           <input type="text" class="form-control border-custom overlay1 <?= isInvalid('username') ?>" name="username"
-            value="<?= set_value('username') ?>" placeholder="Användarnamn" data-parsley-type="alphanum"
+            value="<?= set_value('username') ?>" placeholder="Användarnamn" data-parsley-pattern="/^[A-Za-zÀ-ÿ0-9_]+$/"
             data-parsley-errors-container="#invalidUsername" data-parsley-trigger="keyup" required>
           <label for="username">Användarnamn</label>
           <div class="text-danger text-start" id="invalidUsername">

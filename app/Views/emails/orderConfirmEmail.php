@@ -101,12 +101,12 @@
                   Faktureringsadress
                 </h2>
                 <address style="padding: 12px;border: 1px solid #e5e5e5;background-color: #121212;">
-                  <?= esc($firstname) ?>
-                  <?= esc($lastname) ?><br />
+                  <?= esc($firstname) ?> <?= esc($lastname) ?><br />
                   <?= esc($address) ?><br />
                   <?= esc($zipCode) ?>
                   <?= esc($city) ?><br />
-                  <a href="tel:+46761403625" style="color: #0dcaf0;font-weight: normal;text-decoration: underline;"
+                  <a href="tel:<?= esc($phone) ?>"
+                    style="color: #0dcaf0;font-weight: normal;text-decoration: underline;"
                     target="_blank"><?= esc($phone) ?></a><br />
                   <a style="color: #0d6efd" href="mailto:<?= esc($email) ?>" target="_blank"><?= esc($email) ?></a>
                 </address>
@@ -116,8 +116,7 @@
                   Leveransadress
                 </h2>
                 <address style="padding: 12px;border: 1px solid #e5e5e5;background-color: #121212;">
-                  <?= esc($firstname) ?>
-                  <?= esc($lastname) ?><br />
+                  <?= esc($firstname) ?> <?= esc($lastname) ?><br />
                   <?= esc($address) ?><br />
                   <?= esc($zipCode) ?>
                   <?= esc($city) ?><br />

@@ -17,26 +17,37 @@
           <h5 class="mb-3">Order sammanfattning</h5>
           <hr>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+            <li
+              class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-white">
               Ordinarie Pris
               <span><?= $cart->total() ?> SEK</span>
             </li>
             <?php if ($cart->discountValue()) : ?>
-            <li class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-              <span>Rabatt: (<small><?= esc($cart->discountCode()) ?></small>) <a href="/coupon/delete">Ta
-                  bort</a></span>
+            <li
+              class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-white">
+              <span>
+                Rabatt: (<small><?= esc($cart->discountCode()) ?> - <a href="/cart/removeDiscount">Ta bort</a></small>)
+              </span>
               <span class="text-danger">-<?= $cart->discountValue() ?> SEK</span>
             </li>
             <?php endif; ?>
-            <li class="list-group-item bg-dark d-flex justify-content-between border-white align-items-center px-0">
+            <li
+              class="list-group-item bg-dark d-flex justify-content-between border-white align-items-center px-0 text-white">
               Frakt
-              <span>Gratis</span>
+              <span>
+                <?php if ($cart->shipping() == 0) : ?>
+                Gratis
+                <?php else : ?>
+                49 SEK
+                <?php endif; ?>
+              </span>
             </li>
-            <li class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+            <li
+              class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 mb-3 text-white">
               <div>
                 <strong>Totala beloppet</strong>
               </div>
-              <span><strong><?= $cart->total() - $cart->discountValue() ?> SEK</strong></span>
+              <span><strong><?= $cart->total() - $cart->discountValue() + $cart->shipping() ?> SEK</strong></span>
             </li>
           </ul>
           <button onclick="location.href='cart/checkout'" class="btn btn-outline-info"

@@ -82,7 +82,7 @@ class Validation
 			]
 		],
 		'firstname' => [
-			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö]+$/i]',
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ]+$/]',
 			'label' => 'Förnamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -90,7 +90,7 @@ class Validation
 			]
 		],
 		'lastname' => [
-			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö]+$/i]',
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ]+$/]',
 			'label' => 'Efternamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -98,7 +98,7 @@ class Validation
 			]
 		],
 		'username' => [
-			'rules' => 'required|regex_match[/^[A-Z0-9åäöÅÄÖ]+$/i]|is_unique[customers.username]',
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ0-9_]+$/]|is_unique[customers.username]',
 			'label' => 'Användarnamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -110,7 +110,7 @@ class Validation
 
 	public $updateUser =   [
 		'firstname' => [
-			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö]+$/i]',
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ]+$/]',
 			'label' => 'Förnamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -118,7 +118,7 @@ class Validation
 			]
 		],
 		'lastname' => [
-			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö]+$/i]',
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ]+$/]',
 			'label' => 'Efternamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -126,7 +126,7 @@ class Validation
 			]
 		],
 		'username' => [
-			'rules' => 'required|regex_match[/^[A-Z0-9åäöÅÄÖ]+$/i]|is_unique[customers.username,customer_id,{id}]',
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ0-9_]+$/]|is_unique[customers.username,customer_id,{id}]',
 			'label' => 'Användarnamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -172,7 +172,7 @@ class Validation
 			]
 		],
 		'firstname' => [
-			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö]+$/i]',
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ]+$/]',
 			'label' => 'Förnamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -180,7 +180,7 @@ class Validation
 			]
 		],
 		'lastname' => [
-			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö]+$/i]',
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ]+$/]',
 			'label' => 'Efternamn',
 			'errors' => [
 				'required' => '{field}s fältet får inte vara tomt',
@@ -206,7 +206,7 @@ class Validation
 			]
 		],
 		'address' => [
-			'rules' => 'cleanString[address]|required|regex_match[[a-z]|å|ä|ö ]/i',
+			'rules' => 'cleanString[address]|required|regex_match[/^[A-Za-zÀ-ÿ0-9 ]+$/',
 			'label' => 'Adress',
 			'errors' => [
 				'required' => 'Fältet får inte vara tomt',
@@ -214,7 +214,7 @@ class Validation
 			]
 		],
 		'city' => [
-			'rules' => 'required|regex_match[/^[A-ZÅÄÖåäö ]+$/i]',
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ ]+$/]',
 			'label' => 'Stad',
 			'errors' => [
 				'required' => 'Fältet får inte vara tomt',
@@ -253,6 +253,112 @@ class Validation
 				'required' => 'Fältet får inte vara tomt',
 				'numeric' => 'Fältet får bara innehålla siffror',
 				'exact_length' => 'Fältet måste vara exakt {param} siffror'
+			]
+		],
+	];
+
+	public $billing = [
+		'firstname' => [
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ]+$/]',
+			'label' => 'Förnamn',
+			'errors' => [
+				'required' => '{field}s fältet får inte vara tomt',
+				'regex_match' => '{field}et får bara innehålla bokstäver',
+			]
+		],
+		'lastname' => [
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ]+$/]',
+			'label' => 'Efternamn',
+			'errors' => [
+				'required' => '{field}s fältet får inte vara tomt',
+				'regex_match' => '{field}et får bara innehålla bokstäver',
+			]
+		],
+		'zipCode' => [
+			'rules' => 'cleanString[zipCode]|required|numeric|exact_length[5]',
+			'label' => 'Postnummer',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'numeric' => 'Fältet får bara innehålla siffror',
+				'exact_length' => 'Fältet måste vara 5 siffror långt',
+			]
+		],
+		'address' => [
+			'rules' => 'cleanString[address]|required|regex_match[/^[A-Za-zÀ-ÿ0-9 ]+$/',
+			'label' => 'Adress',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'regex_match' => 'Fältet får innehålla bokstäver, mellanslag och siffror'
+			]
+		],
+		'city' => [
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ ]+$/]',
+			'label' => 'Stad',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'regex_match' => 'Fältet får bara innehålla bokstäver och mellanslag'
+			]
+		],
+		'phone' => [
+			'rules' => 'required|numeric|min_length[7]|max_length[13]',
+			'label' => 'Telefonnummer',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'numeric' => 'Fältet får bara innehålla siffror',
+				'min_length' => 'Fältet måste innehålla minst {param} siffror',
+				'max_length' => 'Fältet får innehålla max {param} siffror'
+			]
+		],
+		'email' => [
+			'rules' => 'required|valid_email',
+			'label' => 'Email',
+			'errors' => [
+				'required' => '{field} fältet får inte vara tomt',
+				'valid_email' => '{field} fältet måste vara en giltig email adress'
+			]
+		],
+	];
+
+	public $delivery = [
+		'firstname' => [
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ]+$/]',
+			'label' => 'Förnamn',
+			'errors' => [
+				'required' => '{field}s fältet får inte vara tomt',
+				'regex_match' => '{field}et får bara innehålla bokstäver',
+			]
+		],
+		'lastname' => [
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ]+$/]',
+			'label' => 'Efternamn',
+			'errors' => [
+				'required' => '{field}s fältet får inte vara tomt',
+				'regex_match' => '{field}et får bara innehålla bokstäver',
+			]
+		],
+		'zipCode' => [
+			'rules' => 'cleanString[zipCode]|required|numeric|exact_length[5]',
+			'label' => 'Postnummer',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'numeric' => 'Fältet får bara innehålla siffror',
+				'exact_length' => 'Fältet måste vara 5 siffror långt',
+			]
+		],
+		'address' => [
+			'rules' => 'cleanString[address]|required|regex_match[/^[A-Za-zÀ-ÿ0-9 ]+$/',
+			'label' => 'Adress',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'regex_match' => 'Fältet får innehålla bokstäver, mellanslag och siffror'
+			]
+		],
+		'city' => [
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ ]+$/]',
+			'label' => 'Stad',
+			'errors' => [
+				'required' => 'Fältet får inte vara tomt',
+				'regex_match' => 'Fältet får bara innehålla bokstäver och mellanslag'
 			]
 		],
 	];

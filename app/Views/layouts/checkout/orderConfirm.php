@@ -30,7 +30,7 @@
           <h4>Ordernummer</h4>
         </div>
         <div class="col text-end">
-          <h4><?= esc($orderId) ?></h4>
+          <h4>#<?= esc($orderNumber) ?></h4>
         </div>
       </div>
     </div>

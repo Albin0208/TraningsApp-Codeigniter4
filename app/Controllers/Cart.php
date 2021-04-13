@@ -13,7 +13,12 @@ class Cart extends Controller
   {
     helper('form');
   }
-
+  
+  /**
+   * Visa varukorgen
+   *
+   * @return View Varukorgen
+   */
   public function index()
   {
     $cart = \Config\Services::cart();
@@ -25,7 +30,12 @@ class Cart extends Controller
 
     return view('layouts/checkout/cart', $data);
   }
-
+  
+  /**
+   * Hanterar checkout
+   *
+   * @return View Checkout vyn
+   */
   public function checkout()
   {
     $cart = \Config\Services::cart();
@@ -39,11 +49,10 @@ class Cart extends Controller
     if ($this->request->getMethod() == 'post') {
       $validation = \Config\Services::validation();
       if ($validation->run($_POST, 'checkout')) {
-
         $order = new OrderModel();
         $orderItem = new OrderItemModel();
         $cart = \Config\Services::cart();
-
+        
         $orderData = [
           'customer_id' => session()->get('id') ?? null,
           'email' => $this->request->getPost('email'),
@@ -54,11 +63,13 @@ class Cart extends Controller
           'city' => $this->request->getPost('city'),
           'phone' => $this->request->getPost('phone'),
           'order_price' => $cart->total(),
-          'quantity' => $cart->totalItems()
+          'quantity' => $cart->totalItems(),
+          'discount_value' => $cart->discountValue(),
+          'shipping' => $cart->shipping()
         ];
-
+        
         $id = $order->insert($orderData);
-
+        
         foreach ($cart->contents() as $item) {
           $orderData = [
             'order_id' => $id,
@@ -66,7 +77,7 @@ class Cart extends Controller
             'quantity' => $item['qty'],
             'item_price' => $item['price']
           ];
-
+          
           $orderItem->insert($orderData);
         }
         
@@ -79,17 +90,20 @@ class Cart extends Controller
         $data['validation'] = $validation;
       }
     } else {
-      $id = session()->get('id');
-      if (isset($id)) {
+      if (session()->has('id')) {
         $model = new UserModel();
-
-        $data['user'] = $model->getUser($id);
+        $data['user'] = $model->getAddressDetails('billing', session()->get('id'))->getRowArray();
       }
     }
 
     return view('layouts/checkout/checkout', $data);
   }
-
+  
+  /**
+   * Visa orderbekräftelsen
+   *
+   * @return View Orderbekräftelse
+   */
   public function orderConfirm()
   {
     $orderModel = new OrderModel();
@@ -101,14 +115,19 @@ class Cart extends Controller
     $data = [
       'title' => 'Din order är slutförd',
       'email' => $order['email'],
-      'orderId' => $order['order_id'],
+      'orderNumber' => $order['order_number'],
       'orderPrice' => $order['order_price'],
       'orderItems' => $items,
     ];
 
     return view('layouts/checkout/orderConfirm', $data);
   }
-
+  
+  /**
+   * Redigera varukorg
+   *
+   * @return void
+   */
   public function editCart()
   {
     $cart = \Config\Services::cart();
@@ -137,7 +156,25 @@ class Cart extends Controller
       }
     }
   }
+    
+  /**
+   * Ta bort rabattkoden
+   *
+   * @return Redirect Tillbaka till varukorgen
+   */
+  public function removeDiscount()
+  {
+    $cart = \Config\Services::cart();
 
+    $cart->removeDiscount();
+    return redirect()->back();
+  }
+  
+  /**
+   * Skicka iväg ett mail
+   *
+   * @return Bool Om mailet blev skickat
+   */
   private function sendMail()
   {
     $data = [

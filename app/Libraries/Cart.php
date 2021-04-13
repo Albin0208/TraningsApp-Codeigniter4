@@ -49,7 +49,6 @@ class Cart
         $save_cart = true;
     }
 
-
     if ($save_cart) {
       $this->saveCart();
       return $rowid ?? true;
@@ -67,8 +66,6 @@ class Cart
     //Innehåller arrayen id, quantity, price och name? Dessa är nödvändiga
     if (!isset($items['product_id'], $items['qty'], $items['price'], $items['name']))
       return false;
-
-    //TODO Fixa validering av namn och id
 
     /*
       Skapa ett unikt id för produkterna.
@@ -203,7 +200,6 @@ class Cart
 
   public function discountvalue()
   {
-    //TODO Fixa rabatt
     if (@$this->cartContents['discount_code'])
       return $this->total() * $this->cartContents['discount_code']['value'];
     return false;
@@ -235,7 +231,7 @@ class Cart
   {
     $this->cartContents['total_items'] = $this->cartContents['cart_total'] = 0;
     foreach ($this->cartContents as $key => $val) {
-      //Se till att arreyn är korrekt
+      //Se till att arrayen är korrekt
       if (!is_array($val) || !isset($val['price'], $val['qty']))
         continue;
 
@@ -293,6 +289,11 @@ class Cart
     return (in_array($rowid, ['total_items', 'cart_total'], true) or !isset($this->cartContents[$rowid]))
       ? false
       : $this->cartContents[$rowid];
+  }
+
+  public function shipping()
+  {
+    return $this->cartContents['cart_total'] > 499 ? 0 : 49;
   }
 
   /**

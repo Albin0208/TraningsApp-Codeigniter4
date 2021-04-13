@@ -55,25 +55,35 @@
           <!-- Desktop checkout -->
           <div class="d-none d-md-block">
             <ul class="list-group list-group-flush">
-              <li class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+              <li
+                class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-white">
                 Ordinarie Pris
                 <span><?= $cart->total() ?> SEK</span>
               </li>
               <?php if ($cart->discountValue()) : ?>
-              <li class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+              <li
+                class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-white">
                 <span>Rabatt: (<small><?= esc($cart->discountCode()) ?></small>)</span>
                 <span class="text-danger">-<?= $cart->discountValue() ?> SEK</span>
               </li>
               <?php endif; ?>
-              <li class="list-group-item bg-dark d-flex justify-content-between border-white align-items-center px-0">
+              <li
+                class="list-group-item bg-dark d-flex justify-content-between border-white align-items-center px-0 text-white">
                 Frakt
-                <span>Gratis</span>
+                <span>
+                  <?php if ($cart->shipping() == 0) : ?>
+                  Gratis
+                  <?php else : ?>
+                  49 SEK
+                  <?php endif; ?>
+                </span>
               </li>
-              <li class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+              <li
+                class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 mb-3 text-white">
                 <div>
                   <strong>Totala beloppet</strong>
                 </div>
-                <span><strong><?= $cart->total() - $cart->discountValue() ?> SEK</strong></span>
+                <span><strong><?= $cart->total() - $cart->discountValue() + $cart->shipping() ?> SEK</strong></span>
               </li>
             </ul>
             <button class="w-100 btn btn-primary btn-lg m-0 ad-none d-md-blocka" form="form_id" type="submit">Slutför
@@ -81,44 +91,48 @@
           </div>
           <!-- Desktop checkout -->
           <!-- Mobile checkout -->
-          <div class="d-md-none fixed-bottom w-100 card-body bg-darkGrey border-top">
+          <div class="d-md-none fixed-bottom w-100 card-body bg-dark border-top">
             <ul class="list-group list-group-flush">
               <li
-                class="list-group-item bg-darkGrey d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-white">
                 Ordinarie Pris
                 <span><?= $cart->total() ?> SEK</span>
               </li>
               <?php if ($cart->discountValue()) : ?>
               <li
-                class="list-group-item bg-darkGrey d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-white">
                 <span>Rabatt: (<small><?= esc($cart->discountCode()) ?></small>)</span>
                 <span class="text-danger">-<?= $cart->discountValue() ?> SEK</span>
               </li>
               <?php endif; ?>
               <li
-                class="list-group-item bg-darkGrey d-flex justify-content-between border-white align-items-center px-0">
+                class="list-group-item bg-dark d-flex justify-content-between border-white align-items-center px-0 text-white">
                 Frakt
-                <span>Gratis</span>
+                <span>
+                  <?php if ($cart->shipping() == 0) : ?>
+                  Gratis
+                  <?php else : ?>
+                  49 SEK
+                  <?php endif; ?>
+                </span>
               </li>
               <li
-                class="list-group-item bg-darkGrey d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                class="list-group-item bg-dark d-flex justify-content-between align-items-center border-0 px-0 mb-3 text-white">
                 <div>
                   <strong>Totala beloppet</strong>
                 </div>
-                <span><strong><?= $cart->total() - $cart->discountValue() ?> SEK</strong></span>
+                <span><strong><?= $cart->total() - $cart->discountValue() + $cart->shipping() ?> SEK</strong></span>
               </li>
             </ul>
             <button class="w-100 btn btn-primary btn-lg m-0 ad-none d-md-blocka" form="form_id" type="submit">Slutför
               köp</button>
           </div>
-          <!-- Mobile checkout -->
         </div>
+        <!-- Card -->
       </div>
       <!-- Card -->
     </div>
-    <!-- Card -->
-  </div>
-  <!--Grid column-->
+    <!--Grid column-->
   </div>
   <!--Grid row-->
 </section>
