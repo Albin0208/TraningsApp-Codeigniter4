@@ -53,6 +53,10 @@ select:-webkit-autofill:focus {
   background-color: rgba(255, 255, 255, 0.07) !important;
 }
 
+.overlay2 {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
 input {
   background-color: #212529 !important;
   color: white !important;

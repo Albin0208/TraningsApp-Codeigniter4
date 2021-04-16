@@ -94,8 +94,12 @@ class Auth extends Controller
       'lastname' => $user['lastname'],
       'email' => $user['email'],
       'username' => $user['username'],
-      'isLoggedIn' => true
+      'isLoggedIn' => true,
     ];
+    
+    if ($user['isAdmin'] == 1) 
+      $data['isAdmin'] = true;
+      
     session()->set($data);
     return;
   }

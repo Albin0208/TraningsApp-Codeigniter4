@@ -12,7 +12,8 @@ class Filters extends BaseConfig
 		'csrf'     => \CodeIgniter\Filters\CSRF::class,
 		'toolbar'  => \CodeIgniter\Filters\DebugToolbar::class,
 		'honeypot' => \CodeIgniter\Filters\Honeypot::class,
-		'auth' 		 => \App\Filters\AuthFIlter::class,
+		'auth' 		 => \App\Filters\AuthFilter::class,
+		'admin' 	 => \App\Filters\AdminFilter::class,
 		'order' 	 => \App\Filters\OrderConfirmFilter::class,
 		'cart' 		 => \App\Filters\CartFilter::class,
 	];
@@ -40,6 +41,7 @@ class Filters extends BaseConfig
 	public $filters = [
 		'auth'  => ['before' => ['user/*', 'user']],
 		'order' => ['before' => ['cart/orderConfirm']],
-		'cart'  => ['before' => ['cart/*']]
+		'cart'  => ['before' => ['cart/*']],
+		'admin' => ['before' => ['admin/*', 'admin']]
 	];
 }
