@@ -11,6 +11,12 @@ class Shop extends Controller
   {
     helper('form');
   }
+    
+  /**
+   * Visa butiken
+   *
+   * @return View Butiksvyn
+   */
   public function index()
   {
     $model = new ShopModel();
@@ -22,23 +28,35 @@ class Shop extends Controller
       'cart' => session()->get('cart_contents')
     ];
 
-    return view('shop/shop', $data);
+    return view('layouts/shop/shop', $data);
   }
-
+  
+  /**
+   * Visa en produkt
+   *
+   * @param  string slugen för produkten
+   * @return View Produktvyn
+   */
   public function product($slug = null)
   {
     if (!$slug) {
-      //return 404 sida
+      //TODO return 404 sida
       echo '404 Page not found';
     }
 
     $model = new ShopModel();
 
     $data['product'] =  $model->getProduct($slug);
+    $data['title'] =  'Elit-Träning | ' .$data['product']['name'];
 
-    return view('shop/single_product', $data);
+    return view('layouts/shop/single_product', $data);
   }
-
+  
+  /**
+   * Lägg till en vara i varukorgen
+   *
+   * @return Redirect Tillbaka till föregående sida
+   */
   public function addToCart()
   {
     $id = $this->request->getPost('product_id');
@@ -48,10 +66,11 @@ class Shop extends Controller
     $model = new ShopModel();
 
     $product = $model->where('product_id', $id)->first();
-    $product['qty'] = $qty;
+    //Om antalet inte finns så ska en vara läggas till
+    $product['qty'] = $qty ?? 1;
 
     $cart->insert($product);
 
-    return redirect()->to(previous_url());
+    return redirect()->back()->with('cartSuccess', 'Varan är tillagd i varukorgen');
   }
 }

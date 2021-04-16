@@ -11,6 +11,6 @@ class ShopModel extends Model
 
     public function getProduct($slug = null)
     {
-        return $this->where('slug', $slug)->first();
+        return $this->where('slug', $slug, true)->first();
     }
 }

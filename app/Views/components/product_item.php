@@ -5,14 +5,13 @@
       <div class="card-body">
         <h5 class="card-title p-0 mx-auto"><?= esc($product['name']) ?></h5>
       </div>
-      <div class="card-footer border-0 mt-auto" style="background-color: #1d1d1d;">
-        <h6 class="card-text mb-1"><strong><?= esc($product['price']) ?> kr</strong></h6>
-        <form action="shop/addToCart" method="post">
-          <?= form_hidden('product_id', $product['product_id']) ?>
-          <?= form_hidden('quantity', 1) ?>
-          <a><button type="submit" class="btn w-100 btn-primary">Lägg i varukorgen</button></a>
-        </form>
-      </div>
     </a>
+    <div class="card-footer border-0 mt-auto" style="background-color: #1d1d1d;">
+      <h6 class="card-text mb-1"><strong><?= esc($product['price']) ?> kr</strong></h6>
+      <?= form_open('shop/addToCart') ?>
+      <?= form_hidden('product_id', $product['product_id']) ?>
+      <button type="submit" class="btn w-100 btn-primary">Lägg i varukorgen</button>
+      <?= form_close() ?>
+    </div>
   </div>
 </div>

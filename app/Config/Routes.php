@@ -35,6 +35,8 @@ $routes->get('/', 'Home::index');
 $routes->add('register', 'Auth::register');
 $routes->add('login', 'Auth::login');
 $routes->add('logout', 'Auth::logout');
+$routes->add('user/view-order/(:any)', 'User::order/$1');
+$routes->add('user/addresses/edit/(:any)', 'User::editAddress/$1');
 
 /**
  * --------------------------------------------------------------------

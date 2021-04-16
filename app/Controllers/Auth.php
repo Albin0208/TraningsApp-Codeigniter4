@@ -36,22 +36,17 @@ class Auth extends Controller
           'email' => $this->request->getPost('email'),
           'username' => $this->request->getPost('username'),
           'password' => $this->request->getPost('password'),
-          'confirm_password' => $this->request->getPost('confirm_password'),
         ];
-        $model->setValidationRules($validation->getRuleGroup('register'));
+
         if ($model->save($newData) == false)
-          return view('errors/errors', ['errors/errors' => $model->errors(), 'data' => $newData]);
+          return redirect()->back()->with('error', 'Något gick fel vid registreringen, vänligen försök igen');
 
-        $session = session();
-        $session->setFlashdata('success', 'Lyckad registrering');
-
-        return redirect()->to("/login");
+        return redirect()->to("/login")->with('success', 'Lyckad registrering');
       } else {
-        $data['apost'] = $_POST;
         $data['validation'] = $validation;
       }
     }
-    return view("register", $data);
+    return view("auth/register", $data);
   }
 
   /**
@@ -64,21 +59,25 @@ class Auth extends Controller
     $data = [
       'title' => 'Elit-Träning | Logga in'
     ];
-
+    //Spara flashdatan till nästa request
+    session()->keepFlashdata('redirect');
+    
     if ($this->request->getMethod() == 'post') {
       $validation = \Config\Services::validation();
       if ($validation->run($_POST, 'login')) {
         $model = new UserModel();
-
         $user = $model->getUser($this->request->getPost('email'));
-
         $this->setUserSession($user);
-        return redirect()->to('/user');
+        
+        //Om vi har redirect i session hämta dess värde annars sätt page till user
+        $page = session()->getFlashdata('redirect') ?? 'user';
+
+        return redirect()->to("/{$page}");
       } else {
         $data['validation'] = $validation;
       }
     }
-    return view("login", $data);
+    return view("auth/login", $data);
   }
 
   /**

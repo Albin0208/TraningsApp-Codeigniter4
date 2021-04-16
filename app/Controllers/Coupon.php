@@ -7,7 +7,12 @@ use App\Models\UserModel;
 use CodeIgniter\Controller;
 
 class Coupon extends Controller
-{
+{  
+  /**
+   * Lägg till en rabattkod
+   *
+   * @return Redirect Tillbaka till föregående sida
+   */
   public function index()
   {
     $validation = \Config\Services::validation();
@@ -22,7 +27,12 @@ class Coupon extends Controller
     }
     return redirect()->back()->with('couponFail', 'Ogiltig rabattkod');
   }
-
+  
+  /**
+   * Ta bort rabattkoden
+   *
+   * @return Redirect Tillbaka till föregående sida
+   */
   public function delete()
   {
     $cart = \Config\Services::cart();
