@@ -13,7 +13,7 @@
 
 <body>
   <?php $uri = service('uri'); ?>
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom bg-reda fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
       <a class="navbar-brand brand" href="/">Elit-Träning</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
