@@ -26,7 +26,7 @@ class OrderModel extends Model
           Om vi har användare hämta användar id, ta användar id och lägg till ett random 7 nummer tal.
           Finns inte en användare slumpa fram ett nummer
 
-          efter numret är genererat kolla att en order med det numret inte finns
+          efter numret är genererat kolla att en order med det numret inte finns,
             finns numret ska ett nytt slumpat tal skapas
 
             do-while om numret redan existerar
