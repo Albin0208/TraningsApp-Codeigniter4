@@ -34,6 +34,14 @@
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
+          <?php if (session()->get('isAdmin')) : ?>
+          <li class="nav-item">
+            <a class="nav-link ps-2 <?= $uri->getSegment(1) == "admin" ? "active" : null ?>" href="/admin">
+              <i class="bi bi-shield-lock-fill" style="font-size: 20px;"></i>
+              Admin
+            </a>
+          </li>
+          <?php endif; ?>
           <li class="nav-item">
             <?php if (session()->get('isLoggedIn')) : ?>
             <a href="/user" class="nav-link ps-2 <?= $uri->getSegment(1) == "user" ? "active" : null ?>">

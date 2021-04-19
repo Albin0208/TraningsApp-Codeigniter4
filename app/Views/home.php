@@ -38,7 +38,7 @@
   </button>
 </div>
 
-<div class="bg-dark w-100 text-white mt-5">
+<div class="bg-dark text-white mt-5 shadow">
   <div class="row row-cols-1 row-cols-md-3 text-center p-3">
     <div class="col">
       <i class="bi bi-check-circle me-1"></i>
@@ -55,6 +55,14 @@
   </div>
 </div>
 
-
+<div class="bg-dark text-white mt-4 p-2">
+  <h2 class="fw-bold mt-1">Nyheter i butiken</h2>
+  <div class="row row-cols-2 row-cols-sm-4 p-2">
+    <?php foreach ($products as $product) : ?>
+    <?= view_cell('\App\Libraries\Shop::productItem', $product) ?>
+    <?php endforeach; ?>
+  </div>
+</div>
+</div>
 
 <?= $this->endSection() ?>
