@@ -2,9 +2,14 @@
 <?= $this->section("content") ?>
 
 <div class="bg-dark p-3 text-white">
+  <?php if (session()->has('success')) : ?>
+  <div class="alert alert-success col-sm-10 ms-auto me-auto w-100">
+    <?= session()->get('success') ?>
+  </div>
+  <?php endif; ?>
   <h1 style="font-size: 4em;">Admin panelen</h1>
   <hr>
-  <div class="row row-cols-4 gx-3">
+  <div class="row row-cols-1 row-cols-sm-4 gx-3">
     <div class="col">
       <div class="card overlay2 text-white shadow">
         <div class="card-body">
@@ -39,8 +44,8 @@
     </div>
   </div>
 
-  <div class="row row-cols-2 gx-3 mt-4">
-    <div class="col-7">
+  <div class="row row-cols-1 row-cols-sm-2 gx-3 mt-4">
+    <div class="col-12 col-sm-7">
       <div class="card overlay2 text-white shadow">
         <div class="card-body">
           <h2 class="card-title">Senaste beställningarna</h2>
@@ -71,7 +76,7 @@
         </div>
       </div>
     </div>
-    <div class="col-5">
+    <div class="col-12 col-sm-5">
       <div class="card overlay2 text-white shadow">
         <div class="card-body">
           <h2 class="card-title">Nyaste kunderna</h2>
@@ -126,12 +131,16 @@
             <tbody>
               <?php foreach($products as $product) : ?>
               <tr>
-                <th scope="row" class="align-middle"><?= esc($product['name']) ?></th>
+                <th scope="row" class="align-middle"><a class="text-info" href="/shop/product/<?= $product['slug'] ?>">
+                    <?= esc($product['name']) ?></a>
+                </th>
                 <td class="align-middle"><?= $product['price'] ?> SEK</td>
-                <td class="align-middle">Bok</td>
+                <td class="align-middle"><?= $product['category_name'] ?></td>
                 <td class="align-middle"><span class="text-danger">-100</span> SEK</td>
                 <td class="text-end">
-                  <a class="btn btn-outline-info" href="/shop/product/<?= $product['slug'] ?>">Visa</a>
+                  <button onclick="setProductSlug('<?= $product['slug'] ?>')" class="btn btn-outline-danger"
+                    data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    data-product-slug="<?= $product['slug'] ?>">Radera</button>
                   <a class="btn btn-outline-info" href="/admin/editProduct/<?= $product['slug'] ?>">Redigera</a>
                 </td>
               </tr>
@@ -145,5 +154,36 @@
   </div>
 </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ta bort produkt</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Är du säker på att du vill ta bort produkten
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-bs-dismiss="modal">Avbryt</button>
+        <a onclick="deleteProduct()" type="button" class="btn btn-danger">Ta bort</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var productSlug;
+
+function setProductSlug(slug) {
+  productSlug = slug;
+}
+
+function deleteProduct() {
+  window.location.replace(window.location.pathname + '/deleteProduct/' + productSlug);
+}
+</script>
 
 <?= $this->endSection() ?>

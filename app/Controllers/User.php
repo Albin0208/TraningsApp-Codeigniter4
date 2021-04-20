@@ -75,7 +75,7 @@ class User extends Controller
 
     $data = [
       'title' => 'Elit-Träning | Beställningar',
-      'orders' => $model->where('customer_id', session()->get('id'))->orderBy('created_at', 'DESC')->paginate(5, 'group'),
+      'orders' => $model->where('customer_id', session()->get('id'))->orderBy('created_at', 'DESC')->paginate(8, 'group'),
       'pager' => $model->pager,
       'time' => new Time(),
       'pageTitle' => 'Mina Beställningar'

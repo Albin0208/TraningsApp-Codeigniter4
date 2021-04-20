@@ -38,6 +38,48 @@
   </button>
 </div>
 
+<div class="text-white mt-4">
+  <div class="row row-cols-1 gx-3">
+    <div class="col col-sm-8">
+      <div class="bg-dark shadow ap-3 h-100">
+        <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia eligendi atque, velit et nulla dolorem ea
+        explicabo esse, obcaecati sit reiciendis veniam alias totam officiis sapiente quidem ipsa, animi in sed cumque
+        aliquam neque recusandae at laudantium! Quaerat quae esse ut, exercitationem non possimus quas a natus alias
+        neque? Esse! -->
+        <img src="https://tyngre.se/wp-content/uploads/2021/03/NOCCO-Mango-Del-SolStartsida-Banner.png" alt=""
+          class="w-100 p-0">
+      </div>
+    </div>
+    <div class="col col-sm-4">
+      <div class="bg-dark p-3 shadow h-100">
+        <?php if (session()->has('newsletter')) : ?>
+        <div class="alert alert-success" role="alert">
+          <?= session()->get('newsletter') ?>
+        </div>
+        <?php endif; ?>
+        <h2><span class="fw-bold">Elit-Träning</span> Nyhetsbrev</h2>
+        <hr class="mt-0" style="height: 3px;">
+        <?= form_open(base_url() . '/Home/newsletterSignup', 'data-parsley-validate id="form_id" novalidate') ?>
+        <div class="row gx-2">
+          <div class="form-floating col-7 col-md-8">
+            <input type="email" class="form-control border-custom overlay1" name="email"
+              value="<?= @$user['email'] ?? set_value('email') ?>" id="email" placeholder="Email"
+              data-parsley-errors-container="#invalidEmail" data-parsley-trigger="keyup change" required>
+            <label for="email">Email adress</label>
+            <div class="text-danger text-start" id="invalidEmail">
+              <?= session()->get('error') ?>
+            </div>
+          </div>
+          <div class="col">
+            <input type="submit" class="btn btn-lg btn-outline-info w-100 h-100" value="Skicka">
+          </div>
+        </div>
+        <?= form_close() ?>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="bg-dark text-white mt-5 shadow">
   <div class="row row-cols-1 row-cols-md-3 text-center p-3">
     <div class="col">

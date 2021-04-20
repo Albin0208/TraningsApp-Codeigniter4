@@ -362,4 +362,81 @@ class Validation
 			]
 		],
 	];
+
+	public $newsletter = [
+		'email' => [
+			'rules' => 'required|valid_email|is_unique[newsletter.email]',
+			'errors' => [
+				'required' => 'Fältet måste vara ifyllt.',
+				'valid_email' => 'Ange en giltig mailadress.',
+				'is_unique' => 'Mailadressen är redan registrerad'
+			]
+		],
+	];
+
+	public $createProduct = [
+		'productName' => [
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ ]+$/]|is_unique[products.name]',
+			'label' => 'namn',
+			'errors' => [
+				'required' => 'Fältet måste vara ifyllt.',
+				'regex_match' => 'Fältet får bara innehålla bokstäver och mellanslag',
+				'is_unique' => 'Det finns redan en produkt med detta namn'
+			]
+		],
+		'productPrice' => [
+			'rules' => 'required|alpha_numeric',
+			'errors' => [
+				'required' => 'Fältet måste vara ifyllt.',
+				'alpha_numeric' => 'Fältet får bara innehålla siffor'
+			]
+		],
+		'productDiscount' => [
+			'rules' => 'required|alpha_numeric',
+			'errors' => [
+				'required' => 'Fältet måste vara ifyllt.',
+				'alpha_numeric' => 'Fältet får bara innehålla siffor'
+			]
+		],
+		'type' => [
+			'rules' => 'required|alpha_numeric',
+			'errors' => [
+				'required' => 'Fältet måste vara ifyllt.',
+				'alpha_numeric' => 'Ett alternativ måste vara valt'
+			]
+		]
+	];
+
+	public $editProduct = [
+		'productName' => [
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ ]+$/]|is_unique[products.name,product_id,{id}]',
+			'label' => 'namn',
+			'errors' => [
+				'required' => 'Fältet måste vara ifyllt.',
+				'regex_match' => 'Fältet får bara innehålla bokstäver och mellanslag',
+				'is_unique' => 'Det finns redan en produkt med detta namn'
+			]
+		],
+		'productPrice' => [
+			'rules' => 'required|alpha_numeric',
+			'errors' => [
+				'required' => 'Fältet måste vara ifyllt.',
+				'alpha_numeric' => 'Fältet får bara innehålla siffor'
+			]
+		],
+		'productDiscount' => [
+			'rules' => 'alpha_numeric',
+			'errors' => [
+				'required' => 'Fältet måste vara ifyllt.',
+				'alpha_numeric' => 'Fältet får bara innehålla siffor'
+			]
+		],
+		'type' => [
+			'rules' => 'required|alpha_numeric',
+			'errors' => [
+				'required' => 'Fältet måste vara ifyllt.',
+				'alpha_numeric' => 'Ett alternativ måste vara valt'
+			]
+		]
+	];
 }

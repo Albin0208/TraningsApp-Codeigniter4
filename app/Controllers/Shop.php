@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\CategoriesModel;
 use App\Models\ShopModel;
 use CodeIgniter\Controller;
 
@@ -17,16 +18,28 @@ class Shop extends Controller
    *
    * @return View Butiksvyn
    */
-  public function index()
+  public function index($category = null)
   {
     $model = new ShopModel();
 
     $data = [
       'title' => 'Elit-Träning | Butik',
-      'products' => $model->paginate(3, 'group'),
+      'products' => $model->paginate(6, 'group'),
       'pager' => $model->pager,
       'cart' => session()->get('cart_contents')
     ];
+    
+    if ($category != null) {
+
+      $categoryModel = new CategoriesModel();
+      
+      $result = $categoryModel->like('category_name', $category)->first();
+      
+      $data['products'] = $model->where('type', $result['category_id'])
+                                ->paginate(6, 'group');
+      $data['pager'] = $model->pager;
+    }
+
 
     return view('layouts/shop/shop', $data);
   }

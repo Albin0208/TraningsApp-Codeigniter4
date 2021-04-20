@@ -1,7 +1,10 @@
       <!-- Card -->
       <div class="card mb-3 bg-dark text-white">
         <div class="card-body">
-          <h5 class="mb-4">Varukorg (Antal varor: <?= $cart->totalItems() ?>)</h5>
+          <div class="row mb-3">
+            <h5 class="col-10">Varukorg (Antal varor: <?= $cart->totalItems() ?>)</h5>
+            <a href="/cart/destroyCart" class="btn btn-outline-danger col">Töm varukorgen</a>
+          </div>
           <div class="overflow-auto bg-dark overlay1 p-2 border rounded border-secondary" style="max-height: 60vh;">
             <?php foreach ($cart->contents() as $item) : ?>
             <?= form_open(base_url() . '/cart/editCart', 'class="row mb-4 p-2 m-0"') ?>

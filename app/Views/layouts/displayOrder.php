@@ -31,7 +31,8 @@
         </tr>
         <tr>
           <td class="fw-bold">Totalt:</td>
-          <td><?= esc($orderDetails['order_price'] + $orderDetails['shipping']) ?> SEK</td>
+          <td><?= esc($orderDetails['order_price'] + $orderDetails['shipping'] - $orderDetails['discount_value'])?> SEK
+          </td>
         </tr>
       </tfoot>
     </table>

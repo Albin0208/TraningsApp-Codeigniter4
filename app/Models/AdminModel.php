@@ -57,4 +57,9 @@ class AdminModel
                        ->get(3)
                        ->getResultArray();
     }
+
+    public function insertProduct(array $data)
+    {
+      # code...
+    }
 }

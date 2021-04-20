@@ -62,7 +62,7 @@ class Cart extends Controller
           'zip_code' => $this->request->getPost('zipCode'),
           'city' => $this->request->getPost('city'),
           'phone' => $this->request->getPost('phone'),
-          'order_price' => $cart->total(),
+          'order_price' => $cart->total() + $cart->shipping(),
           'quantity' => $cart->totalItems(),
           'discount_value' => $cart->discountValue(),
           'shipping' => $cart->shipping()
@@ -81,11 +81,12 @@ class Cart extends Controller
           $orderItem->insert($orderData);
         }
         
-        // if ($this->sendMail()) {
-        //   $cart->destroy();
+        if ($this->sendMail()) {
+          $cart->destroy();
           session()->setFlashData('orderPlaced', true);
           return redirect()->to('/cart/orderConfirm')->with('orderId', $id);
-        // }
+        } else 
+          echo 'Failed';
       } else {
         $data['validation'] = $validation;
       }
@@ -168,6 +169,20 @@ class Cart extends Controller
 
     $cart->removeDiscount();
     return redirect()->back();
+  }
+  
+  /**
+   * Töm varukorgen
+   *
+   * @return void
+   */
+  public function destroyCart()
+  {
+    $cart = \Config\Services::cart();
+
+    $cart->destroy();
+
+    return redirect()->back()->with('cartDestroyed', 'Kundvagnen är tom');
   }
   
   /**

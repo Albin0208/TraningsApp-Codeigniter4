@@ -42,6 +42,6 @@ class Filters extends BaseConfig
 		'auth'  => ['before' => ['user/*', 'user']],
 		'order' => ['before' => ['cart/orderConfirm']],
 		'cart'  => ['before' => ['cart/*']],
-		'admin' => ['before' => ['admin/*', 'admin']]
+		'admin' => ['before' => ['admin/*', 'admin']],
 	];
 }
