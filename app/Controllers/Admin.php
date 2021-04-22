@@ -216,7 +216,7 @@ class Admin extends Controller
         foreach ($this->request->getPost('products') as $productId) {
           $saleData = [
             'sale_id'    => $id,
-            'product_id' => $productId[0]
+            'product_id' => $productId
           ];
   
           $productOnSaleModel->insert($saleData);

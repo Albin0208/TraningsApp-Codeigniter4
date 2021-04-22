@@ -8,7 +8,7 @@
       <div class="form-floating col-sm">
         <input type="text" class="form-control border-custom overlay1 <?= isInvalid('saleName') ?>" name="saleName"
           value="<?= set_value('saleName') ?>" id="saleName" placeholder="Kampanjnamn"
-          data-parsley-pattern="/^[A-Za-zÀ-ÿ ]+$/" data-parsley-errors-container="#invalidSaleName"
+          data-parsley-pattern="/^[A-Za-zÀ-ÿ0-9 ]+$/" data-parsley-errors-container="#invalidSaleName"
           data-parsley-trigger="keyup change" required>
         <label for="saleName">Kampanjnamn</label>
         <div class="text-danger text-start" id="invalidSaleName">

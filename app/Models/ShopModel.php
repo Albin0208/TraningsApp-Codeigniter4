@@ -25,7 +25,6 @@ class ShopModel extends Model
 
     public function getProductsNotOnSale()
     {
-
         $builder = $this->db->table('products_on_sale');
 
         $result = $builder->select('product_id')
@@ -37,9 +36,13 @@ class ShopModel extends Model
             $ids[$i] = $result[$i]['product_id'];
         }
 
+        if (count($result) > 0)
+            $this->builder()->whereNotIn('product_id', $ids);
+
+        $this->builder()
+             ->join('productcategories', "category_id = type");
+
         return $this->builder()
-                    ->whereNotIn('product_id', $ids)
-                    ->join('productcategories', "category_id = type")
                     ->get()
                     ->getResultArray();
     }

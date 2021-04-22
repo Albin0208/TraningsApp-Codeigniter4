@@ -448,7 +448,7 @@ class Validation
 			]
 		],
 		'saleName' => [
-			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ ]+$/]|is_unique[sale.sale_name]',
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ0-9 ]+$/]|is_unique[sale.sale_name]',
 			'errors' => [
 				'required' => 'Fältet måste vara ifyllt.',
 				'regex_match' => 'Fältet får bara innehålla bokstäver och mellanslag',
