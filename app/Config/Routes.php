@@ -38,6 +38,7 @@ $routes->add('logout', 'Auth::logout');
 $routes->add('user/view-order/(:any)', 'User::order/$1');
 $routes->add('user/addresses/edit/(:any)', 'User::editAddress/$1');
 $routes->add('shop', 'Shop::index');
+$routes->add('shop/addToCart', 'Shop::addToCart');
 $routes->add('shop/product/(:any)', 'Shop::product/$1');
 $routes->add('shop/(:any)', 'Shop::index/$1');
 

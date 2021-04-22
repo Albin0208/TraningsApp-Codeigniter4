@@ -18,9 +18,29 @@ class ShopModel extends Model
     public function getProductsInfo()
     {
         $this->builder()
-             ->select('*')
              ->join('productcategories', "category_id = type");
 
         return $this->paginate(6, 'group');
+    }
+
+    public function getProductsNotOnSale()
+    {
+
+        $builder = $this->db->table('products_on_sale');
+
+        $result = $builder->select('product_id')
+                          ->get()
+                          ->getResultArray();
+
+        $ids = [];
+        for ($i=0; $i < count($result); $i++) { 
+            $ids[$i] = $result[$i]['product_id'];
+        }
+
+        return $this->builder()
+                    ->whereNotIn('product_id', $ids)
+                    ->join('productcategories', "category_id = type")
+                    ->get()
+                    ->getResultArray();
     }
 }

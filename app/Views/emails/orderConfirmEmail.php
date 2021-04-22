@@ -28,7 +28,7 @@
         <?= esc($firstname) ?>,<br /><br />
 
         Din beställning hos Elit-Träning är nu slutförd. Normal leveranstid är
-        1-3 vardagar.
+        1-3 arbetsdagar.
         <br /><br />
         Har du frågor om din beställning? Kontakta oss på
         <a style="color: #0d6efd" href="mailto:elittraning1@gmail.com" target="_blank">elittraning1@gmail.com</a>

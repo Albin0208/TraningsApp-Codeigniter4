@@ -391,18 +391,18 @@ class Validation
 				'alpha_numeric' => 'Fältet får bara innehålla siffor'
 			]
 		],
-		'productDiscount' => [
-			'rules' => 'required|alpha_numeric',
-			'errors' => [
-				'required' => 'Fältet måste vara ifyllt.',
-				'alpha_numeric' => 'Fältet får bara innehålla siffor'
-			]
-		],
 		'type' => [
 			'rules' => 'required|alpha_numeric',
 			'errors' => [
 				'required' => 'Fältet måste vara ifyllt.',
 				'alpha_numeric' => 'Ett alternativ måste vara valt'
+			]
+		],
+		'productImage' => [
+			'rules' => 'uploaded[productImage]|ext_in[productImage,png,jpg]',
+			'errors' => [
+				'uploaded' => 'En bild måste vara uppladdad',
+				'ext_in' => 'Bilden måte vara en png eller jpg'
 			]
 		]
 	];
@@ -418,17 +418,10 @@ class Validation
 			]
 		],
 		'productPrice' => [
-			'rules' => 'required|alpha_numeric',
+			'rules' => 'required|numeric',
 			'errors' => [
 				'required' => 'Fältet måste vara ifyllt.',
-				'alpha_numeric' => 'Fältet får bara innehålla siffor'
-			]
-		],
-		'productDiscount' => [
-			'rules' => 'alpha_numeric',
-			'errors' => [
-				'required' => 'Fältet måste vara ifyllt.',
-				'alpha_numeric' => 'Fältet får bara innehålla siffor'
+				'numeric' => 'Fältet får bara innehålla siffor'
 			]
 		],
 		'type' => [
@@ -436,6 +429,30 @@ class Validation
 			'errors' => [
 				'required' => 'Fältet måste vara ifyllt.',
 				'alpha_numeric' => 'Ett alternativ måste vara valt'
+			]
+			],
+			'productImage' => [
+				'rules' => 'ext_in[productImage,png,jpg]',
+				'errors' => [
+					'ext_in' => 'Bilden måte vara en png eller jpg'
+				]
+			]
+	];
+
+	public $sale = [
+		'productDiscount' => [
+			'rules' => 'required|numeric',
+			'errors' => [
+				'required' => 'Fältet måste vara ifyllt.',
+				'numeric' => 'Fältet får bara innehålla siffor'
+			]
+		],
+		'saleName' => [
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ ]+$/]|is_unique[sale.sale_name]',
+			'errors' => [
+				'required' => 'Fältet måste vara ifyllt.',
+				'regex_match' => 'Fältet får bara innehålla bokstäver och mellanslag',
+				'is_unique' => 'Kampanjnamnet finns redan'
 			]
 		]
 	];

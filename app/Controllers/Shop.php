@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\CategoriesModel;
+use App\Models\ProductOnsaleModel;
+use App\Models\SaleModel;
 use App\Models\ShopModel;
 use CodeIgniter\Controller;
 
@@ -57,11 +59,31 @@ class Shop extends Controller
       echo '404 Page not found';
     }
 
-    $model = new ShopModel();
+    $shopModel = new ShopModel();
 
-    $data['product'] =  $model->getProduct($slug);
+    
+    $data['product'] =  $shopModel->getProduct($slug);
     $data['title'] =  'Elit-Träning | ' .$data['product']['name'];
 
+    $model = new ProductOnsaleModel();
+    $saleModel = new SaleModel();
+
+    if ($sale = $model->where('product_id', $data['product']['product_id'])->first()) {
+      $saleInfo = $saleModel->find($sale['sale_id']);
+      $salePrice = 0;
+
+      if ($saleInfo['value_type'] == 'Percent') {
+        $percentLeft = 1 - ($saleInfo['sale_value'] / 100);
+
+        $salePrice = $data['product']['price'] * $percentLeft;
+      } else 
+        $salePrice = $data['product']['price'] - $saleInfo['sale_value'];
+
+      $data['product']['onSale'] = true;
+      $data['product']['salePrice'] = $salePrice;
+
+    }
+    
     return view('layouts/shop/single_product', $data);
   }
   
@@ -77,10 +99,22 @@ class Shop extends Controller
 
     $cart = \Config\Services::cart();
     $model = new ShopModel();
+    $productOnSaleModel = new ProductOnsaleModel();
 
     $product = $model->where('product_id', $id)->first();
     //Om antalet inte finns så ska en vara läggas till
     $product['qty'] = $qty ?? 1;
+
+    if ($sale = $productOnSaleModel->where('product_id', $product['product_id'])->first()) {
+      $saleModel = new SaleModel();
+      $saleInfo = $saleModel->find($sale['sale_id']);
+
+      if ($saleInfo['value_type'] == 'Percent') {
+        $percentLeft = 1 - ($saleInfo['sale_value'] / 100);
+        $product['price'] *= $percentLeft;
+      } else 
+      $product['price'] -= $saleInfo['sale_value'];
+    }
 
     $cart->insert($product);
 
