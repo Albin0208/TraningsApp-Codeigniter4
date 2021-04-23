@@ -32,16 +32,14 @@ class Shop extends Controller
     ];
     
     if ($category != null) {
-
-      $categoryModel = new CategoriesModel();
-      
-      $result = $categoryModel->like('category_name', $category)->first();
-      
-      $data['products'] = $model->where('type', $result['category_id'])
-                                ->paginate(6, 'group');
-      $data['pager'] = $model->pager;
-    }
-
+        $categoryModel = new CategoriesModel();
+        
+        $result = $categoryModel->like('category_name', $category)->first();
+        
+        $data['products'] = $model->where('type', $result['category_id'])
+                                  ->paginate(6, 'group');
+        $data['pager'] = $model->pager;
+      }
 
     return view('layouts/shop/shop', $data);
   }

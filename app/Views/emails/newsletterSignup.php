@@ -25,7 +25,7 @@
       </h3>
     </header>
     Vill inte prenumerera längre
-    <a style="color: #0dcaf0;" href="<?= base_url() ?>/Home/unsubscribe/<?= $delete_key ?>">avregistrera dig här</a>
+    <a style="color: #0dcaf0;" href="<?= base_url("/home/unsubscribe/{$delete_key}") ?>">avregistrera dig här</a>
   </div>
 </body>
 

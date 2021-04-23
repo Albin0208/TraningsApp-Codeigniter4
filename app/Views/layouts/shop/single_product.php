@@ -18,13 +18,12 @@
       <div class="row mb-3">
         <h2 class="text-uppercase fw-bold"><?= $product['name'] ?></h2>
       </div>
-      <p class="">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet non facere deserunt accusamus eius
-        fugit incidunt itaque eligendi optio adipisci?</p>
+      <p><?= $product['description'] ?></p>
       <h4 class="col"><?= $product['price'] ?> SEK</h4>
-      <?= form_open(base_url() . '/shop/addToCart', 'class="row mx-auto"') ?>
+      <?= form_open(base_url('/shop/addToCart'), 'class="row mx-auto"') ?>
       <?= form_hidden('product_id', $product['product_id']) ?>
       <input type="number" name="quantity" class="col form-control me-2 overlay1" value="1">
-      <button type="submit" class="btn btn-primary btn-lg col-9">Lägg i varukorgen</button>
+      <button type="submit" class="btn btn-primary btn-lg col-9">Lägg i varukorg</button>
       <?= form_close() ?>
     </div>
   </div>

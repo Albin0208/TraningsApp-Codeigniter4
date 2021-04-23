@@ -6,9 +6,9 @@
         <h5 class="m-0">Kampanj</h5>
       </div>
       <?php endif; ?>
-      <img src="<?= esc($product['image']) ?>" class="card-img-top" alt="..." width="400" height="400">
+      <img src="<?= esc($product['image']) ?>" class="card-img-top img-fluid" alt="..." width="400">
       <div class="card-body">
-        <h5 class="card-title p-0 mx-auto"><?= esc($product['name']) ?></h5>
+        <h6 class="card-title p-0 mx-auto"><?= esc($product['name']) ?></h6>
       </div>
     </a>
     <div class="card-footer border-0 mt-auto" style="background-color: #1d1d1d;">
@@ -24,7 +24,7 @@
       </h6>
       <?= form_open('shop/addToCart') ?>
       <?= form_hidden('product_id', $product['product_id']) ?>
-      <button type="submit" class="btn w-100 btn-primary">Lägg i varukorgen</button>
+      <button type="submit" class="btn w-100 btn-primary px-0">Lägg i varukorg</button>
       <?= form_close() ?>
     </div>
   </div>

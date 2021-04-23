@@ -1,15 +1,3 @@
-<!-- <nav class="navbar navbar-dark navbar-expand-lg account-nav">
-  <div class="collapse navbar-collapse account-nav bg-red mb-auto" id="navbarNava">
-    <ul class="navbar-nav flex-column w-100 text-white p-2">
-      <li>
-        <div class="col">
-          <p>Kategorier</p>
-          <a href="">Dryck</a>
-        </div>
-      </li>
-    </ul>
-  </div>
-</nav> -->
 <?php $uri = service('uri'); ?>
 
 <nav class="navbar navbar-dark navbar-expand-lg account-nav">

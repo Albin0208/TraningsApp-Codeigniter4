@@ -46,4 +46,12 @@ class ShopModel extends Model
                     ->get()
                     ->getResultArray();
     }
+
+    public function getProducts(string $product)
+    {
+        return $this->builder()
+                    ->like('name', $product)
+                    ->get()
+                    ->getResultArray();
+    }
 }

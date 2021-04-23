@@ -61,7 +61,7 @@
           <p class="d-flex justify-content-between">
             Lägg till en rabattkod (Valfritt)
           </p>
-          <?= form_open(base_url() . '/coupon') ?>
+          <?= form_open(base_url('/coupon')) ?>
           <div class="mt-3">
             <input type="text" name="discount_code"
               class="form-control overlay1 border-custom <?= session()->has('couponFail') ? 'is-invalid' : '' ?>"

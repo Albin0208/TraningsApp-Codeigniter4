@@ -1,4 +1,4 @@
-<?= form_open(base_url() . '/cart/checkout', 'data-parsley-validate id="form_id" novalidate') ?>
+<?= form_open(base_url('/cart/checkout'), 'data-parsley-validate id="form_id" novalidate') ?>
 <div>
   <h1>Fakturaadress</h1>
   <?php if (!session()->has('isLoggedIn')) : ?>

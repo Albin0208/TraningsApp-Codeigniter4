@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\NewsletterModel;
+use App\Models\SaleModel;
 use App\Models\ShopModel;
 
 class Home extends BaseController
@@ -11,10 +12,14 @@ class Home extends BaseController
 	{
 		helper('form');
 
-		$model = New ShopModel();
+		$model = new ShopModel();
+		$saleModel = new SaleModel();
+
 		$data = [
 			'title' => 'Elit-Träning | Startsida',
 			'products' => $model->paginate(8, 'group'),
+			'sales' => $saleModel->findAll(),
+			'noccos' => $model->getProducts('Nocco')
 		];
 
 		return view("home", $data);

@@ -19,7 +19,7 @@
       </div>
     </div>
   </div>
-  <div class="row gx-2">
+  <div class="row row-cols-1 row-cols-sm-2 gx-2">
     <div class="col">
       <div class="form-floating mt-3">
         <input type="text" class="form-control border-custom overlay1 <?= isInvalid('firstname') ?>" name="firstname"
