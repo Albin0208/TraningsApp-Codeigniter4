@@ -20,7 +20,7 @@ class ShopModel extends Model
         $this->builder()
              ->join('productcategories', "category_id = type");
 
-        return $this->paginate(6, 'group');
+        return $this->paginate(6, 'products');
     }
 
     public function getProductsNotOnSale()

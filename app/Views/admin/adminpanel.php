@@ -153,7 +153,7 @@
             </tbody>
           </table>
         </div>
-        <?= $pager->links('group', 'front_full') ?>
+        <?= $pager->links('products', 'front_full') ?>
       </div>
     </div>
   </div>
@@ -200,7 +200,7 @@
             </tbody>
           </table>
         </div>
-        <?= $pager->links('group2', 'front_full') ?>
+        <?= $pager->links('sales', 'front_full') ?>
       </div>
     </div>
   </div>
@@ -213,11 +213,38 @@
           <div class="row mb-2">
             <h2 class="card-title col">Rabattkoder</h2>
             <div class="col text-end">
-              <a href="/admin/createDiscount" class="btn btn-outline-info">Skapa rabattkod</a>
+              <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#discountModal">Skapa
+                rabattkod</button>
             </div>
           </div>
-          <!-- TODO Skapa tabell -->
+          <table class="table text-white table-responsive border">
+            <thead>
+              <tr>
+                <th scope="col">Namn</th>
+                <th scope="col">Värde</th>
+                <th scope="col" class="text-end">Åtgärder</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach($coupons as $coupon) : ?>
+              <tr>
+                <th scope="row" class="align-middle">
+                  <?= esc($coupon['name']) ?>
+                </th>
+                <td class="align-middle">
+                  <span class="text-danger">-<?= $coupon['value'] ?></span>
+                  <span><?= $coupon['type'] == 'Percent' ? 'Procent' : $coupon['type']?></span>
+                </td>
+                <td class="text-end">
+                  <button onclick="modal('coupon')" class="btn btn-outline-danger">Ta bort</button>
+                  <a class="btn btn-outline-info" href="/admin/editSale/<?= $coupon['name'] ?>">Redigera</a>
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
         </div>
+        <?= $pager->links('coupons', 'front_full') ?>
       </div>
     </div>
     <div class="col">
@@ -269,17 +296,83 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-info" data-bs-dismiss="modal">Avbryt</button>
-        <a onclick="endSale()" type="button" class="btn btn-danger">Avsluta</a>
+        <a onclick="deleteWithSlug()" type="button" class="btn btn-danger">Avsluta</a>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Discount Modal -->
+<div class="modal fade" id="discountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Skapa rabattkod</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <?= form_open(base_url('/admin/createDiscount'), 'data-parsley-validate id="form_id" novalidate') ?>
+        <div class="row row-cols-1 row-cols-sm-2 gx-2 mt-3">
+          <div class="col">
+            <div class="form-floating col-sm">
+              <input type="text" class="form-control border-custom overlay1 <?= isInvalid('discountName') ?>"
+                name="discountName" value="<?= set_value('discountName') ?>" id="discountName" placeholder="Namn"
+                data-parsley-pattern="/^[A-Za-zÀ-ÿ0-9 ]+$/" data-parsley-errors-container="#invaliddiscountName"
+                data-parsley-trigger="keyup change" required>
+              <label for="discountName">Namn</label>
+              <div class="text-danger text-start" id="invaliddiscountName">
+                <?= getError('discountName') ?>
+              </div>
+            </div>
+            <div class="form-floating col mt-2">
+              <input type="number" class="form-control border-custom overlay1 <?= isInvalid('productDiscount') ?>"
+                name="productDiscount" value="<?= set_value('productDiscount') ?>" id="productDiscount"
+                placeholder="Rabatt" data-parsley-errors-container="#invalidProductDiscount"
+                data-parsley-trigger="keyup change" required>
+              <label for="productDiscount">Värde</label>
+              <div class="text-danger text-start" id="invalidProductDiscount">
+                <?= getError('productDiscount') ?>
+              </div>
+            </div>
+          </div>
+          <div class="col row gx-2 mt-2 mt-sm-0">
+            <div class="col">
+              <div class="overlay2 p-2 shadow">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="discountType" id="exampleRadios1" value="SEK"
+                    checked>
+                  <label class="form-check-label" for="exampleRadios1">
+                    Rabatt i SEK
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="discountType" id="exampleRadios2" value="Percent">
+                  <label class="form-check-label" for="exampleRadios2">
+                    Rabatt i procent
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-bs-dismiss="modal">Avbryt</button>
+        <button type="submit" class="btn btn-success">Skapa</button>
+        <?= form_close() ?>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Discount Modal -->
+
 <script>
 var productSlug;
+var redirectPath
 
-function setProductSlug(slug) {
+function setProductSlug(slug, path) {
   productSlug = slug;
+  redirectPath = path;
 }
 
 function deleteProduct() {
@@ -289,6 +382,17 @@ function deleteProduct() {
 function endSale() {
   window.location.replace(window.location.pathname + '/endSale/' + productSlug);
 }
+
+function removeDiscount() {
+  // window.location.replace(window.location.pathname + '/removeDiscount/' + productSlug);
+  alert('test');
+}
+
+function deleteWithSlug() {
+  window.location.replace(window.location.pathname + redirectPath + productSlug);
+}
 </script>
+
+<script src="/assets/js/main.js"></script>
 
 <?= $this->endSection() ?>

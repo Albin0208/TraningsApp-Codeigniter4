@@ -200,16 +200,30 @@ class Cart
 
   public function discountvalue()
   {
-    if (@$this->cartContents['discount_code'])
-      return $this->total() * $this->cartContents['discount_code']['value'];
+    if (@$this->cartContents['discount_code']) {
+      if ($this->cartContents['discount_code']['type'] == 'SEK')
+        return $this->cartContents['discount_code']['value'];
+      else if ($this->cartContents['discount_code']['type'] == 'Percent') {
+        $percent = $this->cartContents['discount_code']['value'] / 100;
+        return $this->total() * $percent;
+      }
+      
+    }
     return false;
+  }
+
+  public function discountType()
+  {
+    if ($this->cartContents['discount_code'])
+      return $this->cartContents['discount_code']['type'];
   }
 
   public function setDiscountCode($discountCode)
   {
     $this->cartContents['discount_code'] = [
       'code' => $discountCode['name'],
-      'value' => 0.10
+      'value' => $discountCode['value'],
+      'type' => $discountCode['type']
     ];
     $this->saveCart();
   }

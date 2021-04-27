@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\AdminModel;
 use App\Models\ShopModel;
 use App\Models\CategoriesModel;
+use App\Models\CouponModel;
 use App\Models\ProductOnsaleModel;
 use App\Models\SaleModel;
 use CodeIgniter\Controller;
@@ -21,6 +22,7 @@ class Admin extends Controller
     $admin = new AdminModel($db);
     $model = new ShopModel();
     $saleModel = new SaleModel();
+    $couponsModel = new CouponModel();
 
     $data = [
       'title'           => 'Elit-Träning | Admin',
@@ -32,7 +34,8 @@ class Admin extends Controller
       'latestOrders'    => $admin->getLatest('orders'),
       'latestCustomers' => $admin->getLatest('customers'),
       'products'        => $model->getProductsInfo(),
-      'sales'           => $saleModel->paginate(6, 'group2'),
+      'sales'           => $saleModel->paginate(6, 'sales'),
+      'coupons'         => $couponsModel->paginate(6, 'coupons'),
       'pager'           => $model->pager,
     ];
     //TODO Fixa så admin kan lägga till och ta bort rabattkoder
@@ -248,15 +251,48 @@ class Admin extends Controller
    */
   public function endSale(string $saleKey)
   {
-    if (empty($saleKey) || !preg_match('/^[A-Za-zÀ-ÿ ]+$/', $saleKey))
+    if (empty($saleKey) || !preg_match('/^[A-Za-zÀ-ÿ0-9 ]+$/', $saleKey))
       return redirect()->to('/admin')->with('error', 'Något gick fel');
   
-  $model = new SaleModel();
+    $model = new SaleModel();
 
-  $model->where('sale_name', $saleKey)->delete();
+    if ($model->where('sale_name', $saleKey)->delete())
+      return redirect()->to('/admin')->with('success', 'Kampanjen är avslutad');
+    
+    return redirect()->to('/admin')->with('error', 'Något gick fel');
 
-  return redirect()->to('/admin')->with('success', 'Kampanjen är avslutad');
   }
 
   #endregion
+
+  #region Hanter rabattkoder
+
+  public function createDiscount()
+  {
+    if ($this->request->getMethod() == 'post') {
+      $validation = \Config\Services::validation();
+      $validation->setRules([
+        'discountName' => 'required|is_unique[coupons.name]',
+        'productDiscount' => 'required|is_numeric'
+      ]);
+      
+      if ($validation->run($_POST)) {
+        $model = new CouponModel();
+
+        $newCode = [
+          'type' => $this->request->getPost('discountType'),
+          'name' => $this->request->getPost('discountName'),
+          'value' => $this->request->getPost('productDiscount')
+        ];
+
+        $model->insert($newCode);
+
+        return redirect()->to('/admin')->with('success', 'Rabattkod skapad');
+      }
+      return redirect()->to('/admin')->with('error', 'Rabattkoden finns redan eller så är den ogiltig');
+      }
+  }
+
+  #endregion
+
 }

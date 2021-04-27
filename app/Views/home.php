@@ -1,7 +1,8 @@
 <?= $this->extend("layouts/main") ?>
 <?= $this->section("content") ?>
 
-<div id="carousel" class="carousel slide" data-bs-ride="carousel">
+<!-- News Carousel -->
+<section id="carousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true"
       aria-label="Slide 1"></button>
@@ -10,18 +11,22 @@
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active" data-bs-interval="10000">
-      <div class="container text-center p-3 text-white">
-        <h5>Pågående kampanjer</h5>
+      <div class="container text-center p-3 text-white my-auto">
+        <h3>Pågående kampanjer</h3>
         <ul class="list-unstyled mb-4">
+          <?php if (!empty($sales)) : ?>
           <?php foreach($sales as $sale) : ?>
           <li><?= $sale['sale_name'] ?></li>
           <?php endforeach; ?>
+          <?php else : ?>
+          <li>Just nu finns det inga kampanjer</li>
+          <?php endif; ?>
         </ul>
       </div>
     </div>
     <div class="carousel-item" data-bs-interval="10000">
       <div class="container text-center p-3 text-white">
-        <h5>Familia Del Sol</h5>
+        <h3>Familia Del Sol</h3>
         <div class="row">
           <?php foreach($noccos as $nocco) : ?>
           <div class="col">
@@ -48,9 +53,10 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
-</div>
+</section>
+<!-- /News Carousel -->
 
-<div class="text-white mt-4">
+<section class="text-white mt-4">
   <div class="row row-cols-1 gx-3">
     <div class="col col-sm-8">
       <div class="shadow">
@@ -86,9 +92,10 @@
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="bg-dark text-white mt-5 shadow">
+<!-- Info row -->
+<section class="bg-dark text-white mt-5 shadow">
   <div class="row row-cols-1 row-cols-md-3 text-center p-3">
     <div class="col">
       <i class="bi bi-check-circle me-1"></i>
@@ -103,16 +110,18 @@
       <span class="align-middle">Fria byten</span>
     </div>
   </div>
-</div>
+</section>
+<!-- /Info row -->
 
-<div class="bg-dark text-white mt-4 p-2">
+<!-- News display -->
+<section class="bg-dark text-white mt-4 p-2">
   <h2 class="fw-bold mt-1">Nyheter i butiken</h2>
   <div class="row row-cols-2 row-cols-sm-4 p-2">
     <?php foreach ($products as $product) : ?>
     <?= view_cell('\App\Libraries\Shop::productItem', $product) ?>
     <?php endforeach; ?>
   </div>
-</div>
-</div>
+</section>
+<!-- /News display -->
 
 <?= $this->endSection() ?>
