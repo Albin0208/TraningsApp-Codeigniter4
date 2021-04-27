@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col mt-2 mt-sm-0">
       <div class="card overlay2 text-white shadow">
         <div class="card-body">
           <h1 class="card-title"><?= $orderCount ?></h1>
@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col mt-2 mt-sm-0">
       <div class="card overlay2 text-white shadow">
         <div class="card-body">
           <h1 class="card-title"><?= $totalRevenue ?> SEK</h1>
@@ -38,7 +38,7 @@
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col mt-2 mt-sm-0">
       <div class="card overlay2 text-white shadow">
         <div class="card-body">
           <h1 class="card-title"><?= $productCount ?></h1>
@@ -82,7 +82,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-sm-5">
+    <div class="col-12 col-sm-5 mt-2 mt-sm-0">
       <div class="card overlay2 text-white shadow">
         <div class="card-body">
           <h2 class="card-title">Nyaste kunderna</h2>
@@ -143,9 +143,8 @@
                 <td class="align-middle"><?= $product['price'] ?> SEK</td>
                 <td class="align-middle"><?= $product['category_name'] ?></td>
                 <td class="text-end">
-                  <button onclick="setProductSlug('<?= $product['slug'] ?>')" class="btn btn-outline-danger"
-                    data-bs-toggle="modal" data-bs-target="#productModal"
-                    data-product-slug="<?= $product['slug'] ?>">Radera</button>
+                  <button onclick="modal('product', '<?= $product['slug'] ?>')"
+                    class="btn btn-outline-danger">Radera</button>
                   <a class="btn btn-outline-info" href="/admin/editProduct/<?= $product['slug'] ?>">Redigera</a>
                 </td>
               </tr>
@@ -190,9 +189,8 @@
                 </td>
                 <td class="align-middle">1</td>
                 <td class="text-end">
-                  <button onclick="setProductSlug('<?= $sale['sale_name'] ?>')" class="btn btn-outline-danger"
-                    data-bs-toggle="modal" data-bs-target="#saleModal"
-                    data-product-slug="<?= $sale['sale_id'] ?>">Avsluta</button>
+                  <button onclick="modal('sale', '<?= $sale['sale_name'] ?>')"
+                    class="btn btn-outline-danger">Avsluta</button>
                   <a class="btn btn-outline-info" href="/admin/editSale/<?= $sale['sale_name'] ?>">Redigera</a>
                 </td>
               </tr>
@@ -236,8 +234,8 @@
                   <span><?= $coupon['type'] == 'Percent' ? 'Procent' : $coupon['type']?></span>
                 </td>
                 <td class="text-end">
-                  <button onclick="modal('coupon')" class="btn btn-outline-danger">Ta bort</button>
-                  <a class="btn btn-outline-info" href="/admin/editSale/<?= $coupon['name'] ?>">Redigera</a>
+                  <button onclick="modal('coupon', '<?= $coupon['name'] ?>')" class="btn btn-outline-danger">
+                    Ta bort</button>
                 </td>
               </tr>
               <?php endforeach; ?>
@@ -264,44 +262,6 @@
   <!-- /Rabatter och kategorier -->
 </div>
 
-<!-- Product Modal -->
-<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content bg-dark text-white">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ta bort produkt</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Är du säker på att du vill ta bort produkten
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-info" data-bs-dismiss="modal">Avbryt</button>
-        <a onclick="deleteProduct()" type="button" class="btn btn-danger">Ta bort</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Sale Modal -->
-<div class="modal fade" id="saleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content bg-dark text-white">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Avsluta kampanj</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Är du säker på att du vill avsluta kampanjen
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-info" data-bs-dismiss="modal">Avbryt</button>
-        <a onclick="deleteWithSlug()" type="button" class="btn btn-danger">Avsluta</a>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Discount Modal -->
 <div class="modal fade" id="discountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -310,8 +270,8 @@
         <h5 class="modal-title" id="exampleModalLabel">Skapa rabattkod</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <?= form_open(base_url('/admin/createDiscount'), 'data-parsley-validate id="form_id" novalidate') ?>
       <div class="modal-body">
-        <?= form_open(base_url('/admin/createDiscount'), 'data-parsley-validate id="form_id" novalidate') ?>
         <div class="row row-cols-1 row-cols-sm-2 gx-2 mt-3">
           <div class="col">
             <div class="form-floating col-sm">
@@ -365,33 +325,6 @@
   </div>
 </div>
 <!-- /Discount Modal -->
-
-<script>
-var productSlug;
-var redirectPath
-
-function setProductSlug(slug, path) {
-  productSlug = slug;
-  redirectPath = path;
-}
-
-function deleteProduct() {
-  window.location.replace(window.location.pathname + '/deleteProduct/' + productSlug);
-}
-
-function endSale() {
-  window.location.replace(window.location.pathname + '/endSale/' + productSlug);
-}
-
-function removeDiscount() {
-  // window.location.replace(window.location.pathname + '/removeDiscount/' + productSlug);
-  alert('test');
-}
-
-function deleteWithSlug() {
-  window.location.replace(window.location.pathname + redirectPath + productSlug);
-}
-</script>
 
 <script src="/assets/js/main.js"></script>
 

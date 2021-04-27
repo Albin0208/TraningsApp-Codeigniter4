@@ -45,13 +45,31 @@ const showModal = (
   modal.show();
 };
 
-function modal(name) {
+function modal(name, slug) {
   switch (name) {
     case "coupon":
       showModal(
         "Radera rabattkod",
         "Är du säker på att du vill radera rabattkoden?",
-        deleteWithSlug(slug, path)
+        `deleteWithSlug('${slug}', '/removeDiscount/')`
+      );
+      break;
+
+    case "sale":
+      showModal(
+        "Avsluta kampanj",
+        "Är du säker på att du vill avsluta kampanjen?",
+        `deleteWithSlug('${slug}', '/endSale/')`,
+        "Avsluta"
+      );
+      break;
+
+    case "product":
+      showModal(
+        "Radera produkt",
+        "Är du säker på att du vill radera produkten?",
+        `deleteWithSlug('${slug}', '/deleteProduct/')`,
+        "Radera"
       );
       break;
 
@@ -61,7 +79,5 @@ function modal(name) {
 }
 
 function deleteWithSlug(slug, path) {
-  window.location.replace(
-    window.location.pathname + redirectPath + productSlug
-  );
+  window.location.replace(window.location.pathname + path + slug);
 }

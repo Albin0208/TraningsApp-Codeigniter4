@@ -293,6 +293,19 @@ class Admin extends Controller
       }
   }
 
+  public function removeDiscount(string $name)
+  {
+    if (empty($name) || !preg_match('/^[A-Za-zÀ-ÿ0-9 ]+$/', $name))
+      return redirect()->to('/admin')->with('error', 'Något gick fel');
+
+    $model = new CouponModel();
+
+    if ($model->where('name', $name)->delete())
+      return redirect()->to('/admin')->with('success', 'Rabattkoden är borttagen');
+    
+    return redirect()->to('/admin')->with('error', 'Något gick fel');
+  }
+
   #endregion
 
 }
