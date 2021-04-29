@@ -257,9 +257,9 @@
       <div class="card overlay2 text-white shadow">
         <div class="card-body">
           <div class="row mb-2">
-            <h2 class="card-title col">Kategorier</h2>
+            <h2 class="card-title col">Nyhetsbrev</h2>
             <div class="col text-end">
-              <a href="/admin/createCategory" class="btn btn-outline-info">Skapa kategori</a>
+              <a href="/admin/createCategory" class="btn btn-outline-info">Skicka nyhetsbrev</a>
             </div>
           </div>
           <!-- TODO Skapa tabell -->
