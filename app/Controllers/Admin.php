@@ -5,8 +5,11 @@ use App\Models\AdminModel;
 use App\Models\ShopModel;
 use App\Models\CategoriesModel;
 use App\Models\CouponModel;
+use App\Models\OrderItemModel;
+use App\Models\OrderModel;
 use App\Models\ProductOnsaleModel;
 use App\Models\SaleModel;
+use App\Models\UserModel;
 use CodeIgniter\Controller;
 use CodeIgniter\I18n\Time;
 
@@ -38,7 +41,6 @@ class Admin extends Controller
       'coupons'         => $couponsModel->paginate(6, 'coupons'),
       'pager'           => $model->pager,
     ];
-    //TODO Fixa så admin kan lägga till och ta bort rabattkoder
     //TODO Fixa så att admin kan lägga till och ta bort kategorier
     //TODO Fixa så att produkter kan markeras som nyhet eller kampanj
     //TODO Fixa så att det visas hur många produkter som en kampanj rabatterar
@@ -304,6 +306,39 @@ class Admin extends Controller
       return redirect()->to('/admin')->with('success', 'Rabattkoden är borttagen');
     
     return redirect()->to('/admin')->with('error', 'Något gick fel');
+  }
+
+  #endregion
+
+  #region Visa Ordrar och användare
+
+  function order(string $orderNumber)
+  {
+    $orderModel = new OrderModel();
+    $itemModel = new OrderItemModel();
+    
+    
+    $data = [
+      'title' => 'Elit-Träning | Admin - Order',
+      'pageTitle' => 'Order ' . $orderNumber,
+      'orderDetails' => $order = $orderModel->where('order_number', $orderNumber)->first(),
+      'orderItems' => $itemModel->where('order_id', $order['order_id'])->findAll(),
+      'time' => new Time(),
+    ];
+
+    return view('admin/order', $data);
+  }
+
+  public function customer(string $username)
+  {
+    $model = new UserModel();
+
+    $data = [
+      'title' => 'Elit-Träning | Admin - Användare',
+      'user' => $model->where('username', $username)->first(),
+    ];
+
+    return view('admin/customer', $data);
   }
 
   #endregion

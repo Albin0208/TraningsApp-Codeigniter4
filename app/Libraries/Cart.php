@@ -198,7 +198,7 @@ class Cart
     //TODO Fixa options
   }
 
-  public function discountvalue()
+  public function discountValue()
   {
     if (@$this->cartContents['discount_code']) {
       if ($this->cartContents['discount_code']['type'] == 'SEK')
@@ -210,6 +210,12 @@ class Cart
       
     }
     return false;
+  }
+
+  public function discountTotal()
+  {
+    if (@$this->cartContents['discount_code'])
+      return $this->cartContents['discount_code']['value'];
   }
 
   public function discountType()

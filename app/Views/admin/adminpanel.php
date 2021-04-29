@@ -13,6 +13,7 @@
   <?php endif; ?>
   <h1 style="font-size: 4em;">Admin panelen</h1>
   <hr>
+  <!-- General information -->
   <div class="row row-cols-1 row-cols-sm-4 gx-3">
     <div class="col">
       <div class="card overlay2 text-white shadow">
@@ -47,6 +48,8 @@
       </div>
     </div>
   </div>
+  <!-- /General information -->
+
   <!-- Beställningar och kunder -->
   <div class="row row-cols-1 row-cols-sm-2 gx-3 mt-4">
     <div class="col-12 col-sm-7">
@@ -66,14 +69,15 @@
               <?php foreach($latestOrders as $order) : ?>
               <tr>
                 <th scope="row" class="align-middle"><a class="text-decoration-none text-info"
-                    href="view-order/<?= esc($order['order_number']) ?>">#<?= esc($order['order_number']) ?></a></th>
+                    href="<?= base_url("/admin/order/{$order['order_number']}") ?>">#<?= esc($order['order_number']) ?></a>
+                </th>
                 <td class="align-middle"><?= esc($time->parse($order['created_at'])->toDateString()) ?></td>
                 <td class="align-middle">
                   <?= esc($order['order_price'] + $order['shipping'] - $order['discount_value']) ?> SEK för
                   <?= esc($order['quantity']) ?>
                   <?= $order['quantity'] <= 1 ? 'artikel' : 'artiklar' ?></td>
                 <td class="text-end"><a class="btn btn-outline-info"
-                    href="view-order/<?= esc($order['order_number']) ?>">Visa</a>
+                    href="<?= base_url("/admin/order/{$order['order_number']}") ?>">Visa</a>
                 </td>
               </tr>
               <?php endforeach; ?>
@@ -103,7 +107,8 @@
                 </th>
                 <td class="align-middle"><?= $customer['username'] ?></td>
                 <td class="align-middle"><?= esc($time->parse($customer['created_at'])->toDateString()) ?></td>
-                <td class="text-end"><a class="btn btn-outline-info" href="#">Visa</a>
+                <td class="text-end"><a class="btn btn-outline-info"
+                    href="<?= base_url("/admin/customer/{$customer['username']}") ?>">Visa</a>
                 </td>
               </tr>
               <?php endforeach; ?>
@@ -114,6 +119,7 @@
     </div>
   </div>
   <!-- /Beställningar och kunder -->
+
   <!-- Produkter -->
   <div class="row gx-3 mt-4">
     <div class="col">
@@ -157,6 +163,7 @@
     </div>
   </div>
   <!-- /Produkter -->
+
   <!-- Kampanjer -->
   <div class="row mt-4">
     <div class="col">
@@ -203,6 +210,7 @@
     </div>
   </div>
   <!-- /Kampanjer -->
+
   <!-- Rabatter och kategorier -->
   <div class="row row-cols-1 row-cols-sm-2 gx-3 mt-4">
     <div class="col">
@@ -326,6 +334,6 @@
 </div>
 <!-- /Discount Modal -->
 
-<script src="/assets/js/main.js"></script>
+<script src="/assets/js/modal.js"></script>
 
 <?= $this->endSection() ?>
