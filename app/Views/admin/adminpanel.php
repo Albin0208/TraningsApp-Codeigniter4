@@ -194,7 +194,7 @@
                   <span class="text-danger">-<?= $sale['sale_value'] ?></span>
                   <span><?= $sale['value_type'] == 'Percent' ? 'Procent' : $sale['value_type']?></span>
                 </td>
-                <td class="align-middle">1</td>
+                <td class="align-middle"></td>
                 <td class="text-end">
                   <button onclick="modal('sale', '<?= $sale['sale_name'] ?>')"
                     class="btn btn-outline-danger">Avsluta</button>
@@ -270,7 +270,7 @@
   <!-- /Rabatter och kategorier -->
 </div>
 
-<!-- Discount Modal -->
+<!-- Create Discount Modal -->
 <div class="modal fade" id="discountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content bg-dark text-white">
@@ -278,28 +278,24 @@
         <h5 class="modal-title" id="exampleModalLabel">Skapa rabattkod</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <?= form_open(base_url('/admin/createDiscount'), 'data-parsley-validate id="form_id" novalidate') ?>
+      <?= form_open(base_url('admin/createDiscount'), 'data-parsley-validate id="form_id" novalidate') ?>
       <div class="modal-body">
         <div class="row row-cols-1 row-cols-sm-2 gx-2 mt-3">
           <div class="col">
             <div class="form-floating col-sm">
-              <input type="text" class="form-control border-custom overlay1 <?= isInvalid('discountName') ?>"
-                name="discountName" value="<?= set_value('discountName') ?>" id="discountName" placeholder="Namn"
-                data-parsley-pattern="/^[A-Za-zÀ-ÿ0-9 ]+$/" data-parsley-errors-container="#invaliddiscountName"
-                data-parsley-trigger="keyup change" required>
+              <input type="text" class="form-control border-custom overlay1" name="discountName" id="discountName"
+                placeholder="Namn" data-parsley-pattern="/^[A-Za-zÀ-ÿ0-9 ]+$/"
+                data-parsley-errors-container="#invaliddiscountName" data-parsley-trigger="keyup change" required>
               <label for="discountName">Namn</label>
               <div class="text-danger text-start" id="invaliddiscountName">
-                <?= getError('discountName') ?>
               </div>
             </div>
             <div class="form-floating col mt-2">
-              <input type="number" class="form-control border-custom overlay1 <?= isInvalid('productDiscount') ?>"
-                name="productDiscount" value="<?= set_value('productDiscount') ?>" id="productDiscount"
-                placeholder="Rabatt" data-parsley-errors-container="#invalidProductDiscount"
+              <input type="number" class="form-control border-custom overlay1" name="productDiscount"
+                id="productDiscount" placeholder="Rabatt" data-parsley-errors-container="#invalidProductDiscount"
                 data-parsley-trigger="keyup change" required>
               <label for="productDiscount">Värde</label>
               <div class="text-danger text-start" id="invalidProductDiscount">
-                <?= getError('productDiscount') ?>
               </div>
             </div>
           </div>
@@ -325,15 +321,15 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-info" data-bs-dismiss="modal">Avbryt</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Avbryt</button>
         <button type="submit" class="btn btn-success">Skapa</button>
         <?= form_close() ?>
       </div>
     </div>
   </div>
 </div>
-<!-- /Discount Modal -->
+<!-- /Create Discount Modal -->
 
-<script src="/assets/js/modal.js"></script>
+<script src="/assets/js/modals.js"></script>
 
 <?= $this->endSection() ?>

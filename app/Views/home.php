@@ -40,8 +40,10 @@
     </div>
     <div class="carousel-item" data-bs-interval="10000">
       <div class="container text-center p-3 text-white">
-        <h5>Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
+        <!-- <h5>Third slide label</h5>
+        <p>Some representative placeholder content for the third slide.</p> -->
+        <img src="https://tyngre.se/wp-content/uploads/2021/03/NOCCO-Mango-Del-SolStartsida-Banner.png" alt=""
+          class="img-fluid">
       </div>
     </div>
   </div>

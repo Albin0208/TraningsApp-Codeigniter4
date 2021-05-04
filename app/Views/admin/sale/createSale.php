@@ -54,14 +54,14 @@
           <div class="col">
             <div class="overflow-auto bg-dark overlay1 p-2 border rounded border-secondary" style="max-height: 50vh;">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="0" disabled id="flexCheckDefault">
+                <input class="form-check-input" type="checkbox" value="0" name="categories[]" id="flexCheckDefault">
                 <label class="form-check-label" for="flexCheckDefault">
                   Allt
                 </label>
               </div>
               <?php foreach($categories as $category) : ?>
               <div class="form-check">
-                <input class="form-check-input" name="categories[]" disabled type="checkbox"
+                <input class="form-check-input" name="categories[]" type="checkbox"
                   value="<?= $category['category_id'] ?>" id="flexCheckDefault">
                 <label class="form-check-label" for="flexCheckDefault">
                   <?= $category['category_name'] ?>
@@ -97,7 +97,13 @@
       </div>
     </div>
   </div>
-  <input type="submit" value="Skapa" class="btn btn-lg btn-outline-info mt-4">
+
+  <p class="text-info"><i class="bi bi-info-circle-fill me-1"></i>
+    Är produkten redan med i en kampanj kommer den kampanj gälla istället för den nya
+  </p>
+
+  <button type="submit" class="btn btn-lg btn-outline-info">Skapa</button>
+  <a href="<?= base_url('admin') ?>" class="btn btn-lg btn-outline-danger">Avbryt</a>
   <?= form_close() ?>
 </div>
 

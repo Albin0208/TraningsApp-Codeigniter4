@@ -43,7 +43,6 @@ class Admin extends Controller
     ];
     //TODO Fixa så att admin kan lägga till och ta bort kategorier
     //TODO Fixa så att produkter kan markeras som nyhet eller kampanj
-    //TODO Fixa så att det visas hur många produkter som en kampanj rabatterar
     //TODO Fixa så att man kan se vilka produkter som är rabatterade
     return view('/admin/adminpanel', $data);
   }
@@ -208,25 +207,23 @@ class Admin extends Controller
       
       if ($validation->run($_POST, 'sale')) {
         $saleModel = new SaleModel();
-        $productOnSaleModel = new ProductOnsaleModel();
 
         $saleData =[
           'sale_name'  => $this->request->getPost('saleName'),
           'sale_value' => $this->request->getPost('productDiscount'),
-          'value_type' => $this->request->getPost('discountType')
+          'value_type' => $this->request->getPost('discountType'),
         ];
-
+        
         $id = $saleModel->insert($saleData);
         
-        foreach ($this->request->getPost('products') as $productId) {
-          $saleData = [
-            'sale_id'    => $id,
-            'product_id' => $productId
-          ];
-  
-          $productOnSaleModel->insert($saleData);
-
-        }
+        //Vill vi skapa kampanj på en eller flera kategorier?
+        if ($this->request->getPost('categories'))
+          $this->saleWithCategory($id);
+          
+        //Vill vi skapa kampanj på en eller flera produkter?
+        if ($this->request->getPost('products'))
+          $this->saleWithProducts($id);
+        
         return redirect()->to('/admin')->with('success', 'Kampanj skapad');
       }
     }
@@ -249,7 +246,7 @@ class Admin extends Controller
    * Avsluta en kampanj
    *
    * @param  string $saleKey Nyckeln till en specifik kampanj
-   * @return View
+   * @return Redirect Tillbaka till adminsidan med ett meddelande
    */
   public function endSale(string $saleKey)
   {
@@ -258,11 +255,55 @@ class Admin extends Controller
   
     $model = new SaleModel();
 
-    if ($model->where('sale_name', $saleKey)->delete())
-      return redirect()->to('/admin')->with('success', 'Kampanjen är avslutad');
-    
-    return redirect()->to('/admin')->with('error', 'Något gick fel');
+    return $model->where('sale_name', $saleKey)->delete() 
+            ? redirect()->to('/admin')->with('success', 'Kampanjen är avslutad') 
+            : redirect()->to('/admin')->with('error', 'Något gick fel');
 
+  }
+  
+  /**
+   * Skapa en kampanj för en specifik kategori
+   *
+   * @param  int $id Kampanj id
+   * @return void
+   */
+  private function saleWithCategory(int $id)
+  {
+    $productModel = new ShopModel();
+    $productOnSaleModel = new ProductOnsaleModel();
+    
+    foreach ($this->request->getPost('categories') as $category) {
+      //Är det 0 ska allt ingå i kampanjen, annars hämta de produkterna som tillgör den kategorin
+      $products = $category == 0 ? $productModel->findAll() : $productModel->where('type', $category)->findAll();
+
+      //Lägg till alla produkterna som ska vara med i kampanjen
+      foreach ($products as $product) {
+        $saleData = [
+          'sale_id'    => $id,
+          'product_id' => $product['product_id']
+        ];
+        $productOnSaleModel->insert($saleData);
+      }
+    }
+  }
+  
+  /**
+   * Skapa en kampanj för specifika produkter
+   *
+   * @param  int $id Kampanj id
+   * @return void
+   */
+  private function saleWithProducts(int $id)
+  {
+    $productOnSaleModel = new ProductOnsaleModel();
+    foreach ($this->request->getPost('products') as $productId) {
+      $saleData = [
+        'sale_id'    => $id,
+        'product_id' => $productId
+      ];
+
+      $productOnSaleModel->insert($saleData);
+    }
   }
 
   #endregion

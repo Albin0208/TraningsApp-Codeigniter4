@@ -61,7 +61,7 @@
             <hr class="mb-4">
             <?php endforeach; ?>
           </div>
-          <p class="text-primary mt-1 mb-0"><i class="bi bi-info-circle-fill me-1"></i>
+          <p class="text-info mt-1 mb-0"><i class="bi bi-info-circle-fill me-1"></i>
             Vänta inte med att beställa, att lägga till varor i din kundvagn betyder inte att du bokar dem.</p>
         </div>
       </div>

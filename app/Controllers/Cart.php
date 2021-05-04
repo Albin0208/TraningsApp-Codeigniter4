@@ -62,7 +62,7 @@ class Cart extends Controller
           'zip_code' => $this->request->getPost('zipCode'),
           'city' => $this->request->getPost('city'),
           'phone' => $this->request->getPost('phone'),
-          'order_price' => $cart->total() + $cart->shipping(),
+          'order_price' => $cart->total(),
           'quantity' => $cart->totalItems(),
           'discount_value' => $cart->discountValue(),
           'shipping' => $cart->shipping()
@@ -117,7 +117,7 @@ class Cart extends Controller
       'title' => 'Din order är slutförd',
       'email' => $order['email'],
       'orderNumber' => $order['order_number'],
-      'orderPrice' => $order['order_price'],
+      'orderPrice' => $order['order_price'] + $order['shipping'],
       'orderItems' => $items,
     ];
 
@@ -127,7 +127,7 @@ class Cart extends Controller
   /**
    * Redigera varukorg
    *
-   * @return void
+   * @return Redirect Tillbaka till varukorgen
    */
   public function editCart()
   {
@@ -174,7 +174,7 @@ class Cart extends Controller
   /**
    * Töm varukorgen
    *
-   * @return void
+   * @return Redirect Tillbaka till varukorgen
    */
   public function destroyCart()
   {

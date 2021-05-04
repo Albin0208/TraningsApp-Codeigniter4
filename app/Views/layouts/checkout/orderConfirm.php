@@ -21,7 +21,7 @@
           <h4 class="m-0">Totalbelopp</h4>
         </div>
         <div class="col text-end">
-          <h4 class="m-0"><?= esc($orderPrice) ?> SEK</h4>
+          <h4 class="m-0"><?= $orderPrice?> SEK</h4>
         </div>
       </div>
       <hr class="m-0 mt-3">

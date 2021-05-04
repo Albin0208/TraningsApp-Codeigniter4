@@ -83,10 +83,18 @@
             <?php endif; ?>
             <tr>
               <th style="width: 60%;text-align: start;border: 1px solid black;padding: 20px;" scope="row" colspan="2">
+                Frakt:
+              </th>
+              <td style="border: 1px solid black; padding: 20px">
+                <?= $cart->shipping() == 0 ? 'Gratis' : "{$cart->shipping()} SEK"  ?>
+              </td>
+            </tr>
+            <tr>
+              <th style="width: 60%;text-align: start;border: 1px solid black;padding: 20px;" scope="row" colspan="2">
                 Totalt:
               </th>
               <td style="border: 1px solid black; padding: 20px">
-                <?= $cart->total() - $cart->discountValue() ?> SEK
+                <?= $cart->total() + $cart->shipping() - $cart->discountValue() ?> SEK
               </td>
             </tr>
           </tfoot>

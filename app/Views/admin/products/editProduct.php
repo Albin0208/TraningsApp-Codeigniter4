@@ -63,7 +63,8 @@
         rows="3"><?= $product['description'] ?></textarea>
     </div>
   </div>
-  <input type="submit" value="Uppdatera" class="btn btn-lg btn-outline-info mt-4">
+  <button type="submit" class="btn btn-lg btn-outline-info mt-4">Uppdatera</button>
+  <a href="<?= base_url('admin') ?>" class="btn btn-lg btn-outline-danger mt-4">Avbryt</a>
   <?= form_close() ?>
 </div>
 

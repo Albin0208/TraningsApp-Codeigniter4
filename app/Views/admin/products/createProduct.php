@@ -55,7 +55,9 @@
       <textarea class="w-100 bg-darkGrey text-white" name="productDescription" rows="3"></textarea>
     </div>
   </div>
-  <input type="submit" value="Skapa" class="btn btn-lg btn-outline-info mt-4">
+
+  <button type="submit" class="btn btn-lg btn-outline-info mt-4">Skapa</button>
+  <a href="<?= base_url('admin') ?>" class="btn btn-lg btn-outline-danger mt-4">Avbryt</a>
   <?= form_close() ?>
 </div>
 
