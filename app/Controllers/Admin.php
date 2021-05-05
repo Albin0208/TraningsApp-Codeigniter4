@@ -5,6 +5,7 @@ use App\Models\AdminModel;
 use App\Models\ShopModel;
 use App\Models\CategoriesModel;
 use App\Models\CouponModel;
+use App\Models\NewsletterModel;
 use App\Models\OrderItemModel;
 use App\Models\OrderModel;
 use App\Models\ProductOnsaleModel;
@@ -383,5 +384,39 @@ class Admin extends Controller
   }
 
   #endregion
+  
+  /**
+   * Skicka nyhetsbrev
+   *
+   * @return Redirect Tillbaka admin sidan med meddelande
+   */
+  public function newsletter()
+  {
+    if ($this->request->getMethod() == 'post') {
+      $model = new NewsletterModel();
+      $subscribers = $model->findAll();
+
+      if (count($subscribers) == 0)
+        return redirect()->to('/admin')->with('error', 'Inget nyhetsbrev skickat. Det finns ingen som är registrerad på nyhetsbrevet');
+
+      foreach ($subscribers as $subscriber) {
+        $newsData = [
+          'subject' => $this->request->getPost('subject'),
+          'content' => $this->request->getPost('content'),
+          'delete_key' => $subscriber['delete_key'],
+        ];
+
+        $email = \Config\Services::email();
+        $message = view('emails/newsletterEmail', $newsData);
+        $email->setTo($subscriber['email']);
+        $email->setSubject('Elit-Träning | Nyhetsbrev');
+        $email->setMessage($message);
+
+        if (!$email->send())
+          return redirect()->to('/admin')->with('error', 'Något gick fel när ett nyhetsbrev skulle skickas');
+      }
+      return redirect()->to('/admin')->with('success', 'Nyhetsbrevet är skickat');
+    }
+  }
 
 }

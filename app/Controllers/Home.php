@@ -48,15 +48,16 @@ class Home extends BaseController
 				$model->insert($data);
 
 				$email = \Config\Services::email();
-
-				$email = \Config\Services::email();
-				$message = view('emails/newsletterSignup', $data);
 				$email->setTo($data['email']);
 				$email->setSubject('Elit-Träning Nyhetsbrev');
+				$message = view('emails/newsletterSignup', $data);
 				$email->setMessage($message);
-				$email->send();
 				
-				return redirect()->back()->with('newsletter', 'Lyckad registrering');
+				return $email->send() 
+								? redirect()->back()->with('newsletter', 'Lyckad registrering')
+								: redirect()->back()->with('newsletterError', 'Något gick fel när mailet skulle skickas');
+				
+				// return redirect()->back()->with('newsletter', 'Lyckad registrering');
       } else {
         $data['validation'] = $validation;
 				return redirect()->back()->with('error', $validation->getError('email'));

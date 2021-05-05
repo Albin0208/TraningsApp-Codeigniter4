@@ -259,7 +259,8 @@
           <div class="row mb-2">
             <h2 class="card-title col">Nyhetsbrev</h2>
             <div class="col text-end">
-              <a href="/admin/createCategory" class="btn btn-outline-info">Skicka nyhetsbrev</a>
+              <button data-bs-toggle="modal" data-bs-target="#newsLetterModal" class="btn btn-outline-info">
+                Skicka nyhetsbrev</button>
             </div>
           </div>
           <!-- TODO Skapa tabell -->
@@ -329,6 +330,47 @@
   </div>
 </div>
 <!-- /Create Discount Modal -->
+
+<!-- Send Newsletter Modal -->
+<div class="modal fade" id="newsLetterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Skicka nyhetsbrev</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <?= form_open(base_url('admin/newsletter'), 'data-parsley-validate id="form_id" novalidate') ?>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <div class="form-floating col-sm">
+              <input type="text" class="form-control border-custom overlay1" name="subject" id="subject"
+                placeholder="Ämne" data-parsley-pattern="/^[A-Za-zÀ-ÿ0-9 ]+$/"
+                data-parsley-errors-container="#invalidSubject" data-parsley-trigger="keyup change" required>
+              <label for="subject">Ämne</label>
+              <div class="text-danger text-start" id="invalidSubject">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <label for="subject">Innehåll</label>
+            <textarea name="content" rows="6" class="w-100 bg-dark overlay1 text-white"></textarea>
+            <div class="text-danger text-start" id="invalidSubject">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Avbryt</button>
+        <button type="submit" class="btn btn-success">Skicka</button>
+        <?= form_close() ?>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Send Newsletter Modal -->
 
 <script src="/assets/js/modals.js"></script>
 
