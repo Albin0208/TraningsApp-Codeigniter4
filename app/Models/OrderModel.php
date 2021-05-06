@@ -12,14 +12,26 @@ class OrderModel extends Model
     protected $allowedFields = ['customer_id', 'email', 'firstname', 'lastname', 'address', 'zip_code', 'city', 'phone', 'order_price', 'quantity', 'discount_value', 'shipping', 'order_number'];
 
     protected $beforeInsert = ['beforeInsert'];
-
+    
+    /**
+     * Vad som ska göras innan insert i databasen
+     *
+     * @param  mixed $data
+     * @return array Datan
+     */
     protected function beforeInsert(array $data)
     {
         $data = $this->generateOrderNumber($data);
 
         return $data;
     }
-
+    
+    /**
+     * Generera ett order nummer
+     *
+     * @param  array $data Order datan
+     * @return array Data
+     */
     private function generateOrderNumber(array $data)
     {
         /*

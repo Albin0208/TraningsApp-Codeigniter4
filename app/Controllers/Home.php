@@ -56,8 +56,6 @@ class Home extends BaseController
 				return $email->send() 
 								? redirect()->back()->with('newsletter', 'Lyckad registrering')
 								: redirect()->back()->with('newsletterError', 'Något gick fel när mailet skulle skickas');
-				
-				// return redirect()->back()->with('newsletter', 'Lyckad registrering');
       } else {
         $data['validation'] = $validation;
 				return redirect()->back()->with('error', $validation->getError('email'));

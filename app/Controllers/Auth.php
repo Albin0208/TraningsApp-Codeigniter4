@@ -38,10 +38,9 @@ class Auth extends Controller
           'password' => $this->request->getPost('password'),
         ];
 
-        if ($model->save($newData) == false)
-          return redirect()->back()->with('error', 'Något gick fel vid registreringen, vänligen försök igen');
-
-        return redirect()->to("/login")->with('success', 'Lyckad registrering');
+        return $model->save($newData)
+                ? redirect()->to("/login")->with('success', 'Lyckad registrering')  
+                : redirect()->back()->with('error', 'Något gick fel vid registreringen, vänligen försök igen');
       } else {
         $data['validation'] = $validation;
       }

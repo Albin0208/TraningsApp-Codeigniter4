@@ -70,9 +70,8 @@ class Admin extends Controller
       if ($validation->run($_POST, 'createProduct')) {
         $file = $this->request->getFile('productImage');
 
-        if ($file->isValid() && !$file->hasMoved()) {
+        if ($file->isValid() && !$file->hasMoved())
           $file->move('./uploads/images');
-        }
         
         $productData = [
           'type' => $this->request->getPost('type'),
@@ -85,14 +84,12 @@ class Admin extends Controller
 
         $model = new ShopModel();
 
-        return $model->insert($productData) == false 
-                                            ? redirect()->to('/admin')->with('error', 'Något gick fel när produkten skulle skapas') 
-                                            : redirect()->to('/admin')->with('success', 'Produkten är skapad');
-        
+        return $model->insert($productData)
+                ? redirect()->to('/admin')->with('error', 'Något gick fel när produkten skulle skapas') 
+                : redirect()->to('/admin')->with('success', 'Produkten är skapad');
       } else
         $data['validation'] = $validation;
     }
-      
 
     return view('admin/products/createProduct', $data);
   }
@@ -137,9 +134,9 @@ class Admin extends Controller
         
         $model = new ShopModel();
 
-        return $model->update($this->request->getPost('id'), $productData) == false 
-                                            ? redirect()->to('/admin')->with('error', 'Något gick fel när produkten skulle uppdateras') 
-                                            : redirect()->to('/admin')->with('success', 'Produkten är uppdaterad');
+        return $model->update($this->request->getPost('id'), $productData)
+                ? redirect()->to('/admin')->with('error', 'Något gick fel när produkten skulle uppdateras') 
+                : redirect()->to('/admin')->with('success', 'Produkten är uppdaterad');
         
       } else
         $data['validation'] = $validation;
@@ -310,7 +307,12 @@ class Admin extends Controller
   #endregion
 
   #region Hanter rabattkoder
-
+  
+  /**
+   * Skapa en rabattkod
+   *
+   * @return Redirect Till admin med meddelande
+   */
   public function createDiscount()
   {
     if ($this->request->getMethod() == 'post') {
@@ -336,7 +338,13 @@ class Admin extends Controller
       return redirect()->to('/admin')->with('error', 'Rabattkoden finns redan eller så är den ogiltig');
       }
   }
-
+  
+  /**
+   * Ta bort en rabattkod
+   *
+   * @param  string $name Namnet på rabattkoden
+   * @return Redirect Till admin med meddelande
+   */
   public function removeDiscount(string $name)
   {
     if (empty($name) || !preg_match('/^[A-Za-zÀ-ÿ0-9 ]+$/', $name))
@@ -344,21 +352,25 @@ class Admin extends Controller
 
     $model = new CouponModel();
 
-    if ($model->where('name', $name)->delete())
-      return redirect()->to('/admin')->with('success', 'Rabattkoden är borttagen');
-    
-    return redirect()->to('/admin')->with('error', 'Något gick fel');
+    return $model->where('name', $name)->delete()
+            ? redirect()->to('/admin')->with('success', 'Rabattkoden är borttagen')
+            : redirect()->to('/admin')->with('error', 'Något gick fel');
   }
 
   #endregion
 
   #region Visa Ordrar och användare
-
+  
+  /**
+   * Visa en order
+   *
+   * @param  int $orderNumber Ordernumret
+   * @return View Ordervyn
+   */
   function order(string $orderNumber)
   {
     $orderModel = new OrderModel();
     $itemModel = new OrderItemModel();
-    
     
     $data = [
       'title' => 'Elit-Träning | Admin - Order',
@@ -370,7 +382,13 @@ class Admin extends Controller
 
     return view('admin/order', $data);
   }
-
+  
+  /**
+   * Visa en kund
+   *
+   * @param  string $username Användarnamnet
+   * @return View Kundvyn
+   */
   public function customer(string $username)
   {
     $model = new UserModel();

@@ -14,21 +14,39 @@ class UserModel extends Model
 
     protected $beforeInsert = ['beforeInsert'];
     protected $beforeUpdate = ['beforeUpdate'];
-
+    
+    /**
+     * Vad som ska göras innan insert i databasen
+     *
+     * @param  array $data
+     * @return array Data
+     */
     protected function beforeInsert(array $data)
     {
         $data = $this->passwordHash($data);
 
         return $data;
     }
-
+    
+    /**
+     * Vad som ska göras före uppdatering till databasen
+     *
+     * @param  array $data
+     * @return array Data
+     */
     protected function beforeUpdate(array $data)
     {
         $data = $this->passwordHash($data);
 
         return $data;
     }
-
+    
+    /**
+     * Hasha lösenordet
+     *
+     * @param  array $data Användar datan
+     * @return array Datan med hashade lösenordet
+     */
     protected function passwordHash(array $data)
     {
         if (!isset($data['data']['password']))
@@ -38,7 +56,13 @@ class UserModel extends Model
 
         return $data;
     }
-
+    
+    /**
+     * Hämta en användare med antingen id eller email
+     *
+     * @param  mixed $search Användar id eller email
+     * @return array Användaren
+     */
     public function getUser($search)
     {
         if (is_numeric($search))

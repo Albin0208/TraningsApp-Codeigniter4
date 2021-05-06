@@ -90,11 +90,9 @@ class Cart extends Controller
       } else {
         $data['validation'] = $validation;
       }
-    } else {
-      if (session()->has('id')) {
+    } else if (session()->has('id')) {
         $model = new UserModel();
         $data['user'] = $model->getAddressDetails('billing', session()->get('id'))->getRowArray();
-      }
     }
 
     return view('layouts/checkout/checkout', $data);

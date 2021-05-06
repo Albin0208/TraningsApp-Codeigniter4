@@ -1,7 +1,5 @@
 <?php
 
-use phpDocumentor\Reflection\Types\Boolean;
-
 /**
  * Skriv ut eventuellt felmeddelande
  *
@@ -22,6 +20,12 @@ function displayError(string $field)
   }
 }
 
+/**
+ * Hämta felmeddelandet
+ *
+ * @param  string $field Fältet som meddelandet ska hämtas från
+ * @return string Felmeddelandet
+ */
 function getError($field)
 {
   if (!empty($_POST)) {

@@ -23,7 +23,6 @@ class Coupon extends Controller
     if ($validation->run($_POST)) {
       $model = new CouponModel();
 
-      // $code = 
       if ($code = $model->where('name', $this->request->getPost('discount_code'))->first()) {
         $cart->setDiscountCode($code);
         return redirect()->back()->with('couponSuccess', 'Rabattkoden är tillagd');

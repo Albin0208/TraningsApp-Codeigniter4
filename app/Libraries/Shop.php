@@ -6,7 +6,13 @@ use App\Models\ProductOnsaleModel;
 use App\Models\SaleModel;
 
 class Shop
-{
+{  
+  /**
+   * Visa en produkt
+   *
+   * @param  mixed $params produkten
+   * @return View Produkten
+   */
   public function productItem($params)
   {
     $model = new ProductOnsaleModel();
@@ -25,7 +31,6 @@ class Shop
 
       $params['onSale'] = true;
       $params['salePrice'] = $salePrice;
-
     }
 
     return view('components/product_item', ['product' => $params]);

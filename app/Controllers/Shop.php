@@ -58,7 +58,6 @@ class Shop extends Controller
     }
 
     $shopModel = new ShopModel();
-
     
     $data['product'] =  $shopModel->getProduct($slug);
     $data['title'] =  'Elit-Träning | ' .$data['product']['name'];
@@ -79,7 +78,6 @@ class Shop extends Controller
 
       $data['product']['onSale'] = true;
       $data['product']['salePrice'] = $salePrice;
-
     }
     
     return view('layouts/shop/single_product', $data);
@@ -93,7 +91,6 @@ class Shop extends Controller
   public function addToCart()
   {
     $id = $this->request->getPost('product_id');
-    $qty = $this->request->getPost('quantity');
 
     $cart = \Config\Services::cart();
     $model = new ShopModel();
@@ -101,7 +98,7 @@ class Shop extends Controller
 
     $product = $model->where('product_id', $id)->first();
     //Om antalet inte finns så ska en vara läggas till
-    $product['qty'] = $qty ?? 1;
+    $product['qty'] = $this->request->getPost('quantity') ?? 1;
 
     if ($sale = $productOnSaleModel->where('product_id', $product['product_id'])->first()) {
       $saleModel = new SaleModel();

@@ -35,7 +35,13 @@ class Cart
       $this->cartContents = ['cart_total' => 0, 'total_items' => 0];
     }
   }
-
+  
+  /**
+   * Lägg till produkter i varukorgen
+   *
+   * @param  array $items Produkterna som ska läggas till
+   * @return Rowid id för raden som skapades
+   */
   public function insert($items = [])
   {
     //Se till så att data är skickad
@@ -56,7 +62,13 @@ class Cart
 
     return false;
   }
-
+  
+  /**
+   * Protected - Lägg till produkter i varukorgen
+   *
+   * @param  array $items Produkterna som ska läggas till
+   * @return Rowid id för raden som skapades
+   */
   protected function _insert($items = [])
   {
     //Se till så att data är skickad
@@ -84,7 +96,14 @@ class Cart
 
     return $rowid;
   }
-
+  
+  /**
+   * Uppdatera varukorgen
+   *
+   * @param  array $items Produkterna som ska uppdateras
+   * @param  string $rowid Radid
+   * @return Bool Om uppdateringen lyckades
+   */
   public function update($items = [], $rowid = null)
   {
     //Se till så att data är skickad
@@ -106,6 +125,13 @@ class Cart
     return false;
   }
 
+  /**
+   * Protected - Uppdatera varukorgen
+   *
+   * @param  array $items Produkterna som ska uppdateras
+   * @param  string $rowid Radid
+   * @return Bool Om uppdateringen lyckades
+   */
   protected function _update($items = [], $rowid = null)
   {
     //Se till så att data är skickad
@@ -118,7 +144,13 @@ class Cart
 
     $this->cartContents[$rowid] = $oldItem;
   }
-
+  
+  /**
+   * Öka antalet produkten
+   *
+   * @param  string $rowid Produktens rad id
+   * @return Bool Om lyckad uppdatering
+   */
   public function increase($rowid = null)
   {
     //Se till så vi har ett rad id
@@ -136,7 +168,13 @@ class Cart
 
     return false;
   }
-
+  
+  /**
+   * Protected - Öka antalet produkten
+   *
+   * @param  string $rowid Produktens rad id
+   * @return Bool Om lyckad uppdatering
+   */
   protected function _increase($rowid)
   {
     //Se till att vi har ett rad id
@@ -150,7 +188,13 @@ class Cart
     $this->cartContents[$rowid] = $item;
     return true;
   }
-
+  
+  /**
+   * Minska antalet produkten
+   *
+   * @param  string $rowid Produktens rad id
+   * @return Bool Om lyckad uppdatering
+   */
   public function decrease($rowid = null)
   {
     //Se till så vi har ett rad id
@@ -169,6 +213,12 @@ class Cart
     return false;
   }
 
+  /**
+   * Protected - Minska antalet produkten
+   *
+   * @param  string $rowid Produktens rad id
+   * @return Bool Om lyckad uppdatering
+   */
   protected function _decrease($rowid)
   {
     //Se till att vi har ett rad id
@@ -197,7 +247,12 @@ class Cart
   {
     //TODO Fixa options
   }
-
+  
+  /**
+   * Rabattkodens värde beroende av produktpriset
+   *
+   * @return int Värdet på rabattkoden
+   */
   public function discountValue()
   {
     if (@$this->cartContents['discount_code']) {
@@ -207,23 +262,38 @@ class Cart
         $percent = $this->cartContents['discount_code']['value'] / 100;
         return $this->total() * $percent;
       }
-      
     }
     return false;
   }
-
+  
+  /**
+   * Värdet på rabattkoden
+   *
+   * @return int Värdet på rabatt koden
+   */
   public function discountTotal()
   {
     if (@$this->cartContents['discount_code'])
       return $this->cartContents['discount_code']['value'];
   }
-
+  
+  /**
+   * Vilken typ av rabatt det är
+   *
+   * @return string Typen av rabatt
+   */
   public function discountType()
   {
     if ($this->cartContents['discount_code'])
       return $this->cartContents['discount_code']['type'];
   }
-
+  
+  /**
+   * Spara en rabatt kod i varukorgen
+   *
+   * @param  string $discountCode Rabattkoden
+   * @return void
+   */
   public function setDiscountCode($discountCode)
   {
     $this->cartContents['discount_code'] = [
@@ -233,20 +303,35 @@ class Cart
     ];
     $this->saveCart();
   }
-
+  
+  /**
+   * Ta bort rabattkoden som finns i varukorgen
+   *
+   * @return void
+   */
   public function removeDiscount()
   {
     unset($this->cartContents['discount_code']);
     $this->saveCart();
   }
-
+  
+  /**
+   * Hämta namnet på rabattkoden
+   *
+   * @return string Namnet på rabattkoden
+   */
   public function discountCode()
   {
     if (@$this->cartContents['discount_code'])
       return $this->cartContents['discount_code']['code'];
     return false;
   }
-
+  
+  /**
+   * Protected - Spara varukorgen
+   *
+   * @return Bool Om lyckad sparning
+   */
   protected function saveCart()
   {
     $this->cartContents['total_items'] = $this->cartContents['cart_total'] = 0;
@@ -269,19 +354,22 @@ class Cart
 
     return true;
   }
-
+  
+  /**
+   * Totalen för produkterna
+   *
+   * @return int Totalen
+   */
   public function total()
   {
     return $this->cartContents['cart_total'];
   }
 
   /**
-   * Remove Item
-   * 
    * Ta bort vara från varukorgen
    *
-   * @param  mixed $rowid
-   * @return void
+   * @param  string $rowid
+   * @return Bool
    */
   public function remove($rowid)
   {
@@ -289,12 +377,22 @@ class Cart
     $this->saveCart();
     return true;
   }
-
+  
+  /**
+   * Antalet varor i varukorgen
+   *
+   * @return int Antalet varor
+   */
   public function totalItems()
   {
     return $this->cartContents['total_items'];
   }
-
+  
+  /**
+   * Hämta innehållet i varukorgen
+   *
+   * @return array Innehållet i varukorgen
+   */
   public function contents()
   {
     $cart = $this->cartContents;
@@ -303,14 +401,25 @@ class Cart
 
     return $cart;
   }
-
+  
+  /**
+   * Hämta en specifik vara från varukorgen
+   *
+   * @param  string $rowid Id för varan
+   * @return array Varan
+   */
   public function getItem($rowid)
   {
     return (in_array($rowid, ['total_items', 'cart_total'], true) or !isset($this->cartContents[$rowid]))
       ? false
       : $this->cartContents[$rowid];
   }
-
+  
+  /**
+   * Hämta fraktvärdet
+   *
+   * @return int Fraktvärdet
+   */
   public function shipping()
   {
     return $this->cartContents['cart_total'] > 499 ? 0 : 49;

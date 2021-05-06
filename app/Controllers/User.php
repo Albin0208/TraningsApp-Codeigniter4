@@ -98,7 +98,7 @@ class User extends Controller
     
     //Se till att ordern tillhör den inloggade användaren
     if (session()->get('id') != $order['customer_id'])
-    return redirect()->back();
+      return redirect()->back();
     
     $itemModel = new OrderItemModel();
     $data = [
@@ -111,7 +111,12 @@ class User extends Controller
 
     return view('layouts/displayOrder', $data);
   }
-
+  
+  /**
+   * Visa adresserna som tillhör en användare
+   *
+   * @return void
+   */
   public function addresses()
   {
     $model = new UserModel();
@@ -126,11 +131,17 @@ class User extends Controller
 
     return view('layouts/userLayouts/userAddresses', $data);
   }
-
-  public function editAddress($page)
+  
+  /**
+   * Redigera en adress
+   *
+   * @param  string $page Vilken adress som ska redigeras
+   * @return View Redigeringsvyn
+   */
+  public function editAddress(string $page)
   {
     if ($page != 'billing' && $page != 'delivery') {
-      //Skicka till 404 sida
+      //TODO Skicka till 404 sida
       echo '404';
       return;
     }
