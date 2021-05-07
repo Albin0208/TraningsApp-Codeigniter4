@@ -27,6 +27,7 @@ class Admin extends Controller
     $model = new ShopModel();
     $saleModel = new SaleModel();
     $couponsModel = new CouponModel();
+    $newsletterModel = new NewsletterModel();
 
     $data = [
       'title'           => 'Elit-Träning | Admin',
@@ -40,6 +41,7 @@ class Admin extends Controller
       'products'        => $model->getProductsInfo(),
       'sales'           => $saleModel->paginate(6, 'sales'),
       'coupons'         => $couponsModel->paginate(6, 'coupons'),
+      'newsletter'      => $newsletterModel->paginate(6, 'newsletter'),
       'pager'           => $model->pager,
     ];
     //TODO Fixa så att admin kan lägga till och ta bort kategorier

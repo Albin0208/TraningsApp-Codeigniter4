@@ -263,7 +263,24 @@
                 Skicka nyhetsbrev</button>
             </div>
           </div>
+          <table class="table text-white table-responsive border">
+            <thead>
+              <tr>
+                <th scope="col">Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach($newsletter as $subscriber) : ?>
+              <tr>
+                <th scope="row" class="align-middle">
+                  <?= esc($subscriber['email']) ?>
+                </th>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
         </div>
+        <?= $pager->links('newsletter', 'front_full') ?>
       </div>
     </div>
   </div>
