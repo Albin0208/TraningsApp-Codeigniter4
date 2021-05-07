@@ -263,7 +263,6 @@
                 Skicka nyhetsbrev</button>
             </div>
           </div>
-          <!-- TODO Skapa tabell -->
         </div>
       </div>
     </div>

@@ -395,7 +395,7 @@ class Admin extends Controller
 
     $data = [
       'title' => 'Elit-Träning | Admin - Användare',
-      'user' => $model->where('username', $username)->first(),
+      'customer' => $model->where('username', $username)->first(),
     ];
 
     return view('admin/customer', $data);

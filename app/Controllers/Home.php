@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\NewsletterModel;
 use App\Models\SaleModel;
 use App\Models\ShopModel;
+use Config\View;
 
 class Home extends BaseController
 {
@@ -83,5 +84,32 @@ class Home extends BaseController
 		];
 
 		return view('layouts/unsubscribe', $data);
+	}
+
+	public function about()
+	{
+		$data = [
+			'title' => 'Elit-Träning | Om oss'
+		];
+
+		return view('misc/about', $data);
+	}
+
+	public function termsAndConditions()
+	{
+		$data = [
+			'title' => 'Elit-Träning | Allmänna villkor'
+		];
+
+		return view('misc/terms-and-conditions', $data);
+	}
+
+	public function error()
+	{
+		$data = [
+			'title' => 'Elit-Träning | Error'
+		];
+
+		return view('errors/errors', $data);
 	}
 }

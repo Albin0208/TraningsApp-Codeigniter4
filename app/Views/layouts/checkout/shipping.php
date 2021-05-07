@@ -93,75 +93,7 @@
       </div>
     </div>
   </div>
-  <!-- <div class="row gx-2">
-    <div class="form-check mt-3 ms-1">
-      <input class="form-check-input border border-info" type="checkbox" value="" id="flexCheckDefault" checked>
-      <label class="form-check-label" for="flexCheckDefault">
-        Samma leveransaddress som fakturaadress
-      </label>
-    </div>
-  </div> -->
 </div>
-<!-- TODO kanske fixa så man kan lägga till en annan leveransadress -->
-<!-- <section id="deliveryAddress" class="">
-  <hr>
-  <h1>Leveransadress</h1>
-  <hr>
-  <div class="row gx-2">
-    <div class="form-floating col-sm mt-3">
-      <input type="text" class="form-control border-custom overlay1 <?= isInvalid('firstname') ?>" name="firstname"
-        value="<?= $delivery['firstname'] ?? set_value('firstname') ?>" id="firstname" placeholder="Förnamn"
-        data-parsley-pattern="/^[A-Za-zÀ-ÿ]+$/" data-parsley-errors-container="#invalidFirstname"
-        data-parsley-trigger="keyup change" required>
-      <label for="firstname">Förnamn</label>
-      <div class="text-danger text-start" id="invalidFirstname">
-        <?= getError('firstname') ?>
-      </div>
-    </div>
-    <div class="form-floating col-sm mt-3">
-      <input type="text" class="form-control border-custom overlay1 <?= isInvalid('lastname') ?>" name="lastname"
-        value="<?= $delivery['lastname'] ?? set_value('lastname') ?>" id="lastname" placeholder="Efternamn"
-        data-parsley-pattern="/^[A-Za-zÀ-ÿ]+$/" data-parsley-errors-container="#invalidLastname"
-        data-parsley-trigger="keyup change" required>
-      <label for="lastname">Efternamn</label>
-      <div class="text-danger text-start" id="invalidLastname">
-        <?= getError('lastname') ?>
-      </div>
-    </div>
-  </div>
-  <div class="row gx-2">
-    <div class="form-floating mt-3">
-      <input type="text" class="form-control border-custom overlay1 <?= isInvalid('address') ?>" name="address"
-        value="<?= $delivery['address'] ?? set_value('address') ?>" id="address" placeholder="adress"
-        data-parsley-errors-container="#invalidAddress" data-parsley-trigger="keyup change" required>
-      <label for="address">Adress</label>
-      <div class="text-danger text-start" id="invalidAddress">
-        <?= getError('address') ?>
-      </div>
-    </div>
-  </div>
-  <div class="row gx-2">
-    <div class="form-floating col-sm mt-3">
-      <input type="text" class="form-control border-custom overlay1 <?= isInvalid('city') ?>" name="city"
-        value="<?= $delivery['city'] ?? set_value('city') ?>" id="city" placeholder="Stad"
-        data-parsley-pattern="/^[A-Za-zÀ-ÿ]+$/" data-parsley-errors-container="#invalidCity"
-        data-parsley-trigger="keyup change" required>
-      <label for="city">Stad</label>
-      <div class="text-danger text-start" id="invalidCity">
-        <?= getError('city') ?>
-      </div>
-    </div>
-    <div class="form-floating col-sm mt-3">
-      <input type="tel" class="form-control border-custom overlay1 <?= isInvalid('zipCode') ?>" name="zipCode"
-        value="<?= $addressDetails['zip_code'] ?? set_value('zipCode') ?>" id="zipCode" placeholder="Postnummer"
-        data-mask="000 00" data-parsley-errors-container="#invalidZipCode" data-parsley-trigger="keyup change" required>
-      <label for="zipCode">Postnummer</label>
-      <div class="text-danger text-start" id="invalidZipCode">
-        <?= getError('zipCode') ?>
-      </div>
-    </div>
-  </div>
-</section> -->
 <hr>
 
 <div>

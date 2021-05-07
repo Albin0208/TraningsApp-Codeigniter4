@@ -140,11 +140,8 @@ class User extends Controller
    */
   public function editAddress(string $page)
   {
-    if ($page != 'billing' && $page != 'delivery') {
-      //TODO Skicka till 404 sida
-      echo '404';
-      return;
-    }
+    if ($page != 'billing' && $page != 'delivery')
+      return redirect()->to('error');
 
     $title = $page == 'billing' ? 'Faktureringsadress' : 'Leveransadress';
     $data = [

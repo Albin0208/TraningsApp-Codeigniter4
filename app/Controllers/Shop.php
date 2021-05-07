@@ -52,10 +52,8 @@ class Shop extends Controller
    */
   public function product($slug = null)
   {
-    if (!$slug) {
-      //TODO return 404 sida
-      echo '404 Page not found';
-    }
+    if (!$slug)
+      return redirect()->to('error');
 
     $shopModel = new ShopModel();
     

@@ -41,6 +41,10 @@ $routes->add('shop', 'Shop::index');
 $routes->add('shop/addToCart', 'Shop::addToCart');
 $routes->add('shop/product/(:any)', 'Shop::product/$1');
 $routes->add('shop/(:any)', 'Shop::index/$1');
+$routes->add('about', 'Home::about');
+$routes->add('terms-and-conditions', 'Home::termsAndConditions');
+$routes->add('error', 'Home::error');
+
 
 /**
  * --------------------------------------------------------------------

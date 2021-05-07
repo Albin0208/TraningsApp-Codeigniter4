@@ -29,7 +29,7 @@
             <a class="nav-link ps-2 <?= $uri->getSegment(1) == "shop" ? "active" : null ?>" href="/shop">Butik</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link ps-2 <?= $uri->getSegment(1) == "about" ? "active" : null ?>" href="#">Om
+            <a class="nav-link ps-2 <?= $uri->getSegment(1) == "about" ? "active" : null ?>" href="/about">Om
               Elit-Träning</a>
           </li>
         </ul>
