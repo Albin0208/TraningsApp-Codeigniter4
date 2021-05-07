@@ -19,7 +19,17 @@
         <h2 class="text-uppercase fw-bold"><?= $product['name'] ?></h2>
       </div>
       <p><?= $product['description'] ?></p>
-      <h4 class="col"><?= $product['price'] ?> SEK</h4>
+      <h4 class="col">
+        <span class="<?= @$product['onSale'] ? 'text-decoration-line-through text-muted' : '' ?>">
+          <?= esc($product['price']) ?> SEK
+        </span>
+        <?php if (@$product['onSale']) : ?>
+        <span class="text-danger">
+          <?= esc($product['salePrice']) ?> SEK
+        </span>
+        <?php endif; ?>
+      </h4>
+
       <?= form_open(base_url('/shop/addToCart'), 'class="row mx-auto"') ?>
       <?= form_hidden('product_id', $product['product_id']) ?>
       <input type="number" name="quantity" class="col form-control me-2 overlay1" value="1">
