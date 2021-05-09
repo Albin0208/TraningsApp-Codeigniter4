@@ -137,8 +137,8 @@ class Admin extends Controller
         $model = new ShopModel();
 
         return $model->update($this->request->getPost('id'), $productData)
-                ? redirect()->to('/admin')->with('error', 'Något gick fel när produkten skulle uppdateras') 
-                : redirect()->to('/admin')->with('success', 'Produkten är uppdaterad');
+                ? redirect()->to('/admin')->with('success', 'Produkten är uppdaterad')
+                : redirect()->to('/admin')->with('error', 'Något gick fel när produkten skulle uppdateras');
         
       } else
         $data['validation'] = $validation;
