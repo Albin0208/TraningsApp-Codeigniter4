@@ -157,7 +157,7 @@ class Admin extends Controller
   {
     if (empty($slug) || !preg_match('/^[a-z-]+$/', $slug))
       return redirect()->to('/admin')->with('error', 'Något gick fel');
-    
+      
     $model = new ShopModel();
 
     $productImage = $model->where('slug', $slug)->first();
@@ -383,6 +383,20 @@ class Admin extends Controller
     ];
 
     return view('admin/order', $data);
+  }
+
+  public function allOrders()
+  {
+    $orderModel = new OrderModel();
+    
+    $data = [
+      'title' => 'Elit-Träning | Admin - Ordrar',
+      'orders' => $orderModel->orderBy('order_number', 'DESC')->paginate('10', 'orders'),
+      'pager' => $orderModel->pager,
+      'time' => new Time(),
+    ];
+
+    return view('admin/allOrders', $data);
   }
   
   /**

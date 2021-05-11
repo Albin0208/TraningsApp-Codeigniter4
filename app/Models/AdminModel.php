@@ -54,7 +54,7 @@ class AdminModel
       $builder = $this->db->table($table);
 
       return $builder->orderBy('created_at', 'DESC')
-                       ->get(3)
-                       ->getResultArray();
+                     ->get(3)
+                     ->getResultArray();
     }
 }

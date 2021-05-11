@@ -55,7 +55,12 @@
     <div class="col-12 col-sm-7">
       <div class="card overlay2 text-white shadow">
         <div class="card-body">
-          <h2 class="card-title">Senaste beställningarna</h2>
+          <div class="row mb-2">
+            <h2 class="card-title col-8">Senaste beställningarna</h2>
+            <div class="col-4 text-end">
+              <a href="/admin/allOrders" class="btn btn-outline-info">Visa alla</a>
+            </div>
+          </div>
           <table class="table text-white table-responsive border">
             <thead>
               <tr>

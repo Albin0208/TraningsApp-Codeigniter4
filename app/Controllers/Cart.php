@@ -52,9 +52,9 @@ class Cart extends Controller
         $order = new OrderModel();
         $orderItem = new OrderItemModel();
         $cart = \Config\Services::cart();
-        
+
         $orderData = [
-          'customer_id' => session()->get('id') ?? null,
+          'customer_id' => session()->get('id'),
           'email' => $this->request->getPost('email'),
           'firstname' => $this->request->getPost('firstname'),
           'lastname' => $this->request->getPost('lastname'),
@@ -65,7 +65,7 @@ class Cart extends Controller
           'order_price' => $cart->total(),
           'quantity' => $cart->totalItems(),
           'discount_value' => $cart->discountValue(),
-          'shipping' => $cart->shipping()
+          'shipping' => $cart->shipping(),
         ];
         
         $id = $order->insert($orderData);
@@ -86,7 +86,7 @@ class Cart extends Controller
           session()->setFlashData('orderPlaced', true);
           return redirect()->to('/cart/orderConfirm')->with('orderId', $id);
         } else 
-          echo 'Failed';
+          return redirect()->to('/error');
       } else {
         $data['validation'] = $validation;
       }

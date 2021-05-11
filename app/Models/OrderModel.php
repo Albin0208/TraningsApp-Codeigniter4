@@ -11,20 +11,7 @@ class OrderModel extends Model
 
     protected $allowedFields = ['customer_id', 'email', 'firstname', 'lastname', 'address', 'zip_code', 'city', 'phone', 'order_price', 'quantity', 'discount_value', 'shipping', 'order_number'];
 
-    protected $beforeInsert = ['beforeInsert'];
-    
-    /**
-     * Vad som ska göras innan insert i databasen
-     *
-     * @param  mixed $data
-     * @return array Datan
-     */
-    protected function beforeInsert(array $data)
-    {
-        $data = $this->generateOrderNumber($data);
-
-        return $data;
-    }
+    protected $beforeInsert = ['generateOrderNumber'];
     
     /**
      * Generera ett order nummer
@@ -32,7 +19,7 @@ class OrderModel extends Model
      * @param  array $data Order datan
      * @return array Data
      */
-    private function generateOrderNumber(array $data)
+    protected function generateOrderNumber(array $data)
     {
         /*
           Om vi har användare hämta användar id, ta användar id och lägg till ett random 7 nummer tal.
@@ -46,13 +33,13 @@ class OrderModel extends Model
         */
 
         $customerID = $data['data']['customer_id'] ?? mt_rand(0, 9999);
-        $orderNumber = $customerID;
-
+        
         do {
             $orderNumber = $customerID . mt_rand(1000000, 9999999);
         } while ($this->where('order_number', $orderNumber)->first());
 
         $data['data']['order_number'] = $orderNumber;
+        var_dump($data['data']);
 
         return $data;
     }
