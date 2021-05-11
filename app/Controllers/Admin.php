@@ -73,14 +73,14 @@ class Admin extends Controller
         $file = $this->request->getFile('productImage');
 
         if ($file->isValid() && !$file->hasMoved())
-          $file->move('./uploads/images');
+          $file->move('.' . IMAGE_PATH);
         
         $productData = [
           'type' => $this->request->getPost('type'),
           'name' => $this->request->getPost('productName'),
           'description' => $this->request->getPost('productDescription'),
           'price' => $this->request->getPost('productPrice'),
-          'image' => '/uploads/images/' . $file->getName(),
+          'image' => IMAGE_PATH . $file->getName(),
           'slug' => $this->generateSlug($this->request->getPost('productName')),
         ];
 
@@ -113,7 +113,6 @@ class Admin extends Controller
       'categories' => $categories->findAll()
     ];
 
-
     if ($this->request->getMethod() == 'post') {
       $validation = \Config\Services::validation();
 
@@ -130,8 +129,7 @@ class Admin extends Controller
 
         if ($file->isValid() && !$file->hasMoved()) {
           unlink('.' . $data['product']['image']);
-          $file->move('./uploads/images');
-          $productData['image'] = '/uploads/images/' . $file->getName();
+          $productData['image'] = $file->move('.' .IMAGE_PATH);
         }
         
         $model = new ShopModel();

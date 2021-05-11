@@ -85,7 +85,12 @@ class Home extends BaseController
 
 		return view('layouts/unsubscribe', $data);
 	}
-
+	
+	/**
+	 * Visa sidan om oss
+	 *
+	 * @return View Aboutvyn
+	 */
 	public function about()
 	{
 		$data = [
@@ -94,7 +99,12 @@ class Home extends BaseController
 
 		return view('misc/about', $data);
 	}
-
+	
+	/**
+	 * Visa sidan om de allmänna villkoren
+	 *
+	 * @return View Terms and Conditions vyn
+	 */
 	public function termsAndConditions()
 	{
 		$data = [
@@ -103,7 +113,12 @@ class Home extends BaseController
 
 		return view('misc/terms-and-conditions', $data);
 	}
-
+	
+	/**
+	 * Visa error sidan
+	 *
+	 * @return View Error vyn
+	 */
 	public function error()
 	{
 		$data = [

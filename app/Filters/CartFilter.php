@@ -17,7 +17,7 @@ class CartFilter implements FilterInterface
 
     $cart = \Config\Services::cart();
     if ($cart->totalItems() < 1)
-      return redirect()->to(base_url() . '/cart');
+      return redirect()->to('/cart');
   }
 
   //--------------------------------------------------------------------

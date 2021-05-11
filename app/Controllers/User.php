@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Models\OrderItemModel;
 use App\Models\OrderModel;
-use App\Models\ShopModel;
 use App\Models\UserModel;
 use CodeIgniter\Controller;
 use CodeIgniter\I18n\Time;
@@ -50,10 +49,9 @@ class User extends Controller
         if ($this->request->getPost('current_password') && $this->request->getPost('password'))
           $newData['password'] = $this->request->getPost('password');
 
-        if ($model->update($newData['id'], $newData) == false)
-          return view('errors/errors', ['errors/errors' => $model->errors(), 'data' => $newData]);
-
-        return redirect()->back()->with('success', 'Lyckad uppdatering');
+        return $model->update($newData['id'], $newData)
+                ? redirect()->back()->with('success', 'Lyckad uppdatering')
+                : redirect()->to('/error');
       } else {
         $data['validation'] = $validation;
       }
@@ -141,7 +139,7 @@ class User extends Controller
   public function editAddress(string $page)
   {
     if ($page != 'billing' && $page != 'delivery')
-      return redirect()->to('error');
+      return redirect()->to('/error');
 
     $title = $page == 'billing' ? 'Faktureringsadress' : 'Leveransadress';
     $data = [
@@ -172,8 +170,9 @@ class User extends Controller
           'phone' => $this->request->getPost('phone'),
         ];
         
-        $model->updateAddress($table, $id, $newData);
-        return redirect()->to(base_url() . '/user/addresses')->with('success', 'Adressändring genomfördes');
+        return $model->updateAddress($table, $id, $newData)
+                ? redirect()->to('/user/addresses')->with('success', 'Adressändring genomfördes')
+                : redirect()->to('/error');
       } else {
         $data['validation'] = $validation;
       }
