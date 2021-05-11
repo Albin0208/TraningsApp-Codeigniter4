@@ -87,8 +87,8 @@ class Admin extends Controller
         $model = new ShopModel();
 
         return $model->insert($productData)
-                ? redirect()->to('/admin')->with('error', 'Något gick fel när produkten skulle skapas') 
-                : redirect()->to('/admin')->with('success', 'Produkten är skapad');
+                ? redirect()->to('/admin')->with('success', 'Produkten är skapad')
+                : redirect()->to('/admin')->with('error', 'Något gick fel när produkten skulle skapas');
       } else
         $data['validation'] = $validation;
     }
