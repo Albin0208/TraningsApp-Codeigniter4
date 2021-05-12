@@ -382,14 +382,19 @@ class Admin extends Controller
 
     return view('admin/order', $data);
   }
-
+  
+  /**
+   * Visa alla ordrar
+   *
+   * @return View Ordervyn
+   */
   public function allOrders()
   {
     $orderModel = new OrderModel();
     
     $data = [
       'title' => 'Elit-Träning | Admin - Ordrar',
-      'orders' => $orderModel->orderBy('order_number', 'DESC')->paginate('10', 'orders'),
+      'orders' => $orderModel->getAllOrdersByDate(),
       'pager' => $orderModel->pager,
       'time' => new Time(),
     ];

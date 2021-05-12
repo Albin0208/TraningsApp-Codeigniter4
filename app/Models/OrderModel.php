@@ -39,8 +39,19 @@ class OrderModel extends Model
         } while ($this->where('order_number', $orderNumber)->first());
 
         $data['data']['order_number'] = $orderNumber;
-        var_dump($data['data']);
 
         return $data;
+    }
+    
+    /**
+     * Hämta alla ordrar ordnade efter datum
+     *
+     * @return Array Order
+     */
+    public function getAllOrdersByDate()
+    {
+        $this->builder()->orderBy('created_at', 'DESC');
+        
+        return $this->paginate(10, 'orders');
     }
 }
