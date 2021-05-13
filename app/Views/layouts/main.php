@@ -36,7 +36,7 @@
         <ul class="navbar-nav ms-auto">
           <?php if (session()->get('isAdmin')) : ?>
           <li class="nav-item">
-            <a class="nav-link ps-2 <?= $uri->getSegment(1) == "admin" ? "active" : null ?>" href="/admin">
+            <a class="nav-link ps-2 <?= $uri->getSegment(1) == "admin" ? "active" : null ?>" href="/admin/panel">
               <i class="bi bi-shield-lock-fill" style="font-size: 20px;"></i>
               Admin
             </a>

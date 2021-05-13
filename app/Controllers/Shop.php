@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controllers;
 
 use App\Models\CategoriesModel;
@@ -41,7 +40,7 @@ class Shop extends Controller
         $data['pager'] = $model->pager;
       }
 
-    return view('layouts/shop/shop', $data);
+    return view('shop/shop', $data);
   }
   
   /**
@@ -78,7 +77,7 @@ class Shop extends Controller
       $data['product']['salePrice'] = $salePrice;
     }
     
-    return view('layouts/shop/single_product', $data);
+    return view('shop/single_product', $data);
   }
   
   /**

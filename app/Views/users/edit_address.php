@@ -32,6 +32,7 @@
         </div>
       </div>
     </div>
+    <?php if (service('uri', current_url())->getSegment(4) == 'billing') : ?>
     <div class="row gx-2">
       <div class="form-floating col-sm mt-3">
         <input type="email" class="form-control border-custom overlay1 <?= isInvalid('email') ?>" name="email"
@@ -43,6 +44,7 @@
         </div>
       </div>
     </div>
+    <?php endif; ?>
     <div class="row gx-2">
       <div class="form-floating col-sm mt-3">
         <input type="text" class="form-control border-custom overlay1 <?= isInvalid('city') ?>" name="city"
@@ -65,7 +67,6 @@
         </div>
       </div>
     </div>
-    <?php if (service('uri', current_url())->getSegment(4) == 'billing') : ?>
     <div class="row gx-2">
       <div class="form-floating col-sm mt-3">
         <input type="text" class="form-control border-custom overlay1 <?= isInvalid('address') ?>" name="address"
@@ -76,6 +77,7 @@
           <?= getError('address') ?>
         </div>
       </div>
+      <?php if (service('uri', current_url())->getSegment(4) == 'billing') : ?>
       <div class="form-floating col-sm mt-3">
         <input type="tel" class="form-control border-custom overlay1 <?= isInvalid('phone') ?>" name="phone"
           value="<?= $addressDetails['phone'] ?? set_value('phone') ?>" id="phone" placeholder="Telefonnummer"
@@ -86,8 +88,8 @@
           <?= getError('phone') ?>
         </div>
       </div>
+      <?php endif; ?>
     </div>
-    <?php endif; ?>
   </div>
   <div class="row">
     <button type="submit" class="btn btn-outline-info btn-lg rounded-pill w-50 mt-5 mb-3 mx-auto">

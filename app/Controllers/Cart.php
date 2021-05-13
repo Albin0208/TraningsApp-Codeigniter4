@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controllers;
 
 use App\Models\OrderItemModel;
@@ -28,7 +27,7 @@ class Cart extends Controller
       'cart' => $cart,
     ];
 
-    return view('layouts/checkout/cart', $data);
+    return view('checkout/cart', $data);
   }
   
   /**
@@ -92,10 +91,10 @@ class Cart extends Controller
       }
     } else if (session()->has('id')) {
         $model = new UserModel();
-        $data['user'] = $model->getAddressDetails('billing', session()->get('id'))->getRowArray();
+        $data['user'] = $model->getAddressDetails('billing', session()->get('id'));
     }
 
-    return view('layouts/checkout/checkout', $data);
+    return view('checkout/checkout', $data);
   }
   
   /**
@@ -119,7 +118,7 @@ class Cart extends Controller
       'orderItems' => $items,
     ];
 
-    return view('layouts/checkout/orderConfirm', $data);
+    return view('checkout/orderConfirm', $data);
   }
   
   /**

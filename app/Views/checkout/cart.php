@@ -7,7 +7,7 @@
   <div class="row m-0 gx-2">
     <!--Grid column-->
     <div class="col-lg-8 p-0 px-md-1">
-      <?= $cart->totalItems() == 0 ? '<h2 class="text-white">Varukorgen är tom <a href="/shop">Gå till butiken</a></h2>' : $this->include('/layouts/shop/displayCart') ?>
+      <?= $cart->totalItems() == 0 ? '<h2 class="text-white">Varukorgen är tom <a href="/shop">Gå till butiken</a></h2>' : $this->include('checkout/displayCart') ?>
     </div>
     <!--Grid column-->
     <div class="col-lg-4 p-0 px-md-1">

@@ -51,7 +51,7 @@ function modal(name, slug) {
       showModal(
         "Radera rabattkod",
         "Är du säker på att du vill radera rabattkoden?",
-        `deleteWithSlug('${slug}', '/removeDiscount/')`
+        `deleteWithSlug('${slug}', '/discount/delete/')`
       );
       break;
 
@@ -59,7 +59,7 @@ function modal(name, slug) {
       showModal(
         "Avsluta kampanj",
         "Är du säker på att du vill avsluta kampanjen?",
-        `deleteWithSlug('${slug}', '/endSale/')`,
+        `deleteWithSlug('${slug}', '/sale/delete/')`,
         "Avsluta"
       );
       break;
@@ -68,7 +68,7 @@ function modal(name, slug) {
       showModal(
         "Radera produkt",
         "Är du säker på att du vill radera produkten?",
-        `deleteWithSlug('${slug}', '/deleteProduct/')`,
+        `deleteWithSlug('${slug}', '/product/delete/')`,
         "Radera"
       );
       break;
@@ -79,5 +79,5 @@ function modal(name, slug) {
 }
 
 function deleteWithSlug(slug, path) {
-  window.location.replace(window.location.pathname + path + slug);
+  window.location.replace(window.location.origin + "/admin" + path + slug);
 }

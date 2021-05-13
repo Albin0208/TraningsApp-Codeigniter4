@@ -35,15 +35,54 @@ $routes->get('/', 'Home::index');
 $routes->add('register', 'Auth::register');
 $routes->add('login', 'Auth::login');
 $routes->add('logout', 'Auth::logout');
-$routes->add('user/view-order/(:any)', 'User::order/$1');
-$routes->add('user/addresses/edit/(:any)', 'User::editAddress/$1');
-$routes->add('shop', 'Shop::index');
-$routes->add('shop/addToCart', 'Shop::addToCart');
-$routes->add('shop/product/(:any)', 'Shop::product/$1');
-$routes->add('shop/(:any)', 'Shop::index/$1');
 $routes->add('about', 'Home::about');
 $routes->add('terms-and-conditions', 'Home::termsAndConditions');
 $routes->add('error', 'Home::error');
+$routes->addRedirect('admin', 'admin/panel');
+
+// Shop routes
+$routes->group('shop', function ($routes) 
+{
+	$routes->add('/', 'Shop::index');
+	$routes->add('addToCart', 'Shop::addToCart');
+	$routes->add('product/(:any)', 'Shop::product/$1');
+	$routes->add('(:any)', 'Shop::index/$1');
+});
+
+// User routes
+$routes->group('user', function ($routes) 
+{
+	$routes->add('view-order/(:any)', 'User::order/$1');
+	$routes->add('addresses/edit/(:any)', 'User::editAddress/$1');
+});
+
+// Admin routes
+$routes->group('admin', function($routes)
+{
+		// Panel Route
+    $routes->add('panel', 'Admin\Panel::index');
+
+		// Order routes
+    $routes->add('orders/view-all', 'Admin\Orders::viewAll');
+    $routes->add('orders/view/(:any)', 'Admin\Orders::view/$1');
+
+		// Customer routes
+    $routes->add('customers/view/(:any)', 'Admin\Customers::view/$1');
+		
+		// Product routes
+    $routes->add('product/create', 'Admin\Product::create');
+    $routes->add('product/edit/(:any)', 'Admin\Product::edit/$1');
+		
+		// Sale routes
+		$routes->add('sale/create/', 'Admin\Sale::create');
+		$routes->add('sale/edit/(:any)', 'Admin\Sale::edit/$1');
+		
+		// Discount routes
+		$routes->add('discount/create', 'Admin\Discount::create');
+		
+		// Newsletter routes
+		$routes->add('newsletter/send', 'Admin\Newsletter::send');
+	});
 
 
 /**

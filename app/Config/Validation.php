@@ -456,4 +456,22 @@ class Validation
 			]
 		]
 	];
+	
+	public $updateSale = [
+		'productDiscount' => [
+			'rules' => 'required|numeric',
+			'errors' => [
+				'required' => 'Fältet måste vara ifyllt.',
+				'numeric' => 'Fältet får bara innehålla siffor'
+			]
+		],
+		'saleName' => [
+			'rules' => 'required|regex_match[/^[A-Za-zÀ-ÿ0-9 ]+$/]|is_unique[sale.sale_name,sale_id,{sale_id}]',
+			'errors' => [
+				'required' => 'Fältet måste vara ifyllt.',
+				'regex_match' => 'Fältet får bara innehålla bokstäver och mellanslag',
+				'is_unique' => 'Kampanjnamnet finns redan'
+			]
+		]
+	];
 }

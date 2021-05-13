@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controllers;
 
 use App\Models\OrderItemModel;
@@ -59,7 +58,7 @@ class User extends Controller
     }
 
     $data['user'] = $model->getUser(session()->get('id'));
-    return view('layouts/userLayouts/userProfile', $data);
+    return view('users/profile', $data);
   }
   
   /**
@@ -79,7 +78,7 @@ class User extends Controller
       'pageTitle' => 'Mina Beställningar'
     ];
 
-    return view('layouts/userLayouts/userOrders', $data);
+    return view('users/orders', $data);
   }
   
   /**
@@ -107,7 +106,7 @@ class User extends Controller
       'time' => new Time(),
     ];
 
-    return view('layouts/displayOrder', $data);
+    return view('users/display_order', $data);
   }
   
   /**
@@ -123,11 +122,11 @@ class User extends Controller
     $data = [
       'title' => 'Elit-Träning | Adresser',
       'pageTitle' => 'Mina Adresser',
-      'billing' => $model->getAddressDetails('billing', $id)->getRowArray(),
-      'delivery' => $model->getAddressDetails('delivery', $id)->getRowArray()
+      'billing' => $model->getAddressDetails('billing', $id),
+      'delivery' => $model->getAddressDetails('delivery', $id)
     ];
 
-    return view('layouts/userLayouts/userAddresses', $data);
+    return view('users/addresses', $data);
   }
   
   /**
@@ -145,14 +144,14 @@ class User extends Controller
     $data = [
       'title' => 'Elit-Träning | ' . $title,
       'editTitle' => $title,
+      'page' => $page
     ];
 
     $table = $page == 'billing' ? 'billing' : 'delivery';
     $id = session()->get('id');
     
     $model = new UserModel();
-    $data['addressDetails'] = $model->getAddressDetails($table, $id)
-                                    ->getRowArray();
+    $data['addressDetails'] = $model->getAddressDetails($table, $id);
 
     if ($this->request->getMethod() == 'post') {
       $validation = \Config\Services::validation();
@@ -166,9 +165,13 @@ class User extends Controller
           'address' => $this->request->getPost('address'),
           'city' => $this->request->getPost('city'),
           'zip_code' => $this->request->getPost('zipCode'),
-          'email' => $this->request->getPost('email'),
-          'phone' => $this->request->getPost('phone'),
         ];
+        
+        // Om billing ändras lägg till mail och telefon
+        if ($page == 'billing') {
+          $newData['email'] = $this->request->getPost('email');
+          $newData['phone'] = $this->request->getPost('phone');
+        }
         
         return $model->updateAddress($table, $id, $newData)
                 ? redirect()->to('/user/addresses')->with('success', 'Adressändring genomfördes')
@@ -178,6 +181,6 @@ class User extends Controller
       }
     }
     
-    return view("edit/address", $data);
+    return view("users/edit_address", $data);
   }
 }

@@ -40,7 +40,7 @@ class AdminModel
                        ->get()
                        ->getResultArray();
 
-      return $array[0]['order_price'] + $array[0]['shipping'];
+      return $array[0]['order_price'];
     }
     
     /**
@@ -55,6 +55,23 @@ class AdminModel
 
       return $builder->orderBy('created_at', 'DESC')
                      ->get(3)
+                     ->getResultArray();
+    }
+    
+    /**
+     * Hämta produkterna som är med i en kampanj
+     *
+     * @param  int $saleID Id för kampanjen
+     * @return array Produkterna
+     */
+    public function getProductsOnSale(int $saleID)
+    {
+      $builder = $this->db->table('products_on_sale');
+
+      return $builder->where('sale_id', $saleID)
+                     ->join('products', 'products.product_id = products_on_sale.product_id')
+                     ->join('productcategories', "category_id = type")
+                     ->get()
                      ->getResultArray();
     }
 }

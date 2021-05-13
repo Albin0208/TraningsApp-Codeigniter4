@@ -1,4 +1,4 @@
-<?= $this->extend("layouts/userLayouts/userAccount") ?>
+<?= $this->extend("users/account") ?>
 <?= $this->section('userPage') ?>
 
 <?php if (session()->has('success')) : ?>

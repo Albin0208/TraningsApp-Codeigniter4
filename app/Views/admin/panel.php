@@ -58,7 +58,7 @@
           <div class="row mb-2">
             <h2 class="card-title col-8">Senaste beställningarna</h2>
             <div class="col-4 text-end">
-              <a href="/admin/allOrders" class="btn btn-outline-info">Visa alla</a>
+              <a href="/admin/orders/view-all" class="btn btn-outline-info">Visa alla</a>
             </div>
           </div>
           <table class="table text-white table-responsive border">
@@ -74,7 +74,7 @@
               <?php foreach($latestOrders as $order) : ?>
               <tr>
                 <th scope="row" class="align-middle"><a class="text-decoration-none text-info"
-                    href="<?= base_url("/admin/order/{$order['order_number']}") ?>">#<?= esc($order['order_number']) ?></a>
+                    href="<?= "/admin/orders/view/{$order['order_number']}" ?>">#<?= esc($order['order_number']) ?></a>
                 </th>
                 <td class="align-middle"><?= esc($time->parse($order['created_at'])->toDateString()) ?></td>
                 <td class="align-middle">
@@ -82,7 +82,7 @@
                   <?= esc($order['quantity']) ?>
                   <?= $order['quantity'] <= 1 ? 'artikel' : 'artiklar' ?></td>
                 <td class="text-end"><a class="btn btn-outline-info"
-                    href="<?= base_url("/admin/order/{$order['order_number']}") ?>">Visa</a>
+                    href="<?= "/admin/orders/view/{$order['order_number']}" ?>">Visa</a>
                 </td>
               </tr>
               <?php endforeach; ?>
@@ -113,7 +113,7 @@
                 <td class="align-middle"><?= $customer['username'] ?></td>
                 <td class="align-middle"><?= esc($time->parse($customer['created_at'])->toDateString()) ?></td>
                 <td class="text-end"><a class="btn btn-outline-info"
-                    href="<?= base_url("/admin/customer/{$customer['username']}") ?>">Visa</a>
+                    href="<?= "/admin/customers/view/{$customer['username']}" ?>">Visa</a>
                 </td>
               </tr>
               <?php endforeach; ?>
@@ -133,7 +133,7 @@
           <div class="row mb-2">
             <h2 class="card-title col-8">Produkter</h2>
             <div class="col-4 text-end">
-              <a href="/admin/createProduct" class="btn btn-outline-info">Lägg till produkt</a>
+              <a href="/admin/product/create" class="btn btn-outline-info">Lägg till produkt</a>
             </div>
           </div>
           <table class="table text-white table-responsive border">
@@ -156,7 +156,7 @@
                 <td class="text-end">
                   <button onclick="modal('product', '<?= $product['slug'] ?>')"
                     class="btn btn-outline-danger">Radera</button>
-                  <a class="btn btn-outline-info" href="/admin/editProduct/<?= $product['slug'] ?>">Redigera</a>
+                  <a class="btn btn-outline-info" href="/admin/product/edit/<?= $product['slug'] ?>">Redigera</a>
                 </td>
               </tr>
               <?php endforeach; ?>
@@ -177,7 +177,7 @@
           <div class="row mb-2">
             <h2 class="card-title col">Kampanjer</h2>
             <div class="col text-end">
-              <a href="/admin/createSale" class="btn btn-outline-info">Skapa kampanj</a>
+              <a href="/admin/sale/create" class="btn btn-outline-info">Skapa kampanj</a>
             </div>
           </div>
           <table class="table text-white table-responsive border">
@@ -203,7 +203,7 @@
                 <td class="text-end">
                   <button onclick="modal('sale', '<?= $sale['sale_name'] ?>')"
                     class="btn btn-outline-danger">Avsluta</button>
-                  <a class="btn btn-outline-info" href="/admin/editSale/<?= $sale['sale_name'] ?>">Redigera</a>
+                  <a class="btn btn-outline-info" href="/admin/sale/edit/<?= $sale['sale_name'] ?>">Redigera</a>
                 </td>
               </tr>
               <?php endforeach; ?>
@@ -216,7 +216,7 @@
   </div>
   <!-- /Kampanjer -->
 
-  <!-- Rabatter och kategorier -->
+  <!-- Rabatter och nyhetsbrev -->
   <div class="row row-cols-1 row-cols-sm-2 gx-3 mt-4">
     <div class="col">
       <div class="card overlay2 text-white shadow">
@@ -289,7 +289,7 @@
       </div>
     </div>
   </div>
-  <!-- /Rabatter och kategorier -->
+  <!-- /Rabatter och nyhetsbrev -->
 </div>
 
 <!-- Create Discount Modal -->
@@ -300,7 +300,7 @@
         <h5 class="modal-title" id="exampleModalLabel">Skapa rabattkod</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <?= form_open(base_url('admin/createDiscount'), 'data-parsley-validate id="form_id" novalidate') ?>
+      <?= form_open('admin/discount/create', 'data-parsley-validate id="form_id" novalidate') ?>
       <div class="modal-body">
         <div class="row row-cols-1 row-cols-sm-2 gx-2 mt-3">
           <div class="col">
@@ -360,7 +360,7 @@
         <h5 class="modal-title" id="exampleModalLabel">Skicka nyhetsbrev</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <?= form_open(base_url('admin/newsletter'), 'data-parsley-validate id="form_id" novalidate') ?>
+      <?= form_open('admin/newsletter/send', 'data-parsley-validate id="form_id" novalidate') ?>
       <div class="modal-body">
         <div class="row">
           <div class="col">

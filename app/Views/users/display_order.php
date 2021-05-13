@@ -1,4 +1,4 @@
-<?= $this->extend("layouts/userLayouts/userAccount") ?>
+<?= $this->extend("users/account") ?>
 <?= $this->section('userPage') ?>
 
 <div class="bg-dark text-white">

@@ -1,4 +1,4 @@
-<?= $this->extend("layouts/userLayouts/userAccount") ?>
+<?= $this->extend("users/account") ?>
 <?= $this->section('userPage') ?>
 
 <table class="table text-white table-responsive">

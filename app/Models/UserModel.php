@@ -88,7 +88,8 @@ class UserModel extends Model
         $builder->from($table, true)
                 ->where('customer_id', $id);
 
-        return $builder->get();
+        return $builder->get()
+                       ->getRowArray();
     }
     
     /**
