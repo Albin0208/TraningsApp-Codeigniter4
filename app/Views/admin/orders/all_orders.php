@@ -16,7 +16,7 @@
       <?php foreach($orders as $order) : ?>
       <tr>
         <th scope="row" class="align-middle"><a class="text-decoration-none text-info"
-            href="<?= base_url("/admin/orders/view/{$order['order_number']}") ?>">#<?= esc($order['order_number']) ?></a>
+            href="<?= "/admin/orders/view/{$order['order_number']}" ?>">#<?= esc($order['order_number']) ?></a>
         </th>
         <td class="align-middle"><?= esc($time->parse($order['created_at'])->toDateString()) ?></td>
         <td class="align-middle">
@@ -24,7 +24,7 @@
           <?= esc($order['quantity']) ?>
           <?= $order['quantity'] <= 1 ? 'artikel' : 'artiklar' ?></td>
         <td class="text-end"><a class="btn btn-outline-info"
-            href="<?= base_url("/admin/orders/view/{$order['order_number']}") ?>">Visa</a>
+            href="<?= "/admin/orders/view/{$order['order_number']}" ?>">Visa</a>
         </td>
       </tr>
       <?php endforeach; ?>

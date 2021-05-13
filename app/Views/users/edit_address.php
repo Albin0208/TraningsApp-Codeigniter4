@@ -6,7 +6,7 @@
   <div>
     <div class="row">
       <h1 class="col"><?= $editTitle ?></h1>
-      <a href="<?= base_url('/user/addresses') ?>" class="btn p-0 col-2 col-md-1"><i
+      <a href="<?= '/user/addresses' ?>" class="btn p-0 col-2 col-md-1"><i
           class="bi bi-arrow-left text-white fs-2"></i></a>
     </div>
     <hr>

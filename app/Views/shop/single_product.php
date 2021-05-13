@@ -30,7 +30,7 @@
         <?php endif; ?>
       </h4>
 
-      <?= form_open(base_url('/shop/addToCart'), 'class="row mx-auto"') ?>
+      <?= form_open('/shop/addToCart', 'class="row mx-auto"') ?>
       <?= form_hidden('product_id', $product['product_id']) ?>
       <input type="number" name="quantity" class="col form-control me-2 overlay1" value="1">
       <button type="submit" class="btn btn-primary btn-lg col-9">Lägg i varukorg</button>

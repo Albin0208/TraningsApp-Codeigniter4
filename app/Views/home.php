@@ -30,7 +30,7 @@
         <div class="row">
           <?php foreach($noccos as $nocco) : ?>
           <div class="col">
-            <a href="<?= base_url("/shop/product/{$nocco['slug']}") ?>">
+            <a href="<?= "/shop/product/{$nocco['slug']}" ?>">
               <img src="<?= $nocco['image'] ?>" class="img-fluid w-75">
             </a>
           </div>

@@ -10,7 +10,7 @@
       <?= session()->get('success') ?>
     </div>
     <?php endif; ?>
-    <?= form_open(base_url('/login')) ?>
+    <?= form_open('/login') ?>
     <div class="mb-3 input-group input-group-lg">
       <span class="input-group-text ms-auto bg-dark border-custom border-end-0">
         <i class="bi bi-envelope-fill text-white"></i>

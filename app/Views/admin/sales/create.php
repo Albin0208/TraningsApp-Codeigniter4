@@ -103,7 +103,7 @@
   </p>
 
   <button type="submit" class="btn btn-lg btn-outline-info">Skapa</button>
-  <a href="<?= base_url('admin/panel') ?>" class="btn btn-lg btn-outline-danger">Avbryt</a>
+  <a href="<?= '/admin/panel' ?>" class="btn btn-lg btn-outline-danger">Avbryt</a>
   <?= form_close() ?>
 </div>
 

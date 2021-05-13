@@ -7,7 +7,7 @@
           </div>
           <div class="overflow-auto bg-dark overlay1 p-2 border rounded border-secondary" style="max-height: 60vh;">
             <?php foreach ($cart->contents() as $item) : ?>
-            <?= form_open(base_url('/cart/editCart'), 'class="row mb-4 p-2 m-0"') ?>
+            <?= form_open('/cart/editCart', 'class="row mb-4 p-2 m-0"') ?>
             <?= form_hidden('rowid', $item['rowid']) ?>
             <div class="col-md-5 col-lg-3 col-xl-3">
               <div class="rounded mb-3 mb-md-0">
@@ -17,8 +17,7 @@
             <div class="col-md-7 col-lg-9 col-xl-9 d-flex flex-column justify-content-between">
               <div class="d-flex justify-content-between">
                 <div class="row">
-                  <h5><a class="text-white"
-                      href="<?= base_url("/shop/product/{$item['slug']}") ?>"><?= $item['name'] ?></a></h5>
+                  <h5><a class="text-white" href="<?= "/shop/product/{$item['slug']}" ?>"><?= $item['name'] ?></a></h5>
                   <?php if ($cart->hasOptions($item['rowid'])) : ?>
                   <?php foreach ($cart->productOptions as $option_name => $option_value) : ?>
                   <p class="mb-2"><span class="text-uppercase"><?= $option_name ?></span> - <span

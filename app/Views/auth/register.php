@@ -10,7 +10,7 @@
       <?= session()->get('error') ?>
     </div>
     <?php endif; ?>
-    <?= form_open(base_url('/register'), 'data-parsley-validate') ?>
+    <?= form_open('/register', 'data-parsley-validate') ?>
     <div class="col-md">
       <div class="row gx-2 mt-3">
         <div class="form-floating col-sm">
